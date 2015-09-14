@@ -28,6 +28,10 @@ void ABrainPlayerController::SetupInputComponent()
 
 	InputComponent->BindAction("PerformActionOnObject1", IE_Pressed, this, &ABrainPlayerController::PerformActionOnObject<0>);
 	InputComponent->BindAction("PerformActionOnObject2", IE_Pressed, this, &ABrainPlayerController::PerformActionOnObject<1>);
+	InputComponent->BindAction("PerformActionOnObject3", IE_Pressed, this, &ABrainPlayerController::PerformActionOnObject<2>);
+	InputComponent->BindAction("PerformActionOnObject4", IE_Pressed, this, &ABrainPlayerController::PerformActionOnObject<3>);
+	InputComponent->BindAction("PerformActionOnObject5", IE_Pressed, this, &ABrainPlayerController::PerformActionOnObject<4>);
+	InputComponent->BindAction("PerformActionOnObject6", IE_Pressed, this, &ABrainPlayerController::PerformActionOnObject<5>);
 
 	
 	InputComponent->BindAxis("MoveForward", this, &ABrainPlayerController::MoveForward);

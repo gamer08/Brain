@@ -44,6 +44,11 @@ void ABrainCharacter::InitActionOnObjectDelegate()
 {
 	_actionObjects.Add(&ABrainInteractiveObject::PerformAction1);
 	_actionObjects.Add(&ABrainInteractiveObject::PerformAction2);
+	_actionObjects.Add(&ABrainInteractiveObject::PerformAction3);
+	_actionObjects.Add(&ABrainInteractiveObject::PerformAction4);
+	_actionObjects.Add(&ABrainInteractiveObject::PerformAction5);
+	_actionObjects.Add(&ABrainInteractiveObject::PerformAction6);
+
 }
 
 void ABrainCharacter::MoveForward(float value)

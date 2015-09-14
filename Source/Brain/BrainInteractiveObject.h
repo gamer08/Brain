@@ -11,10 +11,10 @@ class BRAIN_API ABrainInteractiveObject : public AActor
 	GENERATED_BODY()
 
 private:
-	UPROPERTY(EditAnywhere, Category=Interactive, meta = (Display = "Name"))
+	UPROPERTY(EditAnywhere, Category=Interactive, meta = (DisplayName = "Name"))
 	FName _name;
 
-	UPROPERTY(Visibleanywhere, Category = Interactive, meta = (Display = "Mesh"))
+	UPROPERTY(Visibleanywhere, Category = Interactive, meta = (DisplayName = "Mesh"))
 	UStaticMeshComponent* _mesh;
 
 protected:
@@ -32,5 +32,17 @@ public:
 	UFUNCTION()
 	virtual void PerformAction2() PURE_VIRTUAL(ABrainInteractiveObject::PerformAction2,);
 
+	UFUNCTION()
+	virtual void PerformAction3() PURE_VIRTUAL(ABrainInteractiveObject::PerformAction3,);
+
+	UFUNCTION()
+	virtual void PerformAction4() PURE_VIRTUAL(ABrainInteractiveObject::PerformAction4,);
+
 	/*Plus a venir....*/
+
+	UFUNCTION()
+	virtual void PerformAction5();
+
+	UFUNCTION()
+	virtual void PerformAction6();
 };
