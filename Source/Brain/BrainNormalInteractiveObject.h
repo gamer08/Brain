@@ -40,6 +40,7 @@ private:
 	UPROPERTY(EditAnywhere, Category = Scale, meta = (DisplayName = "Scale step to apply", ClampMin = "0.1", EditCondition = "_canBeScale"))
 	FVector _scaleToApply;
 
+	void BeginPlay() override;
 
 	UFUNCTION()
 	void ChangeRotation(int32 orientation);
@@ -51,6 +52,10 @@ private:
 	void ChangeScale(int32 orientation);
 	
 	bool CanBeRescale(int32 orientation, FVector& newScale);
+
+	void Shear(int32 orientation);
+
+	FVector MatrixMultiplication(FMatrix matrix, FVector vector);
 
 public:
 

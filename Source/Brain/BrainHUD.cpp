@@ -5,6 +5,7 @@
 #include "Engine/Canvas.h"
 #include "TextureResource.h"
 #include "CanvasItem.h"
+#include "Blueprint/UserWidget.h"
 
 ABrainHUD::ABrainHUD()
 {
@@ -12,6 +13,19 @@ ABrainHUD::ABrainHUD()
 	CrosshairTex = CrosshiarTexObj.Object;
 }
 
+void ABrainHUD::BeginPlay()
+{
+	
+	_hudWidgetClass = LoadClass<UBrainHUDWidget>(nullptr, TEXT("/Game/FirstPerson/HUD/HUD.HUD_C"), nullptr, LOAD_None, nullptr);
+	
+	if (_hudWidgetClass)
+	{
+		_hudWidget = CreateWidget<UBrainHUDWidget>(GetWorld(), _hudWidgetClass);
+		_hudWidget->AddToViewport();
+	}
+
+	Super::BeginPlay();
+}
 
 void ABrainHUD::DrawHUD()
 {
@@ -25,5 +39,10 @@ void ABrainHUD::DrawHUD()
 	FCanvasTileItem TileItem( CrosshairDrawPosition, CrosshairTex->Resource, FLinearColor::White);
 	TileItem.BlendMode = SE_BLEND_Translucent;
 	Canvas->DrawItem( TileItem );
+}
+
+void ABrainHUD::OnReceiveSelectedObjectActions(FObjectAction actions)
+{
+	_hudWidget->SetAvailableAction(actions);
 }
 

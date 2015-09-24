@@ -12,6 +12,12 @@ void ABrainTimeInteractiveObject::BeginPlay()
 {
 	Super::BeginPlay();
 	_globalTransformationSpeed = _defaultTransformationSpeed;
+
+	int8 flags = (_canBeFastForward ? EAction::FASTFWRD : 0) 
+		       | (_canBeSlowed ? EAction::SLOW : 0) 
+			   | (_canBeStop ? EAction::STOP : 0)
+			   | (_canBeReversed ? EAction::REVERSE : 0);
+	_actions = FObjectAction(flags);
 }
 
 void ABrainTimeInteractiveObject::Tick(float deltaTime)
@@ -28,6 +34,7 @@ void ABrainTimeInteractiveObject::ApplyTransformations(float deltaTime)
 	}
 }
 
+//TO DO REMPLACER CELA PAR SEULEMENT UN CALCUL DE LA MATRICE DE TRANSFORMATION ET ACCUMULER L'INITIAL. AU FINAL 1 APPEL AU LIEU DE N.
 void ABrainTimeInteractiveObject::ApplyTransformation(float deltaTime, const FTransformation& transformation)
 {
 	switch (transformation._type)
@@ -37,6 +44,12 @@ void ABrainTimeInteractiveObject::ApplyTransformation(float deltaTime, const FTr
 			FRotator rotationToApply = FRotator(transformation._transformation.Y, transformation._transformation.Z, transformation._transformation.X);
 			FRotator offset = (deltaTime * _globalTransformationSpeed  * transformation._speed) * rotationToApply;
 			SetActorRotation(GetActorRotation() + offset);
+			
+			FTransform transR = FTransform(FRotator(0,90,0));
+			FTransform transS (FScaleMatrix(FVector(1, 1, 2)));
+
+			transR.Accumulate(transS);
+			float s = 2.0f;
 		}
 	}
 }

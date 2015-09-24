@@ -3,6 +3,7 @@
 #include "Brain.h"
 #include "BrainPlayerController.h"
 #include "BrainCameraManager.h"
+#include "BrainHUD.h"
 
 ABrainPlayerController::ABrainPlayerController()
 {
@@ -74,4 +75,9 @@ void ABrainPlayerController::Jump()
 void ABrainPlayerController::StopJumping()
 {
 	_pawn->StopJumping();
+}
+
+void ABrainPlayerController::SendSelectedObjectActionsToHUD(FObjectAction actions)
+{
+	Cast<ABrainHUD>(MyHUD)->OnReceiveSelectedObjectActions(actions);
 }

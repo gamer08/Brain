@@ -3,7 +3,32 @@
 #pragma once
 
 #include "GameFramework/Actor.h"
+#include "BrainEnums.h"
 #include "BrainInteractiveObject.generated.h"
+
+
+USTRUCT(BlueprintType)
+struct FObjectAction
+{
+	GENERATED_USTRUCT_BODY();
+
+	FObjectAction()
+	{
+	}
+
+	FObjectAction(int32 flags)
+	{
+		_flags = flags;
+	}
+
+	UPROPERTY(BlueprintReadWrite)
+	int32 _flags;
+
+	bool GetValueForAction(EAction::Type action)
+	{
+		return (_flags &  action) != 0;
+	}
+};
 
 UCLASS(Abstract)
 class BRAIN_API ABrainInteractiveObject : public AActor
@@ -14,16 +39,22 @@ private:
 	UPROPERTY(EditAnywhere, Category=Interactive, meta = (DisplayName = "Name"))
 	FName _name;
 
+protected:
+	
 	UPROPERTY(Visibleanywhere, Category = Interactive, meta = (DisplayName = "Mesh"))
 	UStaticMeshComponent* _mesh;
-
-protected:
-	// pas enocre utilisé va être un bitField pour les actions possible sur chaque objet
-	UPROPERTY() 
-	int8 _flags;
 	
+	// pas enocre utilisé va être un bitField pour les actions possible sur chaque objet
+	UPROPERTY()
+	FObjectAction _actions;
+
 public:	
 	ABrainInteractiveObject();
+
+	const FObjectAction GetAvailableActions()
+	{
+		return _actions;
+	}
 
 	// declaration "virtuel pure" d'unreal
 	UFUNCTION()
