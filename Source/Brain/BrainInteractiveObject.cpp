@@ -35,3 +35,13 @@ void ABrainInteractiveObject::PerformAction6()
 
 }
 
+void ABrainInteractiveObject::PerformAction7()
+{
+
+}
+
+void ABrainInteractiveObject::PerformAction8()
+{
+
+}
+

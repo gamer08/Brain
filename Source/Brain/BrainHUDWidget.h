@@ -25,9 +25,6 @@ class BRAIN_API UBrainHUDWidget : public UUserWidget
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
 	TArray<UTexture2D*> _actionTextures;
 
-	//UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Data")
-	//UObjectLibrary* _actionTextures;
-
 	UFUNCTION(BlueprintCallable, Category = "Action Bar")
 	void SetAvailableAction(FObjectAction objectAction);
 	

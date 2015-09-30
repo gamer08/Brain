@@ -40,6 +40,14 @@ private:
 	UPROPERTY(EditAnywhere, Category = Scale, meta = (DisplayName = "Scale step to apply", ClampMin = "0.1", EditCondition = "_canBeScale"))
 	FVector _scaleToApply;
 
+	
+	/*Shear Data -- NE VA PAS ÊTRE UTILISABLE POUR L'INSTANT CAR BESOIN DE TEST ! - Fred*/
+	UPROPERTY(/*EditAnywhere, Category = Shear, meta = (DisplayName = "Can be Shear")*/)
+	bool _canBeShear;
+
+
+
+
 	void BeginPlay() override;
 
 	UFUNCTION()
@@ -53,6 +61,7 @@ private:
 	
 	bool CanBeRescale(int32 orientation, FVector& newScale);
 
+	UFUNCTION()
 	void Shear(int32 orientation);
 
 	FVector MatrixMultiplication(FMatrix matrix, FVector vector);
@@ -78,4 +87,10 @@ public:
 
 	UFUNCTION()
 	void PerformAction6() override;
+
+	UFUNCTION()
+	void PerformAction7() override;
+
+	UFUNCTION()
+	void PerformAction8() override;
 };

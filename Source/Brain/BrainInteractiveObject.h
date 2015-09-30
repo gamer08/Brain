@@ -76,4 +76,10 @@ public:
 
 	UFUNCTION()
 	virtual void PerformAction6();
+
+	UFUNCTION()
+	virtual void PerformAction7();
+
+	UFUNCTION()
+	virtual void PerformAction8();
 };

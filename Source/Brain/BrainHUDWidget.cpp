@@ -7,23 +7,13 @@
 #define ROTATION "rotation"
 #define TRANSLATION "translation"
 #define SCALING "scaling"
+#define SHEARING "shearing"
 #define FASTFORWARDING "fastforwarding"
+#define SLOWING "slowing"
+#define STOPING "stop"
+#define REVERSING "reverse"
 
-//UENUM()
-//namespace EActionOnHUD
-//{
-//	enum ActionOnHUD
-//	{
-//		ROTATION = 0,
-//		TRANSLATE = 1,
-//		SCALE = 2,
-//		SHEAR = 3,
-//		FASTFWRD = 4,
-//		SLOW = 5,
-//		STOP = 6,
-//		REVERSE = 7
-//	};
-//}
+
 
 void UBrainHUDWidget::SetAvailableAction(FObjectAction objectAction)
 {
@@ -71,11 +61,24 @@ void UBrainHUDWidget::LoadActionBarTextures()
 		if (asset.AssetName == SCALING)
 			_actionTextures[2] = (Cast<UTexture2D>(asset.GetAsset()));
 
+		if (asset.AssetName == SHEARING)
+			_actionTextures[3] = (Cast<UTexture2D>(asset.GetAsset()));
+
 		if (asset.AssetName == FASTFORWARDING)
 			_actionTextures[4] = (Cast<UTexture2D>(asset.GetAsset()));
+
+		if (asset.AssetName == SLOWING)
+			_actionTextures[5] = (Cast<UTexture2D>(asset.GetAsset()));
+
+		if (asset.AssetName == STOPING)
+			_actionTextures[6] = (Cast<UTexture2D>(asset.GetAsset()));
+
+		if (asset.AssetName == REVERSING)
+			_actionTextures[7] = (Cast<UTexture2D>(asset.GetAsset()));
 	}
 
 	actionTexturesLibrary->ClearLoaded();
+	actionTexturesLibrary->ConditionalBeginDestroy();
 }
 
 

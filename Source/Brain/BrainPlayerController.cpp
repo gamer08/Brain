@@ -33,6 +33,8 @@ void ABrainPlayerController::SetupInputComponent()
 	InputComponent->BindAction("PerformActionOnObject4", IE_Pressed, this, &ABrainPlayerController::PerformActionOnObject<3>);
 	InputComponent->BindAction("PerformActionOnObject5", IE_Pressed, this, &ABrainPlayerController::PerformActionOnObject<4>);
 	InputComponent->BindAction("PerformActionOnObject6", IE_Pressed, this, &ABrainPlayerController::PerformActionOnObject<5>);
+	InputComponent->BindAction("PerformActionOnObject7", IE_Pressed, this, &ABrainPlayerController::PerformActionOnObject<6>);
+	InputComponent->BindAction("PerformActionOnObject8", IE_Pressed, this, &ABrainPlayerController::PerformActionOnObject<7>);
 
 	
 	InputComponent->BindAxis("MoveForward", this, &ABrainPlayerController::MoveForward);
@@ -63,7 +65,9 @@ void ABrainPlayerController::Turn(float value)
 
 void ABrainPlayerController::LookUp(float value)
 {
-	Cast<ABrainCameraManager>(PlayerCameraManager)->UpdatePitch(-1 * value * GetWorld()->GetDeltaSeconds() * _cameraRotationSpeed);
+	// Le -1 en début de paramètres est à remplacer par une variable pour donner le choix au joueur plus tard dans les options.
+
+	Cast<ABrainCameraManager>(PlayerCameraManager)->UpdatePitch(-1 * value * GetWorld()->GetDeltaSeconds() * _cameraRotationSpeed);  
 	_pawn->LookUp(-1 * value * GetWorld()->GetDeltaSeconds() * _cameraRotationSpeed);
 }
 
