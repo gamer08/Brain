@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Brain.h"
+#include <cmath>
 #include "BrainTimeInteractiveObject.h"
 
 ABrainTimeInteractiveObject::ABrainTimeInteractiveObject()
@@ -13,11 +14,17 @@ void ABrainTimeInteractiveObject::BeginPlay()
 	Super::BeginPlay();
 	_globalTransformationSpeed = _defaultTransformationSpeed;
 
-	int8 flags = (_canBeFastForward ? EAction::FASTFWRD : 0) 
-		       | (_canBeSlowed ? EAction::SLOW : 0) 
-			   | (_canBeStop ? EAction::STOP : 0)
-			   | (_canBeReversed ? EAction::REVERSE : 0);
+	int8 flags = (_canBeFastForward ? EAction::FASTFWRD : 0)
+		| (_canBeSlowed ? EAction::SLOW : 0)
+		| (_canBeStop ? EAction::STOP : 0)
+		| (_canBeReversed ? EAction::REVERSE : 0);
 	_actions = FObjectAction(flags);
+
+	for (FTransformation& trans : _transformations)
+	{
+		PreComputeTransformationData(trans);
+	}
+
 }
 
 void ABrainTimeInteractiveObject::Tick(float deltaTime)
@@ -28,32 +35,61 @@ void ABrainTimeInteractiveObject::Tick(float deltaTime)
 
 void ABrainTimeInteractiveObject::ApplyTransformations(float deltaTime)
 {
+
 	for (FTransformation& trans : _transformations)
 	{
 		ApplyTransformation(deltaTime, trans);
 	}
 }
 
-//TO DO REMPLACER CELA PAR SEULEMENT UN CALCUL DE LA MATRICE DE TRANSFORMATION ET ACCUMULER L'INITIAL. AU FINAL 1 APPEL AU LIEU DE N.
-void ABrainTimeInteractiveObject::ApplyTransformation(float deltaTime, const FTransformation& transformation)
+void ABrainTimeInteractiveObject::ApplyTransformation(float deltaTime, FTransformation& transformation)
 {
 	switch (transformation._type)
 	{
 		case TransformationType::ROTATE:
 		{
-			FRotator rotationToApply = FRotator(transformation._transformation.Y, transformation._transformation.Z, transformation._transformation.X);
-			FRotator offset = (deltaTime * _globalTransformationSpeed  * transformation._speed) * rotationToApply;
+			FRotator offset = (deltaTime * _globalTransformationSpeed  * transformation._speed) * transformation._rotation;
 			SetActorRotation(GetActorRotation() + offset);
-			
-			FTransform transR = FTransform(FRotator(0,90,0));
-			FTransform transS (FScaleMatrix(FVector(1, 1, 2)));
-
-			transR.Accumulate(transS);
-			float s = 2.0f;
+			break;
 		}
+			
+		case TransformationType::SCALE:
+		{
+			FVector newScale;
+			FVector scaleStep = FVector(transformation._baseSclaleOverTimeStepInRAD.X, 
+				                        transformation._baseSclaleOverTimeStepInRAD.Y, 
+										transformation._baseSclaleOverTimeStepInRAD.Z);
+
+			scaleStep *= deltaTime * _globalTransformationSpeed  * transformation._speed;
+
+			//Calculate new scale
+			newScale.X = FMath::Sin(transformation._currentScaleInRAD.X + transformation._baseSclaleOverTimeValueInRAD.X + scaleStep.X);
+			newScale.Y = FMath::Sin(transformation._currentScaleInRAD.Y + transformation._baseSclaleOverTimeValueInRAD.Y + scaleStep.Y);
+			newScale.Z = FMath::Sin(transformation._currentScaleInRAD.Z + transformation._baseSclaleOverTimeValueInRAD.Z + scaleStep.Z);
+
+			transformation._currentScaleInRAD += scaleStep;
+
+			///Convert back to our scale range
+			newScale.X = transformation._minScale.X + ((1.0f - ((1.0f - newScale.X) / 2.0f)) * transformation._scaleRange.X);
+			newScale.Y = transformation._minScale.Y + ((1.0f - ((1.0f - newScale.Y) / 2.0f)) * transformation._scaleRange.Y);
+			newScale.Z = transformation._minScale.Z + ((1.0f - ((1.0f - newScale.Z) / 2.0f)) * transformation._scaleRange.Z);
+			
+			SetActorScale3D(newScale);
+			break;
+		}
+
+		case TransformationType::TRANSLATE:
+		{
+			FVector offset = (deltaTime * _globalTransformationSpeed  * transformation._speed) * transformation._translation;
+			SetActorLocation(GetActorLocation() + offset);
+			break;
+		}
+			
+	default:
+		break;
+
 	}
 }
-
 
 void ABrainTimeInteractiveObject::PerformAction1()
 {
@@ -97,4 +133,56 @@ void ABrainTimeInteractiveObject::Stop()
 void ABrainTimeInteractiveObject::Reverse()
 {
 	_globalTransformationSpeed = _globalTransformationSpeed == _reverseScale ? _defaultTransformationSpeed : _reverseScale;
+}
+
+void ABrainTimeInteractiveObject::PreComputeTransformationData(FTransformation& transformation)
+{
+	switch (transformation._type)
+	{
+	case TransformationType::ROTATE:
+		break;
+
+	case TransformationType::SCALE:
+
+		FVector actorScale = GetActorScale();
+
+		transformation._scaleRange = FVector(transformation._maxScale.X - transformation._minScale.X, 
+			                                 transformation._maxScale.Y - transformation._minScale.Y, 
+											 transformation._maxScale.Z - transformation._minScale.Z);
+		
+		// Manage division by 0
+		float positionInBaseIntervalX, positionInBaseIntervalY, positionInBaseIntervalZ;
+		positionInBaseIntervalX = positionInBaseIntervalY = positionInBaseIntervalZ = 1.0f;
+
+		float x = ((transformation._maxScale.X - actorScale.X) / transformation._scaleRange.X);
+		float y = ((transformation._maxScale.Y - actorScale.Y) / transformation._scaleRange.Y);
+		float z = ((transformation._maxScale.Z - actorScale.Z) / transformation._scaleRange.Z);
+
+		if (!std::isinf(x) && !std::isnan(x))
+			positionInBaseIntervalX -= x;
+
+		if (!std::isinf(y) && !std::isnan(y))
+			positionInBaseIntervalY -= y;
+
+		if (!std::isinf(z) && !std::isnan(z))
+			positionInBaseIntervalZ -= z;
+
+		//Take the value to -1 to 1 interval
+		float positionInMinus1To1IntervalX = -1 + (positionInBaseIntervalX * 2);
+		float positionInMinus1To1IntervalY = -1 + (positionInBaseIntervalY * 2);
+		float positionInMinus1To1IntervalZ = -1 + (positionInBaseIntervalZ * 2);
+
+		//Convert to RAD
+		transformation._baseSclaleOverTimeValueInRAD.X = (FMath::Asin(positionInMinus1To1IntervalX));
+		transformation._baseSclaleOverTimeValueInRAD.Y = (FMath::Asin(positionInMinus1To1IntervalY));
+		transformation._baseSclaleOverTimeValueInRAD.Z = (FMath::Asin(positionInMinus1To1IntervalZ));
+
+		//Calculate base step in RAD
+		transformation._baseSclaleOverTimeStepInRAD.X = FMath::DegreesToRadians(transformation._scaleRange.X / 360.0f);
+		transformation._baseSclaleOverTimeStepInRAD.Y = FMath::DegreesToRadians(transformation._scaleRange.Y / 360.0f);
+		transformation._baseSclaleOverTimeStepInRAD.Z = FMath::DegreesToRadians(transformation._scaleRange.Z / 360.0f);
+
+		break;
+
+	}
 }
