@@ -23,6 +23,8 @@ ABrainCharacter::ABrainCharacter()
 
 	USkeletalMeshComponent* mesh = GetMesh();
 	mesh->bCastDynamicShadow = mesh->CastShadow = false;
+
+	_selectedObject = nullptr;
 }
 
 void ABrainCharacter::BeginPlay()
@@ -36,14 +38,28 @@ void ABrainCharacter::Tick(float deltaTime)
 	Super::Tick(deltaTime);
 
 	ABrainInteractiveObject* selectedObj = CheckForInteractiveObjects();
-	
-	_selectedObject = selectedObj;
+
+	if (selectedObj != _selectedObject)
+	{
+		if (selectedObj)
+			Cast<ABrainPlayerController>(Controller)->SendSelectedObjectActionsToHUD(selectedObj->GetAvailableActions());
+		else
+			Cast<ABrainPlayerController>(Controller)->SendSelectedObjectActionsToHUD(FObjectAction(-1));
+		
+		_selectedObject = selectedObj;
+	}
 }
 
 void ABrainCharacter::InitActionOnObjectDelegate()
 {
 	_actionObjects.Add(&ABrainInteractiveObject::PerformAction1);
 	_actionObjects.Add(&ABrainInteractiveObject::PerformAction2);
+	_actionObjects.Add(&ABrainInteractiveObject::PerformAction3);
+	_actionObjects.Add(&ABrainInteractiveObject::PerformAction4);
+	_actionObjects.Add(&ABrainInteractiveObject::PerformAction5);
+	_actionObjects.Add(&ABrainInteractiveObject::PerformAction6);
+	_actionObjects.Add(&ABrainInteractiveObject::PerformAction7);
+	_actionObjects.Add(&ABrainInteractiveObject::PerformAction8);
 }
 
 void ABrainCharacter::MoveForward(float value)
@@ -112,8 +128,8 @@ ABrainInteractiveObject* ABrainCharacter::CheckForInteractiveObjects()
 
 	world->SweepSingleByChannel(hit, startLocation, endLocation, FQuat::Identity, INTERACTIVE_OBJECT, FCollisionShape::MakeSphere(12.0f), traceParams);
 	
-	//affiche le raycast à des fin de test
-	DrawDebugLine(world, startLocation, endLocation, FColor::Green);
+	////affiche le raycast à des fin de test
+	//DrawDebugLine(world, startLocation, endLocation, FColor::Green);
 	
 	return Cast<ABrainInteractiveObject>(hit.GetActor());
 }

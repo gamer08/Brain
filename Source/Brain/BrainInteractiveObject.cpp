@@ -25,5 +25,23 @@ ABrainInteractiveObject::ABrainInteractiveObject()
 
 }
 
+void ABrainInteractiveObject::PerformAction5()
+{
 
+}
+
+void ABrainInteractiveObject::PerformAction6()
+{
+
+}
+
+void ABrainInteractiveObject::PerformAction7()
+{
+
+}
+
+void ABrainInteractiveObject::PerformAction8()
+{
+
+}
 

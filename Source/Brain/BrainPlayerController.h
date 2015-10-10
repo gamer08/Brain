@@ -43,4 +43,6 @@ public:
 	{ 
 		return PlayerCameraManager->GetCameraRotation(); 
 	}
+
+	void SendSelectedObjectActionsToHUD(FObjectAction actions);
 };
