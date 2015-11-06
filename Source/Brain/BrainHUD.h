@@ -2,6 +2,7 @@
 #pragma once 
 #include "GameFramework/HUD.h"
 #include "BrainHUDWidget.h"
+#include "BrainMainMenuWidget.h"
 #include "BrainHUD.generated.h"
 
 UCLASS()

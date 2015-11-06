@@ -17,7 +17,7 @@ void ABrainHUD::BeginPlay()
 {
 	
 	_hudWidgetClass = LoadClass<UBrainHUDWidget>(nullptr, TEXT("/Game/FirstPerson/HUD/HUD.HUD_C"), nullptr, LOAD_None, nullptr);
-	
+
 	if (_hudWidgetClass)
 	{
 		_hudWidget = CreateWidget<UBrainHUDWidget>(GetWorld(), _hudWidgetClass);

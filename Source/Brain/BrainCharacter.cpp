@@ -3,6 +3,7 @@
 #include "Brain.h"
 #include "BrainCharacter.h"
 #include "BrainPlayerController.h"
+#include "BrainGameInstance.h"
 #include "Engine.h"
 
 // nouveau canal definis pour nos objets interactifs. Rajouté dans la configuration du projet. DefaultEngine.ini
@@ -31,6 +32,16 @@ void ABrainCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	InitActionOnObjectDelegate();
+	
+	if (this->GetClass()->ImplementsInterface(UBrainSaveInterface::StaticClass()))
+	{
+		FString name = GetClass()->ClassGeneratedBy->GetName();
+		FBrainCharacterSaveData savedData = Cast<UBrainGameInstance>(GetGameInstance())->GetSaveManager()->GetDataFromSave<FBrainCharacterSaveData>(name);
+		if (savedData._loadFromfile)
+		{
+			SetActorLocation(savedData._location);
+		}
+	}
 }
 
 void ABrainCharacter::Tick(float deltaTime)
@@ -142,3 +153,13 @@ void ABrainCharacter::PerformActionOnObject(int action)
 	}
 }
 
+void ABrainCharacter::Save(FBrainSaveData& saveData)
+{
+	FBrainCharacterSaveData dataToSave;
+
+	dataToSave._loadFromfile = true;
+	dataToSave._location = GetActorLocation();
+	dataToSave._rotation = GetActorRotation();
+
+	saveData.AddDataToSave(dataToSave);
+}

@@ -27,6 +27,11 @@ private:
 	void Jump();
 	void StopJumping();
 
+	void LoadLevel();
+	void Save();
+	void Load();
+	void ShowPauseMenu();
+
 	template<int action>
 	void PerformActionOnObject()
 	{
@@ -35,6 +40,7 @@ private:
 
 	virtual void SetupInputComponent() override;
 	virtual void Possess(APawn* aPawn) override;
+	virtual void BeginPlay() override;
 
 public:
 	ABrainPlayerController();
@@ -45,4 +51,7 @@ public:
 	}
 
 	void SendSelectedObjectActionsToHUD(FObjectAction actions);
+
+	UFUNCTION(BlueprintCallable, Category = "Brain player controller")
+	void GiveControlsToUI(bool value);
 };

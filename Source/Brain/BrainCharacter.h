@@ -2,10 +2,12 @@
 #pragma once
 #include "GameFramework/Character.h"
 #include "BrainInteractiveObject.h"
+#include "BrainSaveInterface.h"
 #include "BrainCharacter.generated.h"
 
+
 UCLASS(config=Game)
-class ABrainCharacter : public ACharacter
+class ABrainCharacter : public ACharacter, public IBrainSaveInterface
 {
 	friend class ABrainPlayerController;
 	GENERATED_BODY()
@@ -15,6 +17,8 @@ public:
 
 	// declaration du type de délégate. Un délégate = pointeur de fonction !
 	typedef void(ABrainInteractiveObject::* ActionOnObjectFunction)(void);
+
+	void Save(FBrainSaveData& saveData);
 
 protected:
 
@@ -52,4 +56,5 @@ private:
 	void LimitPitch(FRotator& rotation, float minPitch, float maxPitch);
 	
 	ABrainInteractiveObject* CheckForInteractiveObjects();
+
 };

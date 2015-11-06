@@ -3,7 +3,9 @@
 #include "Brain.h"
 #include "BrainPlayerController.h"
 #include "BrainCameraManager.h"
+#include "BrainGameInstance.h"
 #include "BrainHUD.h"
+#include "BrainGameMode.h"
 
 ABrainPlayerController::ABrainPlayerController()
 {
@@ -19,6 +21,14 @@ void ABrainPlayerController::Possess(APawn* pawn)
 	Super::Possess(pawn);
 }
 
+void ABrainPlayerController::BeginPlay()
+{
+	Super::BeginPlay();
+
+	//Pour être sur que le controller recoive les input apres un chargement de sauvegarde
+	FInputModeGameOnly inputMode = FInputModeGameOnly();
+	this->SetInputMode(inputMode);
+}
 
 void ABrainPlayerController::SetupInputComponent()
 {
@@ -42,6 +52,11 @@ void ABrainPlayerController::SetupInputComponent()
 
 	InputComponent->BindAxis("Turn", this, &ABrainPlayerController::Turn);
 	InputComponent->BindAxis("LookUp", this, &ABrainPlayerController::LookUp);
+
+	//InputComponent->BindKey(EKeys::T, IE_Pressed, this, &ABrainPlayerController::LoadLevel);
+	//InputComponent->BindKey(EKeys::Y, IE_Pressed, this, &ABrainPlayerController::Save);
+	//InputComponent->BindKey(EKeys::U, IE_Pressed, this, &ABrainPlayerController::Load);
+	InputComponent->BindKey(EKeys::P, IE_Pressed, this, &ABrainPlayerController::ShowPauseMenu);
 
 }
 
@@ -84,4 +99,58 @@ void ABrainPlayerController::StopJumping()
 void ABrainPlayerController::SendSelectedObjectActionsToHUD(FObjectAction actions)
 {
 	Cast<ABrainHUD>(MyHUD)->OnReceiveSelectedObjectActions(actions);
+}
+
+void ABrainPlayerController::LoadLevel()
+{
+	/*UWorld* world = GetWorld();
+	if (world)
+	{
+		UGameplayStatics::OpenLevel(world, "test");
+	}*/
+}
+
+void ABrainPlayerController::Save()
+{
+	//UBrainGameInstance* gameInstance = Cast<UBrainGameInstance>(GetGameInstance());
+	//gameInstance->GetSaveManager()->Save();
+}
+
+void ABrainPlayerController::Load()
+{
+	//UBrainGameInstance* gameInstance = Cast<UBrainGameInstance>(GetGameInstance());
+	//gameInstance->GetSaveManager()->Load();
+}
+
+void ABrainPlayerController::GiveControlsToUI(bool value)
+{
+	this->bShowMouseCursor = value;
+	this->bEnableClickEvents = value;
+	this->bEnableMouseOverEvents = value;
+
+	if (value)
+	{
+		FInputModeUIOnly inputMode = FInputModeUIOnly();
+		this->SetInputMode(inputMode);
+	}
+	else
+	{
+		FInputModeGameOnly inputMode = FInputModeGameOnly();
+		this->SetInputMode(inputMode);
+	}
+}
+
+void ABrainPlayerController::ShowPauseMenu()
+{
+	UWorld* world = GetWorld();
+	if (world)
+	{
+		ABrainGameMode* gameMode = Cast<ABrainGameMode>(world->GetAuthGameMode());
+		if (gameMode)
+		{
+			UGameplayStatics::SetGamePaused(world,true);
+			GiveControlsToUI(true);
+			gameMode->CreatePauseMenu();
+		}
+	}
 }
