@@ -57,4 +57,6 @@ private:
 	
 	ABrainInteractiveObject* CheckForInteractiveObjects();
 
+	void Load();
+
 };

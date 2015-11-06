@@ -3,12 +3,13 @@
 #include "Brain.h"
 #include "BrainNormalInteractiveObject.h"
 #include "Components/StaticMeshComponent.h"
-#include "StaticMeshResources.h"
+#include "BrainGameInstance.h"
 #include "Engine.h"
 
 
 ABrainNormalInteractiveObject::ABrainNormalInteractiveObject()
 {
+	_currentShearFirstAxis = _currentShearSecondAxis = 0.0f;
 }
 
 void ABrainNormalInteractiveObject::BeginPlay()
@@ -20,6 +21,16 @@ void ABrainNormalInteractiveObject::BeginPlay()
 		| (_canBeScale ? EAction::SCALE : 0)
 		| (_canBeShear ? EAction::SHEAR : 0);
 	_actions = FObjectAction(flags);
+
+	_cachedTransform = GetTransform();
+
+	_shearMatrix = FMatrix(FVector(1, 0, 0),
+								FVector(0, 1, 0), 
+								FVector(0, 0, 1), 
+								FVector(0, 0, 0));
+
+	if (this->GetClass()->ImplementsInterface(UBrainSaveInterface::StaticClass()))
+		Load();
 }
 
 void ABrainNormalInteractiveObject::PerformAction1()
@@ -103,59 +114,70 @@ bool ABrainNormalInteractiveObject::CanBeRescale(int32 orientation, FVector& new
 
 void ABrainNormalInteractiveObject::Shear(int32 orientation)
 {
-	/*FMatrix shearMatrix = FMatrix(FVector(1, 0, 0), 
-		                           FVector(0, 1, 1), 
-								   FVector(0, 0, 1), 
-								   FVector(0, 0, 0));
+	_currentShearFirstAxis += _firstAxisStep * orientation;
+	_currentShearSecondAxis += _secondAxisStep * orientation;
 	
-	FTransform sTrans = FTransform(shearMatrix);
-
-	FTransform pTrans = GetTransform();	
-	SetActorTransform(sTrans*pTrans);*/
-
-	TArray<FVector> vec;
-	FMatrix shearMatrix = FMatrix(FVector(1, 0, 0), 
-		                           FVector(0, 1, 0.1), 
-								   FVector(0, 0, 1), 
-								   FVector(0, 0, 0));
-
-if(!IsValidLowLevel()) return;
-if(!_mesh) return;
-if(!_mesh->StaticMesh) return;
-if(!_mesh->StaticMesh->RenderData) return;
-
-	if (_mesh->StaticMesh->RenderData->LODResources.Num() > 0)
+	switch (_shearPlan)
 	{
-		FPositionVertexBuffer* vBuffer = &_mesh->StaticMesh->RenderData->LODResources[0].PositionVertexBuffer;
+		case ShearPlan::XY:
+			_shearMatrix = FMatrix(FVector(1, 0, _currentShearFirstAxis), 
+									FVector(0, 1, _currentShearSecondAxis), 
+									FVector(0, 0, 1), 
+									FVector(0, 0, 0));
+			break;
 
-		if (vBuffer)
-		{
-			const int32 nbVertices = vBuffer->GetNumVertices();
-			for (int32 index = 0; index < nbVertices; index++)
-			{
-				const FVector position = GetActorLocation() + GetTransform().TransformVector(vBuffer->VertexPosition(index));
-				vec.Add(position);
-			}
-		}
+		case ShearPlan::XZ:
+			_shearMatrix = FMatrix(FVector(1, _currentShearFirstAxis, 0), 
+									FVector(0, 1, 0), 
+									FVector(0, _currentShearSecondAxis, 1), 
+									FVector(0, 0, 0));
+			break;
 
-		for (FVector& v : vec)
-			v = MatrixMultiplication(shearMatrix, v);
-		
-		_mesh->StaticMesh->RenderData->LODResources[0].PositionVertexBuffer.Init(vec);
-		_mesh->StaticMesh->RenderData->LODResources[0].PositionVertexBuffer.InitRHI();
+		case ShearPlan::YZ:
+			_shearMatrix = FMatrix(FVector(1, 0, 0),
+									FVector(_currentShearFirstAxis, 1, 0),
+									FVector(_currentShearSecondAxis, 0, 1), 
+									FVector(0, 0, 0));
+		break;
 
-		_mesh->MarkRenderStateDirty();
-		_mesh->MarkRenderDynamicDataDirty();
-		_mesh->MarkRenderTransformDirty();
+		default:
+			break;
+	}
+	
+	ApplyShear();
+}
+
+void ABrainNormalInteractiveObject::ApplyShear()
+{
+	FTransform sTrans = FTransform(_shearMatrix);	
+	SetActorTransform(sTrans*_cachedTransform);
+}
+
+void ABrainNormalInteractiveObject::Save(FBrainSaveData& saveData)
+{
+	FBrainNIOSaveData dataToSave;
+
+	dataToSave._loadFromfile = true;
+	dataToSave._location = GetActorLocation();
+	dataToSave._rotation = GetActorRotation();
+	dataToSave._scale = GetActorScale();
+	dataToSave._shearMatrix = _shearMatrix;
+
+	saveData.AddDataToSave(GetName(),dataToSave);
+}
+
+void ABrainNormalInteractiveObject::Load()
+{
+	FString name = GetName();
+	FBrainNIOSaveData savedData = Cast<UBrainGameInstance>(GetGameInstance())->GetSaveManager()->GetDataFromSave<FBrainNIOSaveData>(name);
+	if (savedData._loadFromfile)
+	{
+		SetActorLocation(savedData._location);
+		SetActorRotation(savedData._rotation);
+		SetActorScale3D(savedData._scale);
+			
+		_shearMatrix = savedData._shearMatrix;
+		_cachedTransform = GetTransform();
+		ApplyShear();
 	}
 }
-
-FVector ABrainNormalInteractiveObject::MatrixMultiplication(FMatrix matrix, FVector vector)
-{
-	FVector out = FVector(0);
-	out.X = (matrix.M[0][0] * vector.X) + (matrix.M[0][1] * vector.Y) + (matrix.M[0][2] * vector.Z);
-	out.Y = (matrix.M[1][0] * vector.X) + (matrix.M[1][1] * vector.Y) + (matrix.M[1][2] * vector.Z);
-	out.Z = (matrix.M[2][0] * vector.X) + (matrix.M[2][1] * vector.Y) + (matrix.M[2][2] * vector.Z);
-	return out;
-}
-

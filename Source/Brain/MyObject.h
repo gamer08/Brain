@@ -18,11 +18,13 @@ public:
 
 	UPROPERTY()
 	float _number;
+
+	void Load();
 	
 public:
 	UMyObject();
 
 	void Save(FBrainSaveData& saveData);
-	FMyObjectSaveData LoadSavedData();
+	void LoadSavedData();
 	
 };

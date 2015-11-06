@@ -34,18 +34,31 @@ public:
 		return _currentCachedData.GetDataFromSave<FBrainCharacterSaveData>(name);
 	}
 
+	template <> inline FBrainCameraSaveData GetDataFromSave<FBrainCameraSaveData>(FString name)
+	{
+		return _currentCachedData.GetDataFromSave<FBrainCameraSaveData>(name);
+	}
+	
 	template <> inline FMyObjectSaveData GetDataFromSave<FMyObjectSaveData>(FString name)
 	{
 		return _currentCachedData.GetDataFromSave<FMyObjectSaveData>(name);
 	}
 
+	template <> inline FBrainNIOSaveData GetDataFromSave<FBrainNIOSaveData>(FString name)
+	{
+		return _currentCachedData.GetDataFromSave<FBrainNIOSaveData>(name);
+	}
+
+	template <> inline FBrainTIOSaveData GetDataFromSave<FBrainTIOSaveData>(FString name)
+	{
+		return _currentCachedData.GetDataFromSave<FBrainTIOSaveData>(name);
+	}
+
+
 private:
 
 	UPROPERTY()
 	FBrainSaveData _currentCachedData;
-
-	UPROPERTY()
-	FString _savePath;
 
 	UPROPERTY()
 	FString _saveDirectory;

@@ -34,14 +34,7 @@ void ABrainCharacter::BeginPlay()
 	InitActionOnObjectDelegate();
 	
 	if (this->GetClass()->ImplementsInterface(UBrainSaveInterface::StaticClass()))
-	{
-		FString name = GetClass()->ClassGeneratedBy->GetName();
-		FBrainCharacterSaveData savedData = Cast<UBrainGameInstance>(GetGameInstance())->GetSaveManager()->GetDataFromSave<FBrainCharacterSaveData>(name);
-		if (savedData._loadFromfile)
-		{
-			SetActorLocation(savedData._location);
-		}
-	}
+		Load();
 }
 
 void ABrainCharacter::Tick(float deltaTime)
@@ -162,4 +155,15 @@ void ABrainCharacter::Save(FBrainSaveData& saveData)
 	dataToSave._rotation = GetActorRotation();
 
 	saveData.AddDataToSave(dataToSave);
+}
+
+void ABrainCharacter::Load()
+{
+	FString name = GetClass()->ClassGeneratedBy->GetName();
+	FBrainCharacterSaveData savedData = Cast<UBrainGameInstance>(GetGameInstance())->GetSaveManager()->GetDataFromSave<FBrainCharacterSaveData>(name);
+	if (savedData._loadFromfile)
+	{
+		SetActorLocation(savedData._location);
+		SetActorRotation(savedData._rotation);
+	}
 }

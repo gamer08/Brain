@@ -3,6 +3,7 @@
 #pragma once
 
 #include "BrainInteractiveObject.h"
+#include "BrainSaveInterface.h"
 #include "BrainTimeInteractiveObject.generated.h"
 
 UENUM(BlueprintType)	
@@ -63,7 +64,7 @@ struct FTransformation
 };
 
 UCLASS()
-class BRAIN_API ABrainTimeInteractiveObject : public ABrainInteractiveObject
+class BRAIN_API ABrainTimeInteractiveObject : public ABrainInteractiveObject, public IBrainSaveInterface
 {
 	GENERATED_BODY()
 
@@ -119,6 +120,8 @@ private:
 	void ApplyTransformation(float deltaTime, FTransformation& tranformation);
 	void PreComputeTransformationData(FTransformation& transformation);
 
+	void Load();
+
 public:
 
 	ABrainTimeInteractiveObject();
@@ -137,6 +140,8 @@ public:
 	
 	UFUNCTION()
 	void PerformAction4();	
+
+	void Save(FBrainSaveData& saveData);
 };
 
 

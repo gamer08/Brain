@@ -3,11 +3,22 @@
 #pragma once
 
 #include "BrainInteractiveObject.h"
+#include "BrainSaveInterface.h"
 #include "BrainNormalInteractiveObject.generated.h"
 
 
+UENUM(BlueprintType)
+enum class ShearPlan : uint8
+{
+	XY,
+	XZ,
+	YZ
+};
+
+
+
 UCLASS()
-class BRAIN_API ABrainNormalInteractiveObject : public ABrainInteractiveObject
+class BRAIN_API ABrainNormalInteractiveObject : public ABrainInteractiveObject, public IBrainSaveInterface
 {
 	GENERATED_BODY()
 	
@@ -41,10 +52,30 @@ private:
 	FVector _scaleToApply;
 
 	
-	/*Shear Data -- NE VA PAS ÊTRE UTILISABLE POUR L'INSTANT CAR BESOIN DE TEST ! - Fred*/
-	UPROPERTY(/*EditAnywhere, Category = Shear, meta = (DisplayName = "Can be Shear")*/)
+	/*Shear Data*/
+	UPROPERTY(EditAnywhere, Category = Shear, meta = (DisplayName = "Can be Shear"))
 	bool _canBeShear;
 
+	UPROPERTY(EditAnywhere, Category = Shear, meta = (DisplayName = "Shear plan", EditCondition = "_canBeShear"))
+	ShearPlan _shearPlan;
+
+	UPROPERTY(EditAnywhere, Category = Shear, meta = (DisplayName = "First axis step", ClampMin = "0.0", EditCondition = "_canBeShear"))
+	float _firstAxisStep;
+
+	UPROPERTY(EditAnywhere, Category = Shear, meta = (DisplayName = "Second axis step", ClampMin = "0.0", EditCondition = "_canBeShear"))
+	float _secondAxisStep;
+
+	UPROPERTY()
+	float _currentShearFirstAxis;
+
+	UPROPERTY()
+	float _currentShearSecondAxis;
+
+	UPROPERTY()
+	FMatrix _shearMatrix;
+
+	UPROPERTY()
+	FTransform _cachedTransform;
 
 
 
@@ -64,7 +95,9 @@ private:
 	UFUNCTION()
 	void Shear(int32 orientation);
 
-	FVector MatrixMultiplication(FMatrix matrix, FVector vector);
+	void ApplyShear();
+
+	void Load();
 
 public:
 
@@ -93,4 +126,6 @@ public:
 
 	UFUNCTION()
 	void PerformAction8() override;
+
+	void Save(FBrainSaveData& saveData);
 };

@@ -20,7 +20,6 @@ UBrainSaveManager::UBrainSaveManager()
 		saveDirectory = "\\Documents\\Brain\\Saves";
 		userProfile.append(saveDirectory);
 		
-		_savePath = FString("C:\\Users\\frederic\\Documents\\Unreal Projects\\Brain\\Saves\\save1.save");
 		_saveDirectory = FString(userProfile.c_str());
 
 		if (!FPlatformFileManager::Get().GetPlatformFile().DirectoryExists(*_saveDirectory))

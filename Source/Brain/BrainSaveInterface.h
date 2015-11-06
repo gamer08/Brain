@@ -11,7 +11,9 @@ class UBrainSaveInterface : public UInterface
 class IBrainSaveInterface
 {    GENERATED_IINTERFACE_BODY()
 
-public:
+protected:
+	virtual void Load() = 0;
 
+public:
 	virtual void Save(FBrainSaveData& saveData) = 0;
 };

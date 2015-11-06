@@ -22,7 +22,7 @@ void UMyObject::Save(FBrainSaveData& saveData)
 	saveData.AddDataToSave(GetName(),dataToSave);
 }
 
-FMyObjectSaveData UMyObject::LoadSavedData()
+void UMyObject::Load()
 {
 	FMyObjectSaveData data;
 	if (GetOuter())
@@ -32,8 +32,11 @@ FMyObjectSaveData UMyObject::LoadSavedData()
 			data = Cast<UBrainGameInstance>(w->GetGameInstance())->GetSaveManager()->GetDataFromSave<FMyObjectSaveData>("OBJ");
 		}
 	}
+}
 
-	return data;
+void UMyObject::LoadSavedData()
+{
+	Load();
 }
 
 

@@ -2,6 +2,7 @@
 
 #include "Brain.h"
 #include <cmath>
+#include "BrainGameInstance.h"
 #include "BrainTimeInteractiveObject.h"
 
 ABrainTimeInteractiveObject::ABrainTimeInteractiveObject()
@@ -21,10 +22,10 @@ void ABrainTimeInteractiveObject::BeginPlay()
 	_actions = FObjectAction(flags);
 
 	for (FTransformation& trans : _transformations)
-	{
 		PreComputeTransformationData(trans);
-	}
 
+	if (this->GetClass()->ImplementsInterface(UBrainSaveInterface::StaticClass()))
+		Load();
 }
 
 void ABrainTimeInteractiveObject::Tick(float deltaTime)
@@ -139,8 +140,6 @@ void ABrainTimeInteractiveObject::PreComputeTransformationData(FTransformation& 
 {
 	switch (transformation._type)
 	{
-	case TransformationType::ROTATE:
-		break;
 
 	case TransformationType::SCALE:
 
@@ -184,5 +183,45 @@ void ABrainTimeInteractiveObject::PreComputeTransformationData(FTransformation& 
 
 		break;
 
+	}
+}
+
+void ABrainTimeInteractiveObject::Save(FBrainSaveData& saveData)
+{
+	FBrainTIOSaveData dataToSave;
+
+	dataToSave._loadFromfile = true;
+	dataToSave._location = GetActorLocation();
+	dataToSave._rotation = GetActorRotation();
+	dataToSave._scale = GetActorScale();
+	dataToSave._globalTransformationSpeed = _globalTransformationSpeed;
+
+	for (FTransformation& trans : _transformations)
+	{
+		FBrainTransformSaveData transformSaveData = FBrainTransformSaveData();
+		transformSaveData._currentScaleInRAD = trans._currentScaleInRAD;
+
+		dataToSave._transformsData.Add(transformSaveData);
+	}
+
+	saveData.AddDataToSave(GetName(),dataToSave);
+}
+
+void ABrainTimeInteractiveObject::Load()
+{
+	FString name = GetName();
+	FBrainTIOSaveData savedData = Cast<UBrainGameInstance>(GetGameInstance())->GetSaveManager()->GetDataFromSave<FBrainTIOSaveData>(name);
+	if (savedData._loadFromfile)
+	{
+		_globalTransformationSpeed = savedData._globalTransformationSpeed;
+			
+		int32 nbTransformations = _transformations.Num();
+
+		SetActorLocation(savedData._location);
+		SetActorRotation(savedData._rotation);
+		SetActorScale3D(savedData._scale);
+			
+		for (int32 i = 0; i < nbTransformations; i++)
+			_transformations[i]._currentScaleInRAD = savedData._transformsData[i]._currentScaleInRAD;
 	}
 }

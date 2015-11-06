@@ -10,10 +10,6 @@ class ABrainGameMode : public AGameMode
 	GENERATED_BODY()
 
 private:
-
-	UPROPERTY()
-	UMyObject* _obj;
-	
 	void SetupGameModeWithCustomClasses();
 
 public:
