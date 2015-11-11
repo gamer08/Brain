@@ -15,7 +15,8 @@ class BRAIN_API UBrainHUDWidget : public UUserWidget
 {
 	GENERATED_BODY()
 	
-	public:
+public:
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Name")
 	FString _name;
 

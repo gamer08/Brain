@@ -5,13 +5,64 @@
 #include "BrainHUD.h"
 #include "BrainCharacter.h"
 #include "BrainPlayerController.h"
+#include "BrainMainMenuWidget.h"
+#include "BrainPauseMenuWidget.h"
 
 ABrainGameMode::ABrainGameMode()
-	: Super()
+: Super()
+{
+	if (UWorld* world = GetWorld())
+	{
+		if (world->GetName().Equals(FString("MainMenu")))
+		{
+			DefaultPawnClass = APawn::StaticClass();
+			PlayerControllerClass = APlayerController::StaticClass();
+		}
+		else
+			SetupGameModeWithCustomClasses();
+	}
+	else
+		SetupGameModeWithCustomClasses();
+}
+
+void ABrainGameMode::SetupGameModeWithCustomClasses()
 {
 	static ConstructorHelpers::FClassFinder<APawn> PlayerPawnClassFinder(TEXT("/Game/FirstPerson/Blueprints/BrainCharacter"));
 	
 	DefaultPawnClass = PlayerPawnClassFinder.Class;
 	PlayerControllerClass = ABrainPlayerController::StaticClass();
 	HUDClass = ABrainHUD::StaticClass();
+}
+
+void ABrainGameMode::BeginPlay()
+{
+	Super::BeginPlay();
+	UWorld* world = GetWorld();
+	if (world && world->GetName().Equals(FString("MainMenu")))
+	{
+		APlayerController* pc = world->GetFirstPlayerController();
+		pc->bShowMouseCursor = true;
+		pc->bEnableClickEvents = true;
+		pc->bEnableMouseOverEvents = true;
+		DisableInput(pc);
+		
+		TSubclassOf<UBrainMainMenuWidget> mainMenuWidgetClass = LoadClass<UBrainMainMenuWidget>(nullptr, TEXT("/Game/FirstPerson/Menus/MainMenu.MainMenu_C"), nullptr, LOAD_None, nullptr);
+
+		if (mainMenuWidgetClass)
+		{
+			UBrainMainMenuWidget* mainMenuWidget = CreateWidget<UBrainMainMenuWidget>(GetWorld(), mainMenuWidgetClass);
+			mainMenuWidget->AddToViewport();
+		}
+	}
+}
+
+void ABrainGameMode::CreatePauseMenu()
+{
+	TSubclassOf<UBrainPauseMenuWidget> pauseMenuWidgetClass = LoadClass<UBrainPauseMenuWidget>(nullptr, TEXT("/Game/FirstPerson/Menus/PauseMenu.PauseMenu_C"), nullptr, LOAD_None, nullptr);
+
+	if (pauseMenuWidgetClass)
+	{
+		UBrainPauseMenuWidget* mainMenuWidget = CreateWidget<UBrainPauseMenuWidget>(GetWorld(), pauseMenuWidgetClass);
+		mainMenuWidget->AddToViewport();
+	}
 }

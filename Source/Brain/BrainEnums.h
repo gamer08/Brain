@@ -5,7 +5,7 @@
 UENUM(BlueprintType)
 namespace EAction
 {
-	enum Type /*: uint8*/
+	enum Type
 	{
 		ROTATE = 1,
 		TRANSLATE = 2,

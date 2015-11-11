@@ -2,6 +2,7 @@
 
 #include "Brain.h"
 #include "BrainCameraManager.h"
+#include "BrainGameInstance.h"
 
 ABrainCameraManager::ABrainCameraManager()
 {
@@ -9,6 +10,14 @@ ABrainCameraManager::ABrainCameraManager()
 	_maxPitch = 89.0f;
 	_relativePosition = FVector(0.0f, 0.0f, 64.0f);
 	_rotation = FRotator(0.0f);
+}
+
+void ABrainCameraManager::BeginPlay()
+{
+	Super::BeginPlay();
+
+	if (this->GetClass()->ImplementsInterface(UBrainSaveInterface::StaticClass()))
+		Load();
 }
 
 void ABrainCameraManager::UpdateViewTarget(FTViewTarget& outVT, float deltaTime)
@@ -35,4 +44,22 @@ void ABrainCameraManager::LimitPitch(FRotator& rotation, float minPitch, float m
 {
 	rotation.Pitch = FMath::ClampAngle(rotation.Pitch, minPitch, maxPitch);
 	rotation.Pitch = FRotator::ClampAxis(rotation.Pitch);
+}
+
+void ABrainCameraManager::Save(FBrainSaveData& saveData)
+{
+	FBrainCameraSaveData dataToSave;
+
+	dataToSave._loadFromfile = true;
+	dataToSave._rotation = _rotation;
+
+	saveData.AddDataToSave(dataToSave);
+}
+
+void ABrainCameraManager::Load()
+{
+	FString name = GetName();
+	FBrainCameraSaveData savedData = Cast<UBrainGameInstance>(GetGameInstance())->GetSaveManager()->GetDataFromSave<FBrainCameraSaveData>(name);
+	if (savedData._loadFromfile)
+		_rotation = savedData._rotation;
 }

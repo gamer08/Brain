@@ -2,10 +2,12 @@
 #pragma once
 #include "GameFramework/Character.h"
 #include "BrainInteractiveObject.h"
+#include "BrainSaveInterface.h"
 #include "BrainCharacter.generated.h"
 
+
 UCLASS(config=Game)
-class ABrainCharacter : public ACharacter
+class ABrainCharacter : public ACharacter, public IBrainSaveInterface
 {
 	friend class ABrainPlayerController;
 	GENERATED_BODY()
@@ -15,6 +17,23 @@ public:
 
 	// declaration du type de délégate. Un délégate = pointeur de fonction !
 	typedef void(ABrainInteractiveObject::* ActionOnObjectFunction)(void);
+
+	void Save(FBrainSaveData& saveData);
+
+	UFUNCTION(BlueprintCallable, Category = "Energy")
+		void AddEnergy(float energy);
+
+	UFUNCTION(BlueprintCallable, Category = "Energy")
+		void SubEnergy(float energy);
+
+	UFUNCTION(BlueprintCallable, Category = "Energy")
+		bool HasEnergy();
+
+	UFUNCTION(BlueprintCallable, Category = "Energy")
+		float GetEnergy();
+
+	UFUNCTION(BlueprintCallable, Category = "Energy")
+		float GetMaxEnergy();
 
 protected:
 
@@ -37,9 +56,6 @@ private:
 
 	float _maxDistanceInteraction;
 
-	// Array des délégates de type fonction de Interactive Object
-	TArray<ActionOnObjectFunction> _actionObjects;
-
 	UPROPERTY()
 	ABrainInteractiveObject* _selectedObject;
 
@@ -52,4 +68,13 @@ private:
 	void LimitPitch(FRotator& rotation, float minPitch, float maxPitch);
 	
 	ABrainInteractiveObject* CheckForInteractiveObjects();
+
+	void Load();
+
+	UPROPERTY(EditAnywhere, Category = Energy, meta = (DisplayName = "Current Energy"))
+		int32 _energy;
+
+	UPROPERTY(EditAnywhere, Category = Energy, meta = (DisplayName = "Maximum Energy"))
+		int32 _maxEnergy;
+
 };

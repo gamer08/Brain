@@ -3,6 +3,7 @@
 #include "Brain.h"
 #include "BrainCharacter.h"
 #include "BrainPlayerController.h"
+#include "BrainGameInstance.h"
 #include "Engine.h"
 
 // nouveau canal definis pour nos objets interactifs. Rajouté dans la configuration du projet. DefaultEngine.ini
@@ -31,6 +32,9 @@ void ABrainCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	InitActionOnObjectDelegate();
+	
+	if (this->GetClass()->ImplementsInterface(UBrainSaveInterface::StaticClass()))
+		Load();
 }
 
 void ABrainCharacter::Tick(float deltaTime)
@@ -52,14 +56,7 @@ void ABrainCharacter::Tick(float deltaTime)
 
 void ABrainCharacter::InitActionOnObjectDelegate()
 {
-	_actionObjects.Add(&ABrainInteractiveObject::PerformAction1);
-	_actionObjects.Add(&ABrainInteractiveObject::PerformAction2);
-	_actionObjects.Add(&ABrainInteractiveObject::PerformAction3);
-	_actionObjects.Add(&ABrainInteractiveObject::PerformAction4);
-	_actionObjects.Add(&ABrainInteractiveObject::PerformAction5);
-	_actionObjects.Add(&ABrainInteractiveObject::PerformAction6);
-	_actionObjects.Add(&ABrainInteractiveObject::PerformAction7);
-	_actionObjects.Add(&ABrainInteractiveObject::PerformAction8);
+
 }
 
 void ABrainCharacter::MoveForward(float value)
@@ -138,7 +135,57 @@ void ABrainCharacter::PerformActionOnObject(int action)
 {
 	if (_selectedObject != nullptr)
 	{
-		(_selectedObject->* (_actionObjects[action]))();
+		_selectedObject->PerformAction(action);
 	}
 }
 
+void ABrainCharacter::Save(FBrainSaveData& saveData)
+{
+	FBrainCharacterSaveData dataToSave;
+
+	dataToSave._loadFromfile = true;
+	dataToSave._location = GetActorLocation();
+	dataToSave._rotation = GetActorRotation();
+
+	saveData.AddDataToSave(dataToSave);
+}
+
+void ABrainCharacter::Load()
+{
+	FString name = GetClass()->ClassGeneratedBy->GetName();
+	FBrainCharacterSaveData savedData = Cast<UBrainGameInstance>(GetGameInstance())->GetSaveManager()->GetDataFromSave<FBrainCharacterSaveData>(name);
+	if (savedData._loadFromfile)
+	{
+		SetActorLocation(savedData._location);
+		SetActorRotation(savedData._rotation);
+	}
+}
+
+void ABrainCharacter::AddEnergy(float energy)
+{
+	_energy += energy;
+	if (_energy > _maxEnergy)
+		_energy = _maxEnergy;
+}
+
+void ABrainCharacter::SubEnergy(float energy)
+{
+	_energy -= energy;
+	if (_energy < 0)
+		_energy = 0;
+}
+
+bool ABrainCharacter::HasEnergy()
+{
+	return _energy > 0;
+}
+
+float ABrainCharacter::GetEnergy()
+{
+	return _energy;
+}
+
+float ABrainCharacter::GetMaxEnergy()
+{
+	return _maxEnergy;
+}
