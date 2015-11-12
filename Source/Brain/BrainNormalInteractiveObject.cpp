@@ -38,43 +38,91 @@ void ABrainNormalInteractiveObject::BeginPlay()
 		Load();
 }
 
-void ABrainNormalInteractiveObject::PerformAction(int32 action)
+//void ABrainNormalInteractiveObject::PerformAction(int32 action)
+//{
+//	switch (action)
+//	{
+//	case 0:
+//		if (_canBeRotate)
+//			ChangeRotation(1);
+//		break;
+//	case 2:
+//		if (_canBeTranslate)
+//			ChangePosition(1);
+//		break;
+//	case 4:
+//		if (_canBeScale)
+//			ChangeScale(1);
+//		break;
+//	case 6:
+//		if (_canBeShear)
+//			Shear(1);
+//		break;
+//	case 1:
+//		if (_canBeRotate)
+//			ChangeRotation(-1);
+//		break;
+//	case 3:
+//		if (_canBeTranslate)
+//			ChangePosition(-1);
+//		break;
+//	case 5:
+//		if (_canBeScale)
+//			ChangeScale(-1);
+//		break;
+//	case 7:
+//		if (_canBeShear)
+//			Shear(-1);
+//		break;
+//	}
+//}
+
+void ABrainNormalInteractiveObject::PerformAction1()
 {
-	switch (action)
-	{
-	case 0:
-		if (_canBeRotate)
-			ChangeRotation(1);
-		break;
-	case 2:
-		if (_canBeTranslate)
-			ChangePosition(1);
-		break;
-	case 4:
-		if (_canBeScale)
-			ChangeScale(1);
-		break;
-	case 6:
-		if (_canBeShear)
-			Shear(1);
-		break;
-	case 1:
-		if (_canBeRotate)
-			ChangeRotation(-1);
-		break;
-	case 3:
-		if (_canBeTranslate)
-			ChangePosition(-1);
-		break;
-	case 5:
-		if (_canBeScale)
-			ChangeScale(-1);
-		break;
-	case 7:
-		if (_canBeShear)
-			Shear(-1);
-		break;
-	}
+	if (_canBeRotate)
+		ChangeRotation(1);
+}
+
+void ABrainNormalInteractiveObject::PerformAction2()
+{
+	if (_canBeRotate)
+		ChangeRotation(-1);
+}
+
+void ABrainNormalInteractiveObject::PerformAction3()
+{
+	if (_canBeTranslate)
+		ChangePosition(1);
+}
+
+void ABrainNormalInteractiveObject::PerformAction4()
+{
+	if (_canBeTranslate)
+		ChangePosition(-1);
+}
+
+void ABrainNormalInteractiveObject::PerformAction5()
+{
+	if (_canBeScale)
+		ChangeScale(1);
+}
+
+void ABrainNormalInteractiveObject::PerformAction6()
+{
+	if (_canBeScale)
+		ChangeScale(-1);
+}
+
+void ABrainNormalInteractiveObject::PerformAction7()
+{
+	if (_canBeShear)
+		Shear(1);
+}
+
+void ABrainNormalInteractiveObject::PerformAction8()
+{
+	if (_canBeShear)
+		Shear(-1);
 }
 
 void ABrainNormalInteractiveObject::CancelActions()

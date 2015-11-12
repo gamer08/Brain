@@ -57,8 +57,38 @@ public:
 
 	// declaration "virtuel pure" d'unreal
 
+//	UFUNCTION()
+//		virtual void PerformAction(int32 action) PURE_VIRTUAL(ABrainInteractiveObject::PerformAction, );
+	
+
+	// declaration "virtuel pure" d'unreal
 	UFUNCTION()
-		virtual void PerformAction(int32 action) PURE_VIRTUAL(ABrainInteractiveObject::PerformAction, );
+	virtual void PerformAction1() PURE_VIRTUAL(ABrainInteractiveObject::PerformAction1,);
+	
+	UFUNCTION()
+	virtual void PerformAction2() PURE_VIRTUAL(ABrainInteractiveObject::PerformAction2,);
+
+	UFUNCTION()
+	virtual void PerformAction3() PURE_VIRTUAL(ABrainInteractiveObject::PerformAction3,);
+
+	UFUNCTION()
+	virtual void PerformAction4() PURE_VIRTUAL(ABrainInteractiveObject::PerformAction4,);
+
+	/*Plus a venir....*/
+
+	UFUNCTION()
+	virtual void PerformAction5();
+
+	UFUNCTION()
+	virtual void PerformAction6();
+
+	UFUNCTION()
+	virtual void PerformAction7();
+
+	UFUNCTION()
+	virtual void PerformAction8();
+
+	
 	UFUNCTION()
 		virtual void CancelActions() PURE_VIRTUAL(ABrainInteractiveObject::CancelActions, );
 

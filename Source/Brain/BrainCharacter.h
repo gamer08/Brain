@@ -52,6 +52,10 @@ protected:
 	void PerformActionOnObject(int action);
 
 private:
+
+	// Array des délégates de type fonction de Interactive Object
+	TArray<ActionOnObjectFunction> _actionObjects;
+
 	float _minPitch, _maxPitch;
 
 	float _maxDistanceInteraction;

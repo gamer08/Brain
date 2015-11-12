@@ -122,8 +122,32 @@ public:
 
 	void Save(FBrainSaveData& saveData);
 
+	//UFUNCTION()
+	//	void PerformAction(int32 action) override;
+
 	UFUNCTION()
-		void PerformAction(int32 action) override;
+	void PerformAction1();
+	
+	UFUNCTION()
+	void PerformAction2();
+
+	UFUNCTION()
+	void PerformAction3();
+	
+	UFUNCTION()
+	void PerformAction4();
+
+	UFUNCTION()
+	void PerformAction5() override;
+
+	UFUNCTION()
+	void PerformAction6() override;
+
+	UFUNCTION()
+	void PerformAction7() override;
+
+	UFUNCTION()
+	void PerformAction8() override;
 
 	UFUNCTION()
 		void CancelActions() override;

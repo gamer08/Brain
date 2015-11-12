@@ -56,7 +56,14 @@ void ABrainCharacter::Tick(float deltaTime)
 
 void ABrainCharacter::InitActionOnObjectDelegate()
 {
-
+	_actionObjects.Add(&ABrainInteractiveObject::PerformAction1);
+	_actionObjects.Add(&ABrainInteractiveObject::PerformAction2);
+	_actionObjects.Add(&ABrainInteractiveObject::PerformAction3);
+	_actionObjects.Add(&ABrainInteractiveObject::PerformAction4);
+	_actionObjects.Add(&ABrainInteractiveObject::PerformAction5);
+	_actionObjects.Add(&ABrainInteractiveObject::PerformAction6);
+	_actionObjects.Add(&ABrainInteractiveObject::PerformAction7);
+	_actionObjects.Add(&ABrainInteractiveObject::PerformAction8);
 }
 
 void ABrainCharacter::MoveForward(float value)
@@ -135,7 +142,7 @@ void ABrainCharacter::PerformActionOnObject(int action)
 {
 	if (_selectedObject != nullptr)
 	{
-		_selectedObject->PerformAction(action);
+		(_selectedObject->* (_actionObjects[action]))();
 	}
 }
 
@@ -159,6 +166,8 @@ void ABrainCharacter::Load()
 		SetActorLocation(savedData._location);
 		SetActorRotation(savedData._rotation);
 	}
+	else
+		SetActorRotation(FRotator(0));
 }
 
 void ABrainCharacter::AddEnergy(float energy)
