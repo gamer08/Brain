@@ -3,22 +3,23 @@
 #include "Brain.h"
 #include "BrainEndLevelTrigger.h"
 #include "BrainCharacter.h"
+#include "BrainGameInstance.h"
 
 
 ABrainEndLevelTrigger::ABrainEndLevelTrigger()
 {
-
 }
 
 void ABrainEndLevelTrigger::NotifyActorBeginOverlap(AActor* other)
 {
 	if (Cast<ABrainCharacter>(other))
 	{
-		UWorld* world = GetWorld();
-		if (world)
+		if (UWorld* world = GetWorld())
 		{
+			if (UBrainGameInstance* gameInstance = Cast<UBrainGameInstance>(GetGameInstance()))
+				gameInstance->GetSaveManager()->FlushCachedSaveData();
+			
 			UGameplayStatics::OpenLevel(world, "test");
 		}
 	}
 }
-

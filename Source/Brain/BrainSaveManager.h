@@ -54,6 +54,7 @@ public:
 		return _currentCachedData.GetDataFromSave<FBrainTIOSaveData>(name);
 	}
 
+	void FlushCachedSaveData();
 
 private:
 
