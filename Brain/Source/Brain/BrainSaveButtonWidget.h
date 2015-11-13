@@ -2,14 +2,14 @@
 
 #pragma once
 
-#include "BrainSaveSlotButtonWidget.h"
+#include "BrainButtonWidget.h"
 #include "BrainSaveButtonWidget.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class BRAIN_API UBrainSaveButtonWidget : public UBrainSaveSlotButtonWidget
+class BRAIN_API UBrainSaveButtonWidget : public UBrainButtonWidget
 {
 	GENERATED_BODY()
 	

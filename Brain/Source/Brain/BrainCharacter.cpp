@@ -166,4 +166,35 @@ void ABrainCharacter::Load()
 		SetActorLocation(savedData._location);
 		SetActorRotation(savedData._rotation);
 	}
+	else
+		SetActorRotation(FRotator(0));
+}
+
+void ABrainCharacter::AddEnergy(float energy)
+{
+	_energy += energy;
+	if (_energy > _maxEnergy)
+		_energy = _maxEnergy;
+}
+
+void ABrainCharacter::SubEnergy(float energy)
+{
+	_energy -= energy;
+	if (_energy < 0)
+		_energy = 0;
+}
+
+bool ABrainCharacter::HasEnergy()
+{
+	return _energy > 0;
+}
+
+float ABrainCharacter::GetEnergy()
+{
+	return _energy;
+}
+
+float ABrainCharacter::GetMaxEnergy()
+{
+	return _maxEnergy;
 }

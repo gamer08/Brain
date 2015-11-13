@@ -2,6 +2,7 @@
 
 #include "Brain.h"
 #include "BrainInteractiveObject.h"
+#include "BrainPlayerController.h"
 
 
 // Sets default values
@@ -23,6 +24,16 @@ ABrainInteractiveObject::ABrainInteractiveObject()
 
 	RootComponent = _mesh;
 
+}
+
+bool ABrainInteractiveObject::CanUseEnergy(float quantity)
+{
+	return ((ABrainPlayerController*)GetWorld()->GetFirstPlayerController())->GetEnergy() >= quantity;
+}
+
+void ABrainInteractiveObject::UseEnergy(float quantity)
+{
+	((ABrainPlayerController*)GetWorld()->GetFirstPlayerController())->SubEnergy(quantity);
 }
 
 void ABrainInteractiveObject::PerformAction5()

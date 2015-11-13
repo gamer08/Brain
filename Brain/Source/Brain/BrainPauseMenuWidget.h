@@ -13,7 +13,10 @@ class BRAIN_API UBrainPauseMenuWidget : public UUserWidget
 {
 	GENERATED_BODY()
 	
-	
+public:
+
+	UFUNCTION(BlueprintCallable, Category = "Brain")
+	void RestartLevel();	
 	
 	
 };

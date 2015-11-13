@@ -56,6 +56,12 @@ public:
 	}
 
 	// declaration "virtuel pure" d'unreal
+
+//	UFUNCTION()
+//		virtual void PerformAction(int32 action) PURE_VIRTUAL(ABrainInteractiveObject::PerformAction, );
+	
+
+	// declaration "virtuel pure" d'unreal
 	UFUNCTION()
 	virtual void PerformAction1() PURE_VIRTUAL(ABrainInteractiveObject::PerformAction1,);
 	
@@ -81,4 +87,13 @@ public:
 
 	UFUNCTION()
 	virtual void PerformAction8();
+
+	
+	UFUNCTION()
+		virtual void CancelActions() PURE_VIRTUAL(ABrainInteractiveObject::CancelActions, );
+
+	UFUNCTION()
+		bool CanUseEnergy(float quantity);
+	UFUNCTION()
+		void UseEnergy(float quantity);
 };

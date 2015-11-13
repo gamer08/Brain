@@ -154,3 +154,13 @@ void ABrainPlayerController::ShowPauseMenu()
 		}
 	}
 }
+
+float ABrainPlayerController::GetEnergy()
+{
+	return _pawn->GetEnergy();
+}
+
+void ABrainPlayerController::SubEnergy(float quantity)
+{
+	_pawn->SubEnergy(quantity);
+}

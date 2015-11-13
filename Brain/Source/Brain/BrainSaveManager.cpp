@@ -141,3 +141,8 @@ FString UBrainSaveManager::GenerateSaveFileName()
 	
 	return FString("BRN ").Append(buffer).Append(".save"); 
 }
+
+void UBrainSaveManager::FlushCachedSaveData()
+{
+	_currentCachedData = FBrainSaveData();
+}
