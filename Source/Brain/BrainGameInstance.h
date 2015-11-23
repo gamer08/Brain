@@ -3,7 +3,7 @@
 #pragma once
 
 #include "Engine/GameInstance.h"
-#include "BrainSaveManager.h"
+#include "SaveSystem/BrainSaveManager.h"
 #include "BrainGameInstance.generated.h"
 
 /**
