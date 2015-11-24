@@ -24,76 +24,85 @@ class BRAIN_API ABrainNormalInteractiveObject : public ABrainInteractiveObject, 
 	
 private:
 
+	/* Animation Property */
+	UPROPERTY(EditAnywhere, Category = Animation, meta = (DisplayName = "Animation Duration"))
+		float _animDuration;
+
 	/*Rotation data*/
 	UPROPERTY(EditAnywhere, Category = Rotation, meta = (DisplayName = "Can be rotated"))
 		bool _canBeRotate;
 
-	UPROPERTY(EditAnywhere, Category = Animation, meta = (DisplayName = "Animation Duration"))
-		float _animDuration;
-
-	float _currentRotation;
-	float _targetRotation;
-
 	UPROPERTY(EditAnywhere, Category = Rotation, meta = (DisplayName = "Rotation to Apply", EditCondition = "_canBeRotate"))
-		FRotator _rotationToApply;
+		FRotator _rotationStep;
+
+	FRotator _currentRotation;
+	FRotator _targetRotation;
+	FRotator _deltaRotation;
+	int _countRotation;
+	float _durationLeftRotation;
 
 	/*Translation data*/
 	UPROPERTY(EditAnywhere, Category = Translation, meta = (DisplayName = "Can be moved"))
 		bool _canBeTranslate;
 
 	UPROPERTY(EditAnywhere, Category = Translation, meta = (DisplayName = "Translation to apply", EditCondition = "_canBeTranslate"))
-		FVector _translationToApply;
+		FVector _translationStep;
 
-	float _currentTranslation;
-	float _targetTranslation;
+	FVector _currentTranslation;
+	FVector _targetTranslation;
+	FVector _deltaTranslation;
+	int32 _countTranslation;
+	float _durationLeftTranslation;
+
 
 	/*Scale data*/
 	UPROPERTY(EditAnywhere, Category = Scale, meta = (DisplayName = "Can be Scaled"))
 		bool _canBeScale;
 
 	UPROPERTY(EditAnywhere, Category = Scale, meta = (DisplayName = "Minimum scale", EditCondition = "_canBeScale"))
-		int32 _minScale;
+		FVector _minScale;
 
 	UPROPERTY(EditAnywhere, Category = Scale, meta = (DisplayName = "Maximum scale", EditCondition = "_canBeScale"))
-		int32 _maxScale;
+		FVector _maxScale;
 
 	UPROPERTY(EditAnywhere, Category = Scale, meta = (DisplayName = "Scale Step", EditCondition = "_canBeScale"))
-		int32 _scaleStep;
+		FVector _scaleStep;
 
 	UPROPERTY(EditAnywhere, Category = Scale, meta = (DisplayName = "Init scale", EditCondition = "_canBeScale"))
-		int32 _initScale;
+		FVector _initScale;
 
-	UPROPERTY(EditAnywhere, Category = Scale, meta = (DisplayName = "Scale step to apply", ClampMin = "0.1", EditCondition = "_canBeScale"))
-		FVector _scaleToApply;
-
-	float _currentScale;
-	float _targetScale;
+	FVector _currentScale;
+	FVector _targetScale;
+	FVector _deltaScale; // For animation.
+	int32 _countScale;
+	float _durationLeftScale;
 	
 	/*Shear Data*/
 	UPROPERTY(EditAnywhere, Category = Shear, meta = (DisplayName = "Can be Shear"))
-	bool _canBeShear;
+		bool _canBeShear;
 
 	UPROPERTY(EditAnywhere, Category = Shear, meta = (DisplayName = "Shear plan", EditCondition = "_canBeShear"))
-	ShearPlan _shearPlan;
+		ShearPlan _shearPlan;
 
 	UPROPERTY(EditAnywhere, Category = Shear, meta = (DisplayName = "First axis step", ClampMin = "0.0", EditCondition = "_canBeShear"))
-	float _firstAxisStep;
+		float _firstAxisStep;
 
 	UPROPERTY(EditAnywhere, Category = Shear, meta = (DisplayName = "Second axis step", ClampMin = "0.0", EditCondition = "_canBeShear"))
-	float _secondAxisStep;
+		float _secondAxisStep;
 
 	UPROPERTY()
-	float _currentShearFirstAxis;
+		float _currentShearFirstAxis;
 
 	UPROPERTY()
-	float _currentShearSecondAxis;
+		float _currentShearSecondAxis;
 
 	UPROPERTY()
-	FMatrix _shearMatrix;
+		FMatrix _shearMatrix;
 
 	UPROPERTY()
-	FTransform _cachedTransform;
+		FTransform _cachedTransform;
 
+	int32 _countShear;
 
 
 	void BeginPlay() override;

@@ -24,8 +24,23 @@ void ABrainNormalInteractiveObject::BeginPlay()
 		| (_canBeShear ? EAction::SHEAR : 0);
 	_actions = FObjectAction(flags);
 
+	// Init Rotate
+	_currentRotation = GetActorRotation();
+	_targetRotation = GetActorRotation();
+	_countRotation = 0;
+
+	// Init Translate
+	_currentTranslation = GetActorLocation();
+	_targetTranslation = GetActorLocation();
+	_countTranslation = 0;
+
+	// Init Scale
 	_targetScale = _initScale;
 	_currentScale = _initScale;
+	_countScale = 0;
+
+	// Init Shear
+	_countShear = 0;
 
 	_cachedTransform = GetTransform();
 
@@ -88,22 +103,27 @@ void ABrainNormalInteractiveObject::PerformAction8()
 
 void ABrainNormalInteractiveObject::CancelActions()
 {
-	_targetRotation = 0;
-	_targetTranslation = 0;
-	_targetScale = _initScale;
+	//_targetRotation = FRotator(0, 0, 0);
+	//_targetTranslation = _initScale;
+	//_targetScale = _initScale;
 }
 
 void ABrainNormalInteractiveObject::ChangeRotation(int32 orientation)
 {
 	float energy = 0;
-	if (_targetRotation > 0)
+	if (_countRotation > 0)
 		energy = orientation;
-	else if (_targetRotation < 0)
+	else if (_countRotation < 0)
 		energy = -orientation;
 	else energy = 1;
+
 	if (CanUseEnergy(energy))
 	{
-		_targetRotation += orientation;
+		_targetRotation = _currentRotation + (orientation * _rotationStep);
+		_durationLeftRotation = 0;
+		_countRotation += orientation;
+		_deltaRotation = _targetRotation - _currentRotation;
+
 		UseEnergy(energy);
 	}
 }
@@ -111,14 +131,19 @@ void ABrainNormalInteractiveObject::ChangeRotation(int32 orientation)
 void ABrainNormalInteractiveObject::ChangePosition(int32 orientation)
 {
 	float energy = 0;
-	if (_targetTranslation > 0)
+	if (_countTranslation > 0)
 		energy = orientation;
-	else if (_targetTranslation < 0)
+	else if (_countTranslation < 0)
 		energy = -orientation;
 	else energy = 1;
+
 	if (CanUseEnergy(energy))
 	{
-		_targetTranslation += orientation;
+		_targetTranslation = _currentTranslation + (orientation * _translationStep);
+		_durationLeftTranslation = 0;
+		_countTranslation += orientation;
+		_deltaTranslation = _targetTranslation - _currentTranslation;
+
 		UseEnergy(energy);
 	}
 }
@@ -126,19 +151,26 @@ void ABrainNormalInteractiveObject::ChangePosition(int32 orientation)
 void ABrainNormalInteractiveObject::ChangeScale(int32 orientation)
 {
 	float energy = 0;
-	if (_targetScale > 0)
+
+	if (_countScale > 0)
 		energy = orientation;
-	else if (_targetScale < 0)
+	else if (_countScale < 0)
 		energy = -orientation;
 	else energy = 1;
+
 	if (CanUseEnergy(energy))
 	{
-		_targetScale += orientation*_scaleStep;
-		if (_targetScale < _minScale)
+		_targetScale = _currentScale + (orientation * _scaleStep);
+		_durationLeftScale = 0;
+		_countScale += orientation;
+
+		if (_targetScale.Size() < _minScale.Size())
 			_targetScale = _minScale;
-		else if (_targetScale > _maxScale)
+		else if (_targetScale.Size() > _maxScale.Size())
 			_targetScale = _maxScale;
 		else UseEnergy(energy);
+
+		_deltaScale = _targetScale - _currentScale;
 	}
 
 }
@@ -216,56 +248,43 @@ void ABrainNormalInteractiveObject::Load()
 void ABrainNormalInteractiveObject::Tick(float deltaTime)
 {
 	Super::Tick(deltaTime);
-	UE_LOG(LogTemp, Warning, TEXT("TEST %f"), _currentTranslation);
+	//UE_LOG(LogTemp, Warning, TEXT("TEST %f"), _currentTranslation);
 
 	if (_canBeRotate)
 	{
-		if (_currentRotation < _targetRotation)
-		{
-			_currentRotation += deltaTime / _animDuration;
-			if (_currentRotation > _targetRotation)
-				_currentRotation = _targetRotation;
+		_currentRotation += (_deltaRotation * (deltaTime / _animDuration));
+		_durationLeftRotation += deltaTime;
+		if (_durationLeftRotation > _animDuration){
+			_currentRotation = _targetRotation;
+			_deltaRotation = FRotator(0, 0, 0); // Annulation du deltaRotation
 		}
-		else if (_currentRotation > _targetRotation)
-		{
-			_currentRotation -= deltaTime / _animDuration;
-			if (_currentRotation < _targetRotation)
-				_currentRotation = _targetRotation;
-		}
-		FRotator rotation = GetActorRotation();
-		SetActorRotation(_rotationToApply*(_currentRotation * 1));
+
+		SetActorRotation(_currentRotation);
 	}
+
 	if (_canBeTranslate)
 	{
-		FVector initPos = GetActorLocation() - _currentTranslation*_translationToApply;
-		if (_currentTranslation < _targetTranslation)
-		{
-			_currentTranslation += deltaTime / _animDuration;
-			if (_currentTranslation > _targetTranslation)
-				_currentTranslation = _targetTranslation;
+		_currentTranslation += (_deltaTranslation * deltaTime / _animDuration);
+		_durationLeftTranslation += deltaTime;
+		if (_durationLeftTranslation > _animDuration){
+			_currentTranslation = _targetTranslation;
+			_deltaTranslation = FVector(0, 0, 0); // Annulation du deltaSize
 		}
-		else if (_currentTranslation > _targetTranslation)
-		{
-			_currentTranslation -= deltaTime / _animDuration;
-			if (_currentTranslation < _targetTranslation)
-				_currentTranslation = _targetTranslation;
-		}
-		SetActorLocation(initPos + _currentTranslation*_translationToApply);
+
+		SetActorLocation(_currentTranslation);
 	}
+
+
 	if (_canBeScale)
 	{
-		if (_currentScale < _targetScale)
-		{
-			_currentScale += deltaTime / _animDuration;
-			if (_currentScale > _targetScale)
-				_currentScale = _targetScale;
+
+		_currentScale += (_deltaScale * deltaTime / _animDuration);
+		_durationLeftScale += deltaTime;
+		if (_durationLeftScale > _animDuration){
+			_currentScale = _targetScale;
+			_deltaScale = FVector(0,0,0); // Annulation du deltaSize
 		}
-		else if (_currentScale > _targetScale)
-		{
-			_currentScale -= deltaTime / _animDuration;
-			if (_currentScale < _targetScale)
-				_currentScale = _targetScale;
-		}
-		SetActorScale3D(_currentScale*_scaleToApply);
+
+		SetActorScale3D(_currentScale);
 	}
 }
