@@ -15,24 +15,22 @@ void UBrainSaveMenuWidget::FillSavesList(UScrollBox* container)
 		if (gameInstance)
 			_saveFilesList = gameInstance->GetSaveManager()->GetSaveFilesName();
 
+		USlateWidgetStyleAsset* slateStyle = LoadObject<USlateWidgetStyleAsset>(nullptr, TEXT("/Game/FirstPerson/Menus/BrainButtonStyle.BrainButtonStyle"),nullptr,LOAD_None,nullptr);
+		const FButtonStyle* btnStyle = slateStyle->GetStyle<FButtonStyle>();
+		FLinearColor color = FLinearColor(1,0.255,0,1);
+		FSlateColor slateColor = FSlateColor(color);
+		
 		//rajout d'une sauvegarde vide 
-
-		UBrainSaveButtonWidget* btn = NewObject<UBrainSaveButtonWidget>(this);
-		UTextBlock* text = NewObject<UTextBlock>(btn, FName("text"));
-
-		text->SetText(FText::FromString("Nouvelle sauvegarde"));
-		btn->AddChild(text);
-		container->AddChild(btn);
-
-
+		container->AddChild(CreateButton(btnStyle, slateColor, FString("Nouvelle sauvegarde")));
+		
 		for (FString name : _saveFilesList)
-		{
-			UBrainSaveButtonWidget* btn = NewObject<UBrainSaveButtonWidget>(this);
-			UTextBlock* text = NewObject<UTextBlock>(btn, FName("text"));
+			container->AddChild(CreateButton(btnStyle, slateColor, name));
 
-			text->SetText(FText::FromString(name));
-			btn->AddChild(text);
-			container->AddChild(btn);
+		TArray<UPanelSlot*> slots = container->GetSlots();
+		for (UPanelSlot* slot : slots)
+		{
+			if (UScrollBoxSlot* sSlot = Cast<UScrollBoxSlot>(slot))
+				sSlot->SetPadding(FMargin(0, 0, 0, 5.0f));
 		}
 	}
 }
@@ -54,3 +52,16 @@ void UBrainSaveMenuWidget::Save(FString saveName)
 	}
 }
 
+UButton* UBrainSaveMenuWidget::CreateButton(const FButtonStyle* buttonStyle, FSlateColor textColor, FString textToDisplay)
+{
+	UBrainSaveButtonWidget* btn = NewObject<UBrainSaveButtonWidget>(this);
+	btn->WidgetStyle = *buttonStyle;
+		
+	UTextBlock* text = NewObject<UTextBlock>(btn, FName("text"));
+	text->ColorAndOpacity = textColor;
+	text->SetText(FText::FromString(textToDisplay));
+
+	btn->AddChild(text);
+
+	return btn;
+}

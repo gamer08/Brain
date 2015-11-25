@@ -25,6 +25,8 @@ public:
 
 private:
 
+	UButton* CreateButton(const FButtonStyle* buttonStyle, FSlateColor textColor, FString text);
+
 	UPROPERTY()
 	TArray<FString> _saveFilesList;
 };
