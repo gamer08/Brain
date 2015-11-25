@@ -57,6 +57,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Brain player controller")
 	void GiveControlsToUI(bool value);
 
-	float GetEnergy();
-	void SubEnergy(float quantity);
+	int32 GetEnergy();
+	void SubEnergy(int32 quantity);
 };

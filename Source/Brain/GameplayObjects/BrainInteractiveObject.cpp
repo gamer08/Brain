@@ -26,12 +26,12 @@ ABrainInteractiveObject::ABrainInteractiveObject()
 
 }
 
-bool ABrainInteractiveObject::CanUseEnergy(float quantity)
+bool ABrainInteractiveObject::CanUseEnergy(int32 quantity)
 {
 	return ((ABrainPlayerController*)GetWorld()->GetFirstPlayerController())->GetEnergy() >= quantity;
 }
 
-void ABrainInteractiveObject::UseEnergy(float quantity)
+void ABrainInteractiveObject::UseEnergy(int32 quantity)
 {
 	((ABrainPlayerController*)GetWorld()->GetFirstPlayerController())->SubEnergy(quantity);
 }

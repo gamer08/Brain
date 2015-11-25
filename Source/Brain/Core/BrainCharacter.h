@@ -21,19 +21,19 @@ public:
 	void Save(FBrainSaveData& saveData);
 
 	UFUNCTION(BlueprintCallable, Category = "Energy")
-		void AddEnergy(float energy);
+		void AddEnergy(int32 energy);
 
 	UFUNCTION(BlueprintCallable, Category = "Energy")
-		void SubEnergy(float energy);
+		void SubEnergy(int32 energy);
 
 	UFUNCTION(BlueprintCallable, Category = "Energy")
 		bool HasEnergy();
 
 	UFUNCTION(BlueprintCallable, Category = "Energy")
-		float GetEnergy();
+		int32 GetEnergy();
 
 	UFUNCTION(BlueprintCallable, Category = "Energy")
-		float GetMaxEnergy();
+		int32 GetMaxEnergy();
 
 protected:
 

@@ -170,14 +170,14 @@ void ABrainCharacter::Load()
 		SetActorRotation(FRotator(0));
 }
 
-void ABrainCharacter::AddEnergy(float energy)
+void ABrainCharacter::AddEnergy(int32 energy)
 {
 	_energy += energy;
 	if (_energy > _maxEnergy)
 		_energy = _maxEnergy;
 }
 
-void ABrainCharacter::SubEnergy(float energy)
+void ABrainCharacter::SubEnergy(int32 energy)
 {
 	_energy -= energy;
 	if (_energy < 0)
@@ -189,12 +189,12 @@ bool ABrainCharacter::HasEnergy()
 	return _energy > 0;
 }
 
-float ABrainCharacter::GetEnergy()
+int32 ABrainCharacter::GetEnergy()
 {
 	return _energy;
 }
 
-float ABrainCharacter::GetMaxEnergy()
+int32 ABrainCharacter::GetMaxEnergy()
 {
 	return _maxEnergy;
 }

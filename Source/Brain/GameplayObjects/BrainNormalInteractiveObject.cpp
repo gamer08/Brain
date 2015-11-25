@@ -6,10 +6,8 @@
 #include "BrainGameInstance.h"
 #include "Engine.h"
 
-
 ABrainNormalInteractiveObject::ABrainNormalInteractiveObject()
 {
-	_currentShearFirstAxis = _currentShearSecondAxis = 0.0f;
 
 	PrimaryActorTick.bCanEverTick = true;
 }
@@ -40,14 +38,13 @@ void ABrainNormalInteractiveObject::BeginPlay()
 	_countScale = 0;
 
 	// Init Shear
+	_currentShearFirstAxis = 0;
+	_currentShearSecondAxis = 0;
+	_targetShearFirstAxis = 0;
+	_targetShearSecondAxis = 0;
 	_countShear = 0;
 
 	_cachedTransform = GetTransform();
-
-	_shearMatrix = FMatrix(FVector(1, 0, 0),
-								FVector(0, 1, 0), 
-								FVector(0, 0, 1), 
-								FVector(0, 0, 0));
 
 	if (this->GetClass()->ImplementsInterface(UBrainSaveInterface::StaticClass()))
 		Load();
@@ -92,25 +89,18 @@ void ABrainNormalInteractiveObject::PerformAction6()
 void ABrainNormalInteractiveObject::PerformAction7()
 {
 	if (_canBeShear)
-		Shear(1);
+		ChangeShear(1);
 }
 
 void ABrainNormalInteractiveObject::PerformAction8()
 {
 	if (_canBeShear)
-		Shear(-1);
-}
-
-void ABrainNormalInteractiveObject::CancelActions()
-{
-	//_targetRotation = FRotator(0, 0, 0);
-	//_targetTranslation = _initScale;
-	//_targetScale = _initScale;
+		ChangeShear(-1);
 }
 
 void ABrainNormalInteractiveObject::ChangeRotation(int32 orientation)
 {
-	float energy = 0;
+	int32 energy = 0;
 	if (_countRotation > 0)
 		energy = orientation;
 	else if (_countRotation < 0)
@@ -120,7 +110,7 @@ void ABrainNormalInteractiveObject::ChangeRotation(int32 orientation)
 	if (CanUseEnergy(energy))
 	{
 		_targetRotation = _currentRotation + (orientation * _rotationStep);
-		_durationLeftRotation = 0;
+		_durationRotation = 0;
 		_countRotation += orientation;
 		_deltaRotation = _targetRotation - _currentRotation;
 
@@ -130,7 +120,7 @@ void ABrainNormalInteractiveObject::ChangeRotation(int32 orientation)
 
 void ABrainNormalInteractiveObject::ChangePosition(int32 orientation)
 {
-	float energy = 0;
+	int32 energy = 0;
 	if (_countTranslation > 0)
 		energy = orientation;
 	else if (_countTranslation < 0)
@@ -140,7 +130,7 @@ void ABrainNormalInteractiveObject::ChangePosition(int32 orientation)
 	if (CanUseEnergy(energy))
 	{
 		_targetTranslation = _currentTranslation + (orientation * _translationStep);
-		_durationLeftTranslation = 0;
+		_durationTranslation = 0;
 		_countTranslation += orientation;
 		_deltaTranslation = _targetTranslation - _currentTranslation;
 
@@ -150,7 +140,7 @@ void ABrainNormalInteractiveObject::ChangePosition(int32 orientation)
 
 void ABrainNormalInteractiveObject::ChangeScale(int32 orientation)
 {
-	float energy = 0;
+	int32 energy = 0;
 
 	if (_countScale > 0)
 		energy = orientation;
@@ -161,7 +151,7 @@ void ABrainNormalInteractiveObject::ChangeScale(int32 orientation)
 	if (CanUseEnergy(energy))
 	{
 		_targetScale = _currentScale + (orientation * _scaleStep);
-		_durationLeftScale = 0;
+		_durationScale = 0;
 		_countScale += orientation;
 
 		if (_targetScale.Size() < _minScale.Size())
@@ -175,45 +165,64 @@ void ABrainNormalInteractiveObject::ChangeScale(int32 orientation)
 
 }
 
-void ABrainNormalInteractiveObject::Shear(int32 orientation)
+void ABrainNormalInteractiveObject::ChangeShear(int32 orientation){
+	int32 energy = 0;
+	if (_countShear > 0)
+		energy = orientation;
+	else if (_countShear < 0)
+		energy = -orientation;
+	else energy = 1;
+
+	if (CanUseEnergy(energy)){
+		_targetShearFirstAxis = _currentShearFirstAxis + (orientation * _firstAxisStep);
+		_targetShearSecondAxis = _currentShearSecondAxis + (orientation * _secondAxisStep);
+		_durationShear = 0;
+		_countShear += orientation;
+
+		_deltaShearFirstAxis = _targetShearFirstAxis - _currentShearFirstAxis;
+		_deltaShearSecondAxis = _targetShearSecondAxis - _currentShearSecondAxis;
+
+		UseEnergy(energy);
+	}
+
+}
+
+FMatrix ABrainNormalInteractiveObject::Shear(float firstAxis, float secondAxis)
 {
-	_currentShearFirstAxis += _firstAxisStep * orientation;
-	_currentShearSecondAxis += _secondAxisStep * orientation;
+	FMatrix shearMatrix;
 	
 	switch (_shearPlan)
 	{
 		case ShearPlan::XY:
-			_shearMatrix = FMatrix(FVector(1, 0, _currentShearFirstAxis), 
-									FVector(0, 1, _currentShearSecondAxis), 
+			shearMatrix = FMatrix(FVector(1, 0, firstAxis),
+									FVector(0, 1, secondAxis),
 									FVector(0, 0, 1), 
 									FVector(0, 0, 0));
 			break;
 
 		case ShearPlan::XZ:
-			_shearMatrix = FMatrix(FVector(1, _currentShearFirstAxis, 0), 
+			shearMatrix = FMatrix(FVector(1, firstAxis, 0),
 									FVector(0, 1, 0), 
-									FVector(0, _currentShearSecondAxis, 1), 
+									FVector(0, secondAxis, 1),
 									FVector(0, 0, 0));
 			break;
 
 		case ShearPlan::YZ:
-			_shearMatrix = FMatrix(FVector(1, 0, 0),
-									FVector(_currentShearFirstAxis, 1, 0),
-									FVector(_currentShearSecondAxis, 0, 1), 
+			shearMatrix = FMatrix(FVector(1, 0, 0),
+									FVector(firstAxis, 1, 0),
+									FVector(secondAxis, 0, 1),
 									FVector(0, 0, 0));
-		break;
+			break;
 
 		default:
+			shearMatrix = FMatrix(FVector(1, 0, 0),
+									FVector(0, 1, 0),
+									FVector(0, 0, 1),
+									FVector(0, 0, 0));
 			break;
 	}
-	
-	ApplyShear();
-}
 
-void ABrainNormalInteractiveObject::ApplyShear()
-{
-	FTransform sTrans = FTransform(_shearMatrix);	
-	SetActorTransform(sTrans*_cachedTransform);
+	return shearMatrix;
 }
 
 void ABrainNormalInteractiveObject::Save(FBrainSaveData& saveData)
@@ -224,7 +233,13 @@ void ABrainNormalInteractiveObject::Save(FBrainSaveData& saveData)
 	dataToSave._location = GetActorLocation();
 	dataToSave._rotation = GetActorRotation();
 	dataToSave._scale = GetActorScale();
-	dataToSave._shearMatrix = _shearMatrix;
+	dataToSave._shearFirstAxis = _currentShearFirstAxis;
+	dataToSave._shearSecondAxis = _currentShearSecondAxis;
+
+	dataToSave._countRotation = _countRotation;
+	dataToSave._countTranslation = _countTranslation;
+	dataToSave._countScale = _countScale;
+	dataToSave._countShear = _countShear;
 
 	saveData.AddDataToSave(GetName(),dataToSave);
 }
@@ -235,26 +250,43 @@ void ABrainNormalInteractiveObject::Load()
 	FBrainNIOSaveData savedData = Cast<UBrainGameInstance>(GetGameInstance())->GetSaveManager()->GetDataFromSave<FBrainNIOSaveData>(name);
 	if (savedData._loadFromfile)
 	{
+		// Movement Counters and Energy
+		_countRotation = savedData._countRotation;
+		_countTranslation = savedData._countTranslation;
+		_countScale = savedData._countScale;
+		_countShear = savedData._countShear;
+
+		// Load Translation
 		SetActorLocation(savedData._location);
+		_currentTranslation = savedData._location;
+		_targetTranslation = savedData._location;
+
 		SetActorRotation(savedData._rotation);
+		_currentRotation = savedData._rotation;
+		_targetRotation = savedData._rotation;
+
 		SetActorScale3D(savedData._scale);
-			
-		_shearMatrix = savedData._shearMatrix;
+		_currentScale = savedData._scale;
+		_targetScale = savedData._scale;
+
 		_cachedTransform = GetTransform();
-		ApplyShear();
+		SetActorTransform(FTransform(Shear(savedData._shearFirstAxis, savedData._shearSecondAxis))*_cachedTransform);
+
+
+		int32 energyUsed = abs(_countRotation) + abs(_countTranslation) + abs(_countScale) + abs(_countShear);
+		UseEnergy(energyUsed);
 	}
 }
 
 void ABrainNormalInteractiveObject::Tick(float deltaTime)
 {
 	Super::Tick(deltaTime);
-	//UE_LOG(LogTemp, Warning, TEXT("TEST %f"), _currentTranslation);
 
 	if (_canBeRotate)
 	{
 		_currentRotation += (_deltaRotation * (deltaTime / _animDuration));
-		_durationLeftRotation += deltaTime;
-		if (_durationLeftRotation > _animDuration){
+		_durationRotation += deltaTime;
+		if (_durationRotation > _animDuration){
 			_currentRotation = _targetRotation;
 			_deltaRotation = FRotator(0, 0, 0); // Annulation du deltaRotation
 		}
@@ -265,8 +297,8 @@ void ABrainNormalInteractiveObject::Tick(float deltaTime)
 	if (_canBeTranslate)
 	{
 		_currentTranslation += (_deltaTranslation * deltaTime / _animDuration);
-		_durationLeftTranslation += deltaTime;
-		if (_durationLeftTranslation > _animDuration){
+		_durationTranslation += deltaTime;
+		if (_durationTranslation > _animDuration){
 			_currentTranslation = _targetTranslation;
 			_deltaTranslation = FVector(0, 0, 0); // Annulation du deltaSize
 		}
@@ -279,12 +311,28 @@ void ABrainNormalInteractiveObject::Tick(float deltaTime)
 	{
 
 		_currentScale += (_deltaScale * deltaTime / _animDuration);
-		_durationLeftScale += deltaTime;
-		if (_durationLeftScale > _animDuration){
+		_durationScale += deltaTime;
+		if (_durationScale > _animDuration){
 			_currentScale = _targetScale;
 			_deltaScale = FVector(0,0,0); // Annulation du deltaSize
 		}
 
 		SetActorScale3D(_currentScale);
+	}
+
+	if (_canBeShear){
+		_currentShearFirstAxis += (_deltaShearFirstAxis * deltaTime / _animDuration);
+		_currentShearSecondAxis += (_deltaShearSecondAxis * deltaTime / _animDuration);
+		_durationShear += deltaTime;
+		if (_durationShear > _animDuration){
+			_currentShearFirstAxis = _targetShearFirstAxis;
+			_currentShearSecondAxis = _targetShearSecondAxis;
+			_deltaShearFirstAxis = 0;
+			_deltaShearSecondAxis = 0;
+		}
+
+		FTransform sTrans = FTransform(Shear(_currentShearFirstAxis, _currentShearSecondAxis));
+		SetActorTransform(sTrans*_cachedTransform);
+
 	}
 }

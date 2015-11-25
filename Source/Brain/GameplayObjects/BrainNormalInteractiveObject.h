@@ -39,7 +39,7 @@ private:
 	FRotator _targetRotation;
 	FRotator _deltaRotation;
 	int _countRotation;
-	float _durationLeftRotation;
+	float _durationRotation;
 
 	/*Translation data*/
 	UPROPERTY(EditAnywhere, Category = Translation, meta = (DisplayName = "Can be moved"))
@@ -52,7 +52,7 @@ private:
 	FVector _targetTranslation;
 	FVector _deltaTranslation;
 	int32 _countTranslation;
-	float _durationLeftTranslation;
+	float _durationTranslation;
 
 
 	/*Scale data*/
@@ -75,7 +75,7 @@ private:
 	FVector _targetScale;
 	FVector _deltaScale; // For animation.
 	int32 _countScale;
-	float _durationLeftScale;
+	float _durationScale;
 	
 	/*Shear Data*/
 	UPROPERTY(EditAnywhere, Category = Shear, meta = (DisplayName = "Can be Shear"))
@@ -91,18 +91,17 @@ private:
 		float _secondAxisStep;
 
 	UPROPERTY()
-		float _currentShearFirstAxis;
-
-	UPROPERTY()
-		float _currentShearSecondAxis;
-
-	UPROPERTY()
-		FMatrix _shearMatrix;
-
-	UPROPERTY()
 		FTransform _cachedTransform;
 
-	int32 _countShear;
+	
+	float _currentShearFirstAxis;
+	float _currentShearSecondAxis;
+	float _targetShearFirstAxis;
+	float _targetShearSecondAxis;
+	float _deltaShearFirstAxis;
+	float _deltaShearSecondAxis;
+	int _countShear;
+	float _durationShear;
 
 
 	void BeginPlay() override;
@@ -115,13 +114,11 @@ private:
 
 	UFUNCTION()
 	void ChangeScale(int32 orientation);
-	
-	bool CanBeRescale(int32 orientation, FVector& newScale);
 
 	UFUNCTION()
-	void Shear(int32 orientation);
+	void ChangeShear(int32 orientation);
 
-	void ApplyShear();
+	FMatrix Shear(float firstAxis, float secondAxis);
 
 	void Load();
 
@@ -157,9 +154,6 @@ public:
 
 	UFUNCTION()
 	void PerformAction8() override;
-
-	UFUNCTION()
-		void CancelActions() override;
 
 	void Tick(float deltaTime) override;
 };

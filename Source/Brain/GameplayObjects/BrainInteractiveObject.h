@@ -93,7 +93,7 @@ public:
 		virtual void CancelActions() PURE_VIRTUAL(ABrainInteractiveObject::CancelActions, );
 
 	UFUNCTION()
-		bool CanUseEnergy(float quantity);
+		bool CanUseEnergy(int32 quantity);
 	UFUNCTION()
-		void UseEnergy(float quantity);
+		void UseEnergy(int32 quantity);
 };
