@@ -26,8 +26,10 @@ struct FBrainNIOSaveData
 	UPROPERTY()
 	bool _loadFromfile;
 
-	UPROPERTY()
-	int _countRotation, _countTranslation, _countScale, _countShear;
+	int32 _countRotation;
+	int32 _countTranslation;
+	int32 _countScale;
+	int32 _countShear;
 
 	FBrainNIOSaveData()
 	{

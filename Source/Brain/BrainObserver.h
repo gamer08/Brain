@@ -3,7 +3,7 @@
 #pragma once
 
 #include "Components/ActorComponent.h"
-#include "GameplayObjects/BrainTimeInteractiveObject.h"
+#include "GameplayObjects/FTransformation.h"
 #include "BrainObserver.generated.h"
 
 
