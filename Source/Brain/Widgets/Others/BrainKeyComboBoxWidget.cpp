@@ -19,9 +19,11 @@ UWidget* UBrainKeyComboBoxWidget::CreateComboBoxItem(FString itemText)
 	
 	text->Justification = ETextJustify::Center;
 	text->SetText(FText::FromString(itemText));
-	FSlateColor color = text->ColorAndOpacity.UseForeground();
-	text->SetColorAndOpacity(color);
 	
+	FLinearColor color = FLinearColor(1,0.255,0,1);
+	FSlateColor slateColor = FSlateColor(color);
+	text->SetColorAndOpacity(slateColor);
+
 	scaleBox->AddChild(text);
 
 	return scaleBox;

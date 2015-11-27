@@ -30,18 +30,30 @@ void UBrainOptionsMenuWidget::FillControlsList(UScrollBox* container)
 		
 	for (UBrainInputActionIndex* action : _actionsSelectedKey)
 		container->AddChild(CreateInputElement(action));
+
+	TArray<UPanelSlot*> slots = container->GetSlots();
+	for (UPanelSlot* slot : slots)
+	{
+		if (UScrollBoxSlot* sSlot = Cast<UScrollBoxSlot>(slot))
+			sSlot->SetPadding(FMargin(0, 0, 0, 5.0f));
+	}
 } 
 
 UHorizontalBox* UBrainOptionsMenuWidget:: CreateInputElement(IBrainInputInterface* obj)
 {
 	UHorizontalBox* line = NewObject<UHorizontalBox>(this);
 	UTextBlock* actionName = NewObject<UTextBlock>(line);
+	
+	USlateWidgetStyleAsset* slateStyle = LoadObject<USlateWidgetStyleAsset>(nullptr, TEXT("/Game/FirstPerson/Menus/BrainComboBoxStyle.BrainComboBoxStyle"),nullptr,LOAD_None,nullptr);
+	const FComboBoxStyle* cbStyle = slateStyle->GetStyle<FComboBoxStyle>();
 	UBrainKeyComboBoxWidget* cb = NewObject<UBrainKeyComboBoxWidget>(line);
+	cb->WidgetStyle = *cbStyle;
 
 	actionName->Justification = ETextJustify::Center;
 	actionName->SetText(FText::FromString(_inputKeyDisplayValues[obj->GetInputName()]));
-	FSlateColor color = actionName->ColorAndOpacity.UseForeground();
-	actionName->SetColorAndOpacity(color);
+	FLinearColor color = FLinearColor(1,0.255,0,1);
+	FSlateColor slateColor = FSlateColor(color);
+	actionName->SetColorAndOpacity(slateColor);
 		
 	for (FKey key : _keys)
 		cb->AddOption(key.GetDisplayName().ToString());
