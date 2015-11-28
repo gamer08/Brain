@@ -190,27 +190,26 @@ void ABrainNormalInteractiveObject::ChangeShear(int32 orientation){
 FMatrix ABrainNormalInteractiveObject::Shear(float firstAxis, float secondAxis)
 {
 	FMatrix shearMatrix;
-	
 	switch (_shearPlan)
 	{
 		case ShearPlan::XY:
-			shearMatrix = FMatrix(FVector(1, 0, firstAxis),
-									FVector(0, 1, secondAxis),
-									FVector(0, 0, 1), 
+			shearMatrix = FMatrix(FVector(1, 0, 0),
+									FVector(0, 1, 0),
+									FVector(firstAxis, secondAxis, 1), 
 									FVector(0, 0, 0));
 			break;
 
 		case ShearPlan::XZ:
-			shearMatrix = FMatrix(FVector(1, firstAxis, 0),
-									FVector(0, 1, 0), 
-									FVector(0, secondAxis, 1),
+			shearMatrix = FMatrix(FVector(1, 0, 0),
+									FVector(firstAxis, 1, secondAxis), 
+									FVector(0, 0, 1),
 									FVector(0, 0, 0));
 			break;
 
 		case ShearPlan::YZ:
-			shearMatrix = FMatrix(FVector(1, 0, 0),
-									FVector(firstAxis, 1, 0),
-									FVector(secondAxis, 0, 1),
+			shearMatrix = FMatrix(FVector(1, firstAxis, secondAxis),
+									FVector(0, 1, 0),
+									FVector(0, 0, 1),
 									FVector(0, 0, 0));
 			break;
 
@@ -303,7 +302,7 @@ void ABrainNormalInteractiveObject::Tick(float deltaTime)
 			_deltaTranslation = FVector(0, 0, 0); // Annulation du deltaSize
 		}
 
-		SetActorLocation(_currentTranslation);
+		SetActorLocation(_currentTranslation,true);
 	}
 
 

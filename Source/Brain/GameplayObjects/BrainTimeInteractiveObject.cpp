@@ -82,7 +82,7 @@ void ABrainTimeInteractiveObject::ApplyTransformation(float deltaTime, FTransfor
 		case TransformationType::TRANSLATE:
 		{
 			FVector offset = (deltaTime * _globalTransformationSpeed  * transformation._speed) * transformation._translation;
-			SetActorLocation(GetActorLocation() + offset);
+			SetActorLocation(GetActorLocation() + offset,true);
 			break;
 		}
 			

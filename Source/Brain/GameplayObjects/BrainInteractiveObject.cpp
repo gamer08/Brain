@@ -13,6 +13,8 @@ ABrainInteractiveObject::ABrainInteractiveObject()
 	
 	FName collisionProfileName(TEXT("Custom"));
 	
+	_mesh->SetSimulatePhysics(true);
+
 	_mesh->BodyInstance.bSimulatePhysics = true;
 	_mesh->bGenerateOverlapEvents = false;
 
