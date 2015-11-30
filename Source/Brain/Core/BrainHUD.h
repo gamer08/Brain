@@ -20,6 +20,8 @@ public:
 
 	void OnReceiveSelectedObjectActions(FObjectAction actions);
 
+	void UpdateActionBar();
+
 private:
 	class UTexture2D* CrosshairTex;
 

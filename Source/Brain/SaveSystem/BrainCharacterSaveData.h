@@ -15,6 +15,9 @@ struct FBrainCharacterSaveData
 	FRotator _rotation;
 
 	UPROPERTY()
+		int32 _energy;
+
+	UPROPERTY()
 	bool _loadFromfile;
 
 	FBrainCharacterSaveData()
@@ -23,6 +26,8 @@ struct FBrainCharacterSaveData
 		_rotation = FRotator();
 
 		_loadFromfile = false;
+
+		_energy = 0;
 	}
 
 };
@@ -32,6 +37,7 @@ FORCEINLINE FArchive &operator << (FArchive &archive, FBrainCharacterSaveData& d
 	archive << data._location;
 	archive << data._rotation;
 	archive << data._loadFromfile;
+	archive << data._energy;
 
 	return archive;
 }

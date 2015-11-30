@@ -51,6 +51,7 @@ void ABrainCharacter::Tick(float deltaTime)
 			Cast<ABrainPlayerController>(Controller)->SendSelectedObjectActionsToHUD(FObjectAction(-1));
 		
 		_selectedObject = selectedObj;
+		_selectedAction = 0;
 	}
 }
 
@@ -146,6 +147,14 @@ void ABrainCharacter::PerformActionOnObject(int action)
 	}
 }
 
+void ABrainCharacter::PerformSelectedAction(bool reversed)
+{
+	if (_selectedObject != nullptr)
+	{
+		_selectedObject->PerformActionNo(_selectedAction, reversed);
+	}
+}
+
 void ABrainCharacter::Save(FBrainSaveData& saveData)
 {
 	FBrainCharacterSaveData dataToSave;
@@ -153,6 +162,7 @@ void ABrainCharacter::Save(FBrainSaveData& saveData)
 	dataToSave._loadFromfile = true;
 	dataToSave._location = GetActorLocation();
 	dataToSave._rotation = GetActorRotation();
+	dataToSave._energy = _energy;
 
 	saveData.AddDataToSave(dataToSave);
 }
@@ -165,9 +175,13 @@ void ABrainCharacter::Load()
 	{
 		SetActorLocation(savedData._location);
 		SetActorRotation(savedData._rotation);
+		_energy = savedData._energy;
 	}
 	else
+	{
 		SetActorRotation(FRotator(0));
+		_energy = _maxEnergy;
+	}
 }
 
 void ABrainCharacter::AddEnergy(int32 energy)
@@ -197,4 +211,33 @@ int32 ABrainCharacter::GetEnergy()
 int32 ABrainCharacter::GetMaxEnergy()
 {
 	return _maxEnergy;
+}
+
+int32 ABrainCharacter::CountAvailableActions()
+{
+	if (_selectedObject != NULL)
+		return _selectedObject->CountAvailableActions();
+	else return 0;
+}
+
+void ABrainCharacter::SelectNextAction()
+{
+	_selectedAction++;
+	int32 actionCount = CountAvailableActions();
+	if (_selectedAction >= actionCount)
+		_selectedAction -= actionCount;
+	UE_LOG(LogTemp, Warning, TEXT("%d"), _selectedAction);
+}
+
+void ABrainCharacter::SelectLastAction()
+{
+	_selectedAction--;
+	int32 actionCount = CountAvailableActions();
+	if (_selectedAction < 0)
+		_selectedAction += actionCount;
+}
+
+int32 ABrainCharacter::GetSelectedAction()
+{
+	return _selectedAction;
 }

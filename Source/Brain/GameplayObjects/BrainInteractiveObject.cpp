@@ -56,3 +56,36 @@ void ABrainInteractiveObject::PerformAction8()
 
 }
 
+void ABrainInteractiveObject::PerformActionNo(int id, bool reverseAction)
+{
+	int32 actionId = _actions.GetActionNo(id);
+	UE_LOG(LogTemp, Warning, TEXT("%d => %d"), id, actionId);
+
+	switch (actionId)
+	{
+	case 0:
+		reverseAction ? PerformAction2() : PerformAction1();
+		break;
+	case 1:
+		reverseAction ? PerformAction4() : PerformAction3();
+		break;
+	case 2:
+		reverseAction ? PerformAction6() : PerformAction5();
+		break;
+	case 3:
+		reverseAction ? PerformAction8() : PerformAction7();
+		break;
+	case 4:
+		reverseAction ? PerformAction2() : PerformAction1();
+		break;
+	case 5:
+		reverseAction ? PerformAction4() : PerformAction3();
+		break;
+	case 6:
+		reverseAction ? PerformAction6() : PerformAction5();
+		break;
+	case 7:
+		reverseAction ? PerformAction8() : PerformAction7();
+		break;
+	}
+}

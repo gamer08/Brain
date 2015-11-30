@@ -28,6 +28,30 @@ struct FObjectAction
 	{
 		return (_flags &  action) != 0;
 	}
+
+	int32 CountAvailableActions()
+	{
+		int32 count = 0;
+		for (int32 i = 0; i < 8; i++)
+		{
+			if (((1 << i) & _flags) != 0)
+				count++;
+		}
+		return count;
+	}
+
+	int32 GetActionNo(int32 id)
+	{
+		int32 count = id;
+		for (int32 i = 0; i < 8; i++)
+		{
+			if (count <= 0)
+				return i;
+			if (((1 << i) & _flags) != 0)
+				count--;
+		}
+		return -1;
+	}
 };
 
 UCLASS(Abstract)
@@ -53,6 +77,11 @@ public:
 	const FObjectAction GetAvailableActions()
 	{
 		return _actions;
+	}
+
+	int32 CountAvailableActions()
+	{
+		return _actions.CountAvailableActions();
 	}
 
 	// declaration "virtuel pure" d'unreal
@@ -96,4 +125,6 @@ public:
 		bool CanUseEnergy(int32 quantity);
 	UFUNCTION()
 		void UseEnergy(int32 quantity);
+
+	void PerformActionNo(int id, bool reverseAction);
 };

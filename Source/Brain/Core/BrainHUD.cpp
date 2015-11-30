@@ -46,3 +46,7 @@ void ABrainHUD::OnReceiveSelectedObjectActions(FObjectAction actions)
 	_hudWidget->SetAvailableAction(actions);
 }
 
+void ABrainHUD::UpdateActionBar()
+{
+	_hudWidget->UpdateActionBar();
+}

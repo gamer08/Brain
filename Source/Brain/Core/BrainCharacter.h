@@ -35,6 +35,15 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Energy")
 		int32 GetMaxEnergy();
 
+	void SelectNextAction();
+
+	void SelectLastAction();
+
+	UFUNCTION(BlueprintCallable, Category = "Energy")
+		int32 GetSelectedAction();
+
+	int32 CountAvailableActions();
+
 protected:
 
 	void MoveForward(float value);
@@ -51,6 +60,8 @@ protected:
 
 	void PerformActionOnObject(int action);
 
+	void PerformSelectedAction(bool reversed);
+
 private:
 
 	// Array des délégates de type fonction de Interactive Object
@@ -59,6 +70,8 @@ private:
 	float _minPitch, _maxPitch;
 
 	float _maxDistanceInteraction;
+
+	int32 _selectedAction;
 
 	UPROPERTY()
 	ABrainInteractiveObject* _selectedObject;
