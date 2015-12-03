@@ -186,4 +186,3 @@ void UBrainOptionsMenuWidget::FillInputKeyDisplayValues()
 	_inputKeyDisplayValues.Emplace("MoveLeft", "Deplacement sur la gauche");
 	_inputKeyDisplayValues.Emplace("MoveRight", "Deplacement sur la droite");
 }
-

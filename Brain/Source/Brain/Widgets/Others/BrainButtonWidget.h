@@ -5,10 +5,6 @@
 #include "Components/Button.h"
 #include "BrainButtonWidget.generated.h"
 
-/**
- * 
- */
-
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FClickDelegate);
 
 UCLASS()
@@ -24,5 +20,4 @@ public:
 
 	UFUNCTION()
 	virtual void OnClick() PURE_VIRTUAL(UBrainButtonWidget::OnClick,);
-	
 };

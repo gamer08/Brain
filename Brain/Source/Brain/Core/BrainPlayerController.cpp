@@ -131,12 +131,12 @@ void ABrainPlayerController::ShowPauseMenu()
 	}
 }
 
-float ABrainPlayerController::GetEnergy()
+int32 ABrainPlayerController::GetEnergy()
 {
 	return _pawn->GetEnergy();
 }
 
-void ABrainPlayerController::SubEnergy(float quantity)
+void ABrainPlayerController::SubEnergy(int32 quantity)
 {
 	_pawn->SubEnergy(quantity);
 }

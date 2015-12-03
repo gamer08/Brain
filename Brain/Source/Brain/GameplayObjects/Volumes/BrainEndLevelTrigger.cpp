@@ -5,7 +5,6 @@
 #include "Core/BrainCharacter.h"
 #include "BrainGameInstance.h"
 
-
 ABrainEndLevelTrigger::ABrainEndLevelTrigger()
 {
 }

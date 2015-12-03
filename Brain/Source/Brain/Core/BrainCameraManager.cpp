@@ -58,8 +58,16 @@ void ABrainCameraManager::Save(FBrainSaveData& saveData)
 
 void ABrainCameraManager::Load()
 {
-	FString name = GetName();
-	FBrainCameraSaveData savedData = Cast<UBrainGameInstance>(GetGameInstance())->GetSaveManager()->GetDataFromSave<FBrainCameraSaveData>(name);
-	if (savedData._loadFromfile)
-		_rotation = savedData._rotation;
+	if (!GetName().IsEmpty())
+	{
+		if (UBrainGameInstance* gameInstance = Cast<UBrainGameInstance>(GetGameInstance()))
+		{
+			if (UBrainSaveManager* saveManager = gameInstance->GetSaveManager())
+			{
+				FBrainCameraSaveData savedData = saveManager->GetDataFromSave<FBrainCameraSaveData>(GetName());
+				if (savedData._loadFromfile)
+					_rotation = savedData._rotation;
+			}
+		}
+	}
 }

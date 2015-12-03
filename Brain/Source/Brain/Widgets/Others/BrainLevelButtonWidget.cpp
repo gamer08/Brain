@@ -17,5 +17,3 @@ void UBrainLevelButtonWidget::OnClick()
 	UBrainLevelSelectionMenuWidget* levelMenu = Cast<UBrainLevelSelectionMenuWidget>(GetOuter());
 	levelMenu->LoadLevel(saveName);
 }
-
-

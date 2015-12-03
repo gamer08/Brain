@@ -20,4 +20,3 @@ void UBrainSaveButtonWidget::OnClick()
 	UBrainSaveMenuWidget* saveMenu = Cast<UBrainSaveMenuWidget>(GetOuter());
 	saveMenu->Save(saveName);
 }
-

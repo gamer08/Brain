@@ -13,7 +13,6 @@ class UBrainInputAxisIndex : public UObject, public IBrainInputInterface
 	GENERATED_BODY()
 
 public:
-	
 	UBrainInputAxisIndex()
 	{}
 	
@@ -50,7 +49,6 @@ class UBrainInputActionIndex : public UObject, public IBrainInputInterface
 	GENERATED_BODY()
 
 public:
-	
 	UBrainInputActionIndex()
 	{}
 	
@@ -87,7 +85,6 @@ class BRAIN_API UBrainOptionsMenuWidget : public UUserWidget
 	GENERATED_BODY()
 
 private:
-
 	UPROPERTY()
 	TMap<FName, FString> _inputKeyDisplayValues;
 
@@ -102,7 +99,6 @@ private:
 	UHorizontalBox* CreateInputElement(IBrainInputInterface* obj);
 
 public:
-
 	UPROPERTY(BlueprintReadWrite, Category = "Controls")
 	TArray<UBrainInputAxisIndex*> _axisSelectedKey;
 

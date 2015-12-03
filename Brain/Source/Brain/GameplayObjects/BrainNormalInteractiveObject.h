@@ -6,7 +6,6 @@
 #include "SaveSystem/BrainSaveInterface.h"
 #include "BrainNormalInteractiveObject.generated.h"
 
-
 UENUM(BlueprintType)
 enum class ShearPlan : uint8
 {
@@ -15,60 +14,83 @@ enum class ShearPlan : uint8
 	YZ
 };
 
-
-
 UCLASS()
 class BRAIN_API ABrainNormalInteractiveObject : public ABrainInteractiveObject, public IBrainSaveInterface
 {
 	GENERATED_BODY()
 	
 private:
+	/* Animation Property */
+	UPROPERTY(EditAnywhere, Category = Animation, meta = (DisplayName = "Animation Duration"))
+	float _animDuration;
+
 
 	/*Rotation data*/
 	UPROPERTY(EditAnywhere, Category = Rotation, meta = (DisplayName = "Can be rotated"))
-		bool _canBeRotate;
-
-	UPROPERTY(EditAnywhere, Category = Animation, meta = (DisplayName = "Animation Duration"))
-		float _animDuration;
-
-	float _currentRotation;
-	float _targetRotation;
+	bool _canBeRotate;
 
 	UPROPERTY(EditAnywhere, Category = Rotation, meta = (DisplayName = "Rotation to Apply", EditCondition = "_canBeRotate"))
-		FRotator _rotationToApply;
+	FRotator _rotationStep;
+
+	UPROPERTY()
+	int32 _countRotation;
+
+	FRotator _currentRotation;
+
+	FRotator _targetRotation;
+	
+	FRotator _deltaRotation;
+	
+	float _durationRotation;
+
 
 	/*Translation data*/
 	UPROPERTY(EditAnywhere, Category = Translation, meta = (DisplayName = "Can be moved"))
-		bool _canBeTranslate;
+	bool _canBeTranslate;
 
 	UPROPERTY(EditAnywhere, Category = Translation, meta = (DisplayName = "Translation to apply", EditCondition = "_canBeTranslate"))
-		FVector _translationToApply;
+	FVector _translationStep;
 
-	float _currentTranslation;
-	float _targetTranslation;
+	UPROPERTY()
+	int32 _countTranslation;
+	
+	FVector _currentTranslation;
+	
+	FVector _targetTranslation;
+	
+	FVector _deltaTranslation;
+	
+	float _durationTranslation;
+
 
 	/*Scale data*/
 	UPROPERTY(EditAnywhere, Category = Scale, meta = (DisplayName = "Can be Scaled"))
-		bool _canBeScale;
+	bool _canBeScale;
 
 	UPROPERTY(EditAnywhere, Category = Scale, meta = (DisplayName = "Minimum scale", EditCondition = "_canBeScale"))
-		int32 _minScale;
+	FVector _minScale;
 
 	UPROPERTY(EditAnywhere, Category = Scale, meta = (DisplayName = "Maximum scale", EditCondition = "_canBeScale"))
-		int32 _maxScale;
+	FVector _maxScale;
 
 	UPROPERTY(EditAnywhere, Category = Scale, meta = (DisplayName = "Scale Step", EditCondition = "_canBeScale"))
-		int32 _scaleStep;
+	FVector _scaleStep;
 
 	UPROPERTY(EditAnywhere, Category = Scale, meta = (DisplayName = "Init scale", EditCondition = "_canBeScale"))
-		int32 _initScale;
+	FVector _initScale;
 
-	UPROPERTY(EditAnywhere, Category = Scale, meta = (DisplayName = "Scale step to apply", ClampMin = "0.1", EditCondition = "_canBeScale"))
-		FVector _scaleToApply;
-
-	float _currentScale;
-	float _targetScale;
+	UPROPERTY()
+	int32 _countScale;
 	
+	FVector _currentScale;
+
+	FVector _targetScale;
+
+	FVector _deltaScale; // For animation.
+	
+	float _durationScale;
+	
+
 	/*Shear Data*/
 	UPROPERTY(EditAnywhere, Category = Shear, meta = (DisplayName = "Can be Shear"))
 	bool _canBeShear;
@@ -83,17 +105,24 @@ private:
 	float _secondAxisStep;
 
 	UPROPERTY()
-	float _currentShearFirstAxis;
-
-	UPROPERTY()
-	float _currentShearSecondAxis;
-
-	UPROPERTY()
-	FMatrix _shearMatrix;
-
-	UPROPERTY()
 	FTransform _cachedTransform;
 
+	UPROPERTY()
+	int32 _countShear;
+
+	float _currentShearFirstAxis;
+
+	float _currentShearSecondAxis;
+
+	float _targetShearFirstAxis;
+
+	float _targetShearSecondAxis;
+
+	float _deltaShearFirstAxis;
+
+	float _deltaShearSecondAxis;
+	
+	float _durationShear;
 
 
 	void BeginPlay() override;
@@ -106,24 +135,18 @@ private:
 
 	UFUNCTION()
 	void ChangeScale(int32 orientation);
-	
-	bool CanBeRescale(int32 orientation, FVector& newScale);
 
 	UFUNCTION()
-	void Shear(int32 orientation);
+	void ChangeShear(int32 orientation);
 
-	void ApplyShear();
+	FMatrix Shear(float firstAxis, float secondAxis);
 
 	void Load();
 
 public:
-
 	ABrainNormalInteractiveObject();
 
 	void Save(FBrainSaveData& saveData);
-
-	//UFUNCTION()
-	//	void PerformAction(int32 action) override;
 
 	UFUNCTION()
 	void PerformAction1();
@@ -148,9 +171,6 @@ public:
 
 	UFUNCTION()
 	void PerformAction8() override;
-
-	UFUNCTION()
-		void CancelActions() override;
 
 	void Tick(float deltaTime) override;
 };

@@ -24,7 +24,6 @@ struct FBrainCharacterSaveData
 
 		_loadFromfile = false;
 	}
-
 };
 
 FORCEINLINE FArchive &operator << (FArchive &archive, FBrainCharacterSaveData& data)
@@ -35,4 +34,3 @@ FORCEINLINE FArchive &operator << (FArchive &archive, FBrainCharacterSaveData& d
 
 	return archive;
 }
-

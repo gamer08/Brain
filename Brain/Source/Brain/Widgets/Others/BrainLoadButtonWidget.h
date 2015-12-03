@@ -5,18 +5,14 @@
 #include "BrainButtonWidget.h"
 #include "BrainLoadButtonWidget.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class BRAIN_API UBrainLoadButtonWidget : public UBrainButtonWidget
 {
 	GENERATED_BODY()
 	
-	public:
+public:
 	UBrainLoadButtonWidget();
 	
 	UFUNCTION()
-	void OnClick();
-	
+	void OnClick();	
 };

@@ -6,10 +6,6 @@
 #include "GameplayObjects/BrainInteractiveObject.h"
 #include "BrainHUDWidget.generated.h"
 
-
-/**
- * 
- */
 UCLASS()
 class BRAIN_API UBrainHUDWidget : public UUserWidget
 {
@@ -35,6 +31,4 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Action Bar")
 	void LoadActionBarTextures();
-
-
 };

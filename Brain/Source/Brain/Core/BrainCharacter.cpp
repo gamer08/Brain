@@ -19,7 +19,6 @@ ABrainCharacter::ABrainCharacter()
 	_maxPitch = 89.0f;
 	_maxDistanceInteraction = 600.0f;
 
-	//fait en sorte qu'un actor peut caller Tick();
 	PrimaryActorTick.bCanEverTick = true;
 
 	USkeletalMeshComponent* mesh = GetMesh();
@@ -44,13 +43,19 @@ void ABrainCharacter::Tick(float deltaTime)
 	ABrainInteractiveObject* selectedObj = CheckForInteractiveObjects();
 
 	if (selectedObj != _selectedObject)
-	{
+	{	
 		if (selectedObj)
+		{
+			_selectedObject = selectedObj;
 			Cast<ABrainPlayerController>(Controller)->SendSelectedObjectActionsToHUD(selectedObj->GetAvailableActions());
+			_selectedObject->ApplySelectionColor();
+		}
 		else
+		{
 			Cast<ABrainPlayerController>(Controller)->SendSelectedObjectActionsToHUD(FObjectAction(-1));
-		
-		_selectedObject = selectedObj;
+			_selectedObject->ResetMaterialColor();
+			_selectedObject = selectedObj;
+		}	
 	}
 }
 
@@ -132,18 +137,13 @@ ABrainInteractiveObject* ABrainCharacter::CheckForInteractiveObjects()
 
 	world->SweepSingleByChannel(hit, startLocation, endLocation, FQuat::Identity, INTERACTIVE_OBJECT, FCollisionShape::MakeSphere(12.0f), traceParams);
 	
-	////affiche le raycast à des fin de test
-	//DrawDebugLine(world, startLocation, endLocation, FColor::Green);
-	
 	return Cast<ABrainInteractiveObject>(hit.GetActor());
 }
 
 void ABrainCharacter::PerformActionOnObject(int action)
 {
 	if (_selectedObject != nullptr)
-	{
 		(_selectedObject->* (_actionObjects[action]))();
-	}
 }
 
 void ABrainCharacter::Save(FBrainSaveData& saveData)
@@ -159,25 +159,34 @@ void ABrainCharacter::Save(FBrainSaveData& saveData)
 
 void ABrainCharacter::Load()
 {
-	FString name = GetClass()->ClassGeneratedBy->GetName();
-	FBrainCharacterSaveData savedData = Cast<UBrainGameInstance>(GetGameInstance())->GetSaveManager()->GetDataFromSave<FBrainCharacterSaveData>(name);
-	if (savedData._loadFromfile)
+	if (!GetName().IsEmpty())
 	{
-		SetActorLocation(savedData._location);
-		SetActorRotation(savedData._rotation);
+		if (UBrainGameInstance* gameInstance = Cast<UBrainGameInstance>(GetGameInstance()))
+		{
+			if (UBrainSaveManager* saveManager = gameInstance->GetSaveManager())
+			{
+				FBrainCharacterSaveData savedData = saveManager->GetDataFromSave<FBrainCharacterSaveData>(GetName());
+
+				if (savedData._loadFromfile)
+				{
+					SetActorLocation(savedData._location);
+					SetActorRotation(savedData._rotation);
+				}
+				else
+					SetActorRotation(FRotator(0));
+			}
+		}
 	}
-	else
-		SetActorRotation(FRotator(0));
 }
 
-void ABrainCharacter::AddEnergy(float energy)
+void ABrainCharacter::AddEnergy(int32 energy)
 {
 	_energy += energy;
 	if (_energy > _maxEnergy)
 		_energy = _maxEnergy;
 }
 
-void ABrainCharacter::SubEnergy(float energy)
+void ABrainCharacter::SubEnergy(int32 energy)
 {
 	_energy -= energy;
 	if (_energy < 0)
@@ -189,12 +198,12 @@ bool ABrainCharacter::HasEnergy()
 	return _energy > 0;
 }
 
-float ABrainCharacter::GetEnergy()
+int32 ABrainCharacter::GetEnergy()
 {
 	return _energy;
 }
 
-float ABrainCharacter::GetMaxEnergy()
+int32 ABrainCharacter::GetMaxEnergy()
 {
 	return _maxEnergy;
 }

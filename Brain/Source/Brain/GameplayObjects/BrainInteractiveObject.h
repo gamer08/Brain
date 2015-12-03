@@ -6,7 +6,6 @@
 #include "BrainEnums.h"
 #include "BrainInteractiveObject.generated.h"
 
-
 USTRUCT(BlueprintType)
 struct FObjectAction
 {
@@ -35,17 +34,23 @@ class BRAIN_API ABrainInteractiveObject : public AActor
 {
 	GENERATED_BODY()
 
-private:
-	UPROPERTY(EditAnywhere, Category=Interactive, meta = (DisplayName = "Name"))
-	FName _name;
-
 protected:
-	
 	UPROPERTY(Visibleanywhere, Category = Interactive, meta = (DisplayName = "Mesh"))
 	UStaticMeshComponent* _mesh;
 	
 	UPROPERTY()
 	FObjectAction _actions;
+
+	UPROPERTY()
+	UMaterialInstanceDynamic* _materialInstance;
+
+	UPROPERTY()
+	FLinearColor _defaultColor;
+
+	UPROPERTY(EditAnywhere, Category = Interactive, meta = (DisplayName = "Selection Color"))
+	FLinearColor _selectionColor;
+
+	void BeginPlay() override;
 
 public:	
 	ABrainInteractiveObject();
@@ -54,12 +59,6 @@ public:
 	{
 		return _actions;
 	}
-
-	// declaration "virtuel pure" d'unreal
-
-//	UFUNCTION()
-//		virtual void PerformAction(int32 action) PURE_VIRTUAL(ABrainInteractiveObject::PerformAction, );
-	
 
 	// declaration "virtuel pure" d'unreal
 	UFUNCTION()
@@ -88,12 +87,13 @@ public:
 	UFUNCTION()
 	virtual void PerformAction8();
 
+	UFUNCTION()
+	bool CanUseEnergy(int32 quantity);
 	
 	UFUNCTION()
-		virtual void CancelActions() PURE_VIRTUAL(ABrainInteractiveObject::CancelActions, );
+	void UseEnergy(int32 quantity);
 
-	UFUNCTION()
-		bool CanUseEnergy(float quantity);
-	UFUNCTION()
-		void UseEnergy(float quantity);
+	void ApplySelectionColor();
+
+	void ResetMaterialColor();
 };
