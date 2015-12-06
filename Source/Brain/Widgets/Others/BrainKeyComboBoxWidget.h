@@ -6,9 +6,6 @@
 #include "Widget.h"
 #include "BrainKeyComboBoxWidget.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class BRAIN_API UBrainKeyComboBoxWidget : public UComboBoxString
 {
@@ -20,5 +17,4 @@ public:
 protected: 
 	UFUNCTION()
 	UWidget* CreateComboBoxItem(FString text);
-	
 };

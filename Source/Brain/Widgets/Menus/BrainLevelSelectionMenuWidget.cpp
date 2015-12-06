@@ -4,7 +4,6 @@
 #include "BrainLevelSelectionMenuWidget.h"
 #include "Widgets/Others/BrainLevelButtonWidget.h"
 
-
 void UBrainLevelSelectionMenuWidget::FillLevelsList(UScrollBox* container)
 {
 	UWorld* world = GetWorld();
@@ -54,6 +53,3 @@ void UBrainLevelSelectionMenuWidget::LoadLevel(FString name)
 	if (world)
 		UGameplayStatics::OpenLevel(world,FName(*name));
 }
-
-
-

@@ -1,0 +1,272 @@
+﻿[2015.12.06-15.03.41:185][  0]Log file open, 12/06/15 10:03:41
+[2015.12.06-15.03.41:185][  0]LogInit:Display: Running engine for game: Brain
+[2015.12.06-15.03.41:185][  0]LogInit:Display: RandInit(-1502620919) SRandInit(-1502620918).
+[2015.12.06-15.03.41:185][  0]LogTaskGraph: Started task graph with 4 named threads and 5 total threads.
+[2015.12.06-15.03.41:185][  0]LogStats: Stats thread started
+[2015.12.06-15.03.41:185][  0]LogInit: Version: 4.8.3-2634408+++depot+UE4-Releases+4.8
+[2015.12.06-15.03.41:185][  0]LogInit: API Version: 2579680
+[2015.12.06-15.03.41:185][  0]LogInit: Compiled (64-bit): Jul 27 2015 16:24:33
+[2015.12.06-15.03.41:185][  0]LogInit: Compiled with Visual C++: 18.00.21005.01
+[2015.12.06-15.03.41:185][  0]LogInit: Build Configuration: Development
+[2015.12.06-15.03.41:185][  0]LogInit: Branch Name: ++depot+UE4-Releases+4.8
+[2015.12.06-15.03.41:185][  0]LogInit: Command line:  
+[2015.12.06-15.03.41:185][  0]LogInit: Base directory: C:/Program Files/Epic Games/4.8/Engine/Binaries/Win64/
+[2015.12.06-15.03.41:185][  0]LogInit: Rocket: 1
+[2015.12.06-15.03.41:263][  0]LogInit: Using libcurl 7.41.0
+[2015.12.06-15.03.41:263][  0]LogInit:  - built for x86_64-pc-win32
+[2015.12.06-15.03.41:263][  0]LogInit:  - supports SSL with WinSSL
+[2015.12.06-15.03.41:263][  0]LogInit:  - other features:
+[2015.12.06-15.03.41:263][  0]LogInit:      CURL_VERSION_SSL
+[2015.12.06-15.03.41:263][  0]LogInit:      CURL_VERSION_IPV6
+[2015.12.06-15.03.41:263][  0]LogInit:      CURL_VERSION_ASYNCHDNS
+[2015.12.06-15.03.41:263][  0]LogInit:      CURL_VERSION_LARGEFILE
+[2015.12.06-15.03.41:263][  0]LogInit:      CURL_VERSION_IDN
+[2015.12.06-15.03.41:263][  0]LogInit:  CurlRequestOptions (configurable via config and command line):
+[2015.12.06-15.03.41:263][  0]LogInit:  - bVerifyPeer = true  - Libcurl will verify peer certificate
+[2015.12.06-15.03.41:263][  0]LogInit:  - bUseHttpProxy = false  - Libcurl will NOT use HTTP proxy
+[2015.12.06-15.03.41:263][  0]LogInit:  - bDontReuseConnections = false  - Libcurl will reuse connections
+[2015.12.06-15.03.41:263][  0]LogInit:  - CertBundlePath = nullptr  - Libcurl will use whatever was configured at build time.
+[2015.12.06-15.03.41:326][  0]LogOnline:Warning: No default platform service specified for OnlineSubsystem
+[2015.12.06-15.03.41:623][  0]LogInit: Presizing for 0 objects not considered by GC, pre-allocating 0 bytes.
+[2015.12.06-15.03.41:873][  0]LogInit: Object subsystem initialized
+[2015.12.06-15.03.41:998][  0]LogConsoleResponse:Warning: Skipping Unknown console variable: 'TranslucentSortAxis = (X=0.000000,Y=-1.000000,Z=0.000000)'
+[2015.12.06-15.03.41:998][  0]LogConsoleResponse:Warning:   Found in ini file 'D:/UQAC/Séminaire en Informatique IV/Brain/Saved/Config/Windows/Engine.ini', in section '[/Script/Engine.RendererSettings]'
+[2015.12.06-15.03.41:998][  0]LogConsoleResponse:Warning: Skipping Unknown console variable: 'UIScaleRule = ShortestSide'
+[2015.12.06-15.03.41:998][  0]LogConsoleResponse:Warning:   Found in ini file 'D:/UQAC/Séminaire en Informatique IV/Brain/Saved/Config/Windows/Engine.ini', in section '[/Script/Engine.RendererSettings]'
+[2015.12.06-15.03.41:998][  0]LogConsoleResponse:Warning: Skipping Unknown console variable: 'UIScaleCurve = (EditorCurveData=(Keys=),ExternalCurve=None)'
+[2015.12.06-15.03.41:998][  0]LogConsoleResponse:Warning:   Found in ini file 'D:/UQAC/Séminaire en Informatique IV/Brain/Saved/Config/Windows/Engine.ini', in section '[/Script/Engine.RendererSettings]'
+[2015.12.06-15.03.42:139][  0]LogInit: Selected Device Profile: [Windows]
+[2015.12.06-15.03.42:139][  0]LogInit: Applying CVar settings loaded from the selected device profile: [Windows]
+[2015.12.06-15.03.42:304][  0]LogInit: Computer: QUENTIN-WINDOWS
+[2015.12.06-15.03.42:304][  0]LogInit: User: Quentin
+[2015.12.06-15.03.42:304][  0]LogInit: CPU Page size=4096, Cores=2
+[2015.12.06-15.03.42:304][  0]LogInit: High frequency timer resolution =2.241000 MHz
+[2015.12.06-15.03.42:304][  0]LogMemory: Memory total: Physical=3.9GB (4GB approx)
+[2015.12.06-15.03.42:304][  0]LogMemory: Platform Memory Stats for Windows
+[2015.12.06-15.03.42:304][  0]LogMemory: Process Physical Memory: 52.16 MB used, 52.16 MB peak
+[2015.12.06-15.03.42:304][  0]LogMemory: Process Virtual Memory: 22.93 MB used, 24.77 MB peak
+[2015.12.06-15.03.42:304][  0]LogMemory: Physical Memory: 1998.95 MB used, 3999.99 MB total
+[2015.12.06-15.03.42:304][  0]LogMemory: Virtual Memory: 309.90 MB used, 134217728.00 MB total
+[2015.12.06-15.03.44:772][  0]LogTextLocalizationManager: The requested culture ('fr_FR') has no localization data; falling back to 'en' for localization and internationalization data.
+[2015.12.06-15.03.45:440][  0]LogTextLocalizationManager:Warning: Loaded localization resources contain conflicting entries for (Namespace:ContentBrowser, Key:ImportAssetToolTip):
+Localization Resource: (C:/Program Files/Epic Games/4.8/Engine/Content/Localization/Editor/en/Editor.locres) Source String Hash: (-630476809) Localized String: (Import to {0}...)
+Localization Resource: (C:/Program Files/Epic Games/4.8/Engine/Content/Localization/Editor/en/Editor.locres) Source String Hash: (1271782899) Localized String: (Imports an asset from file to this folder.)
+[2015.12.06-15.03.48:583][  0]LogD3D11RHI: Found D3D11 adapter 0: NVIDIA GeForce GT 555M     (Feature Level 11_0)
+[2015.12.06-15.03.48:583][  0]LogD3D11RHI: Adapter has 1996MB of dedicated video memory, 0MB of dedicated system memory, and 1999MB of shared system memory, 1 output[s]
+[2015.12.06-15.03.48:625][  0]LogD3D11RHI: Found D3D11 adapter 1: NVIDIA GeForce GT 555M     (Feature Level 11_0)
+[2015.12.06-15.03.48:625][  0]LogD3D11RHI: Adapter has 1996MB of dedicated video memory, 0MB of dedicated system memory, and 1999MB of shared system memory, 0 output[s]
+[2015.12.06-15.03.48:682][  0]LogD3D11RHI: Found D3D11 adapter 2: Microsoft Basic Render Driver (Feature Level 11_0)
+[2015.12.06-15.03.48:682][  0]LogD3D11RHI: Adapter has 1996MB of dedicated video memory, 0MB of dedicated system memory, and 1999MB of shared system memory, 0 output[s]
+[2015.12.06-15.03.48:682][  0]LogD3D11RHI: Chosen D3D11 Adapter Id = 0
+[2015.12.06-15.03.48:716][  0]LogD3D11RHI: InitD3DDevice
+[2015.12.06-15.03.48:716][  0]LogD3D11RHI: !Direct3DDevice
+[2015.12.06-15.03.48:717][  0]LogRHI: Texture pool is 1361 MB (70% of 1945 MB)
+[2015.12.06-15.03.48:736][  0]LogD3D11RHI: Async texture creation enabled
+[2015.12.06-15.03.49:320][  0]LogShaderCompilers:Display: Using Local Shader Compiler.
+[2015.12.06-15.03.54:928][  0]LogTemp:Display: Loaded TP DesktopTargetPlatform
+[2015.12.06-15.03.54:997][  0]LogTemp:Display: Loaded TP WindowsClientTargetPlatform
+[2015.12.06-15.03.55:039][  0]LogTemp:Display: Loaded TP WindowsNoEditorTargetPlatform
+[2015.12.06-15.03.55:071][  0]LogTemp:Display: Loaded TP WindowsServerTargetPlatform
+[2015.12.06-15.03.55:118][  0]LogTemp:Display: Loaded TP WindowsTargetPlatform
+[2015.12.06-15.03.55:150][  0]LogTemp:Display: Loaded TP AndroidTargetPlatform
+[2015.12.06-15.03.55:191][  0]LogTemp:Display: Loaded TP Android_ASTCTargetPlatform
+[2015.12.06-15.03.55:222][  0]LogTemp:Display: Loaded TP Android_ATCTargetPlatform
+[2015.12.06-15.03.55:256][  0]LogTemp:Display: Loaded TP Android_DXTTargetPlatform
+[2015.12.06-15.03.55:297][  0]LogTemp:Display: Loaded TP Android_ETC1TargetPlatform
+[2015.12.06-15.03.55:321][  0]LogTemp:Display: Loaded TP Android_ETC2TargetPlatform
+[2015.12.06-15.03.55:358][  0]LogTemp:Display: Loaded TP Android_PVRTCTargetPlatform
+[2015.12.06-15.03.55:550][  0]LogTemp:Display: Loaded TP IOSTargetPlatform
+[2015.12.06-15.03.55:584][  0]LogTemp:Display: Loaded TP LinuxNoEditorTargetPlatform
+[2015.12.06-15.03.55:623][  0]LogTemp:Display: Loaded TP LinuxServerTargetPlatform
+[2015.12.06-15.03.55:689][  0]LogTemp:Display: Loaded TP LinuxTargetPlatform
+[2015.12.06-15.03.55:689][  0]LogTargetPlatformManager:Display: Building Assets For Windows
+[2015.12.06-15.03.57:186][  0]LogDerivedDataCache:Display: Max Cache Size: 512 MB
+[2015.12.06-15.03.58:053][  0]LogDerivedDataCache: Loaded boot cache 0.85s 60MB C:/Users/Quentin/AppData/Local/UnrealEngine/4.8/DerivedDataCache/Boot.ddc.
+[2015.12.06-15.03.58:053][  0]LogDerivedDataCache:Display: Loaded Boot cache: C:/Users/Quentin/AppData/Local/UnrealEngine/4.8/DerivedDataCache/Boot.ddc
+[2015.12.06-15.03.58:054][  0]LogDerivedDataCache: FDerivedDataBackendGraph:  Pak pak cache file D:/UQAC/Séminaire en Informatique IV/Brain/DerivedDataCache/DDC.ddp not found, will not use a pak cache.
+[2015.12.06-15.03.58:054][  0]LogDerivedDataCache: Unable to find inner node Pak for hierarchical cache Hierarchy.
+[2015.12.06-15.03.58:054][  0]LogDerivedDataCache: FDerivedDataBackendGraph:  CompressedPak pak cache file D:/UQAC/Séminaire en Informatique IV/Brain/DerivedDataCache/Compressed.ddp not found, will not use a pak cache.
+[2015.12.06-15.03.58:054][  0]LogDerivedDataCache: Unable to find inner node CompressedPak for hierarchical cache Hierarchy.
+[2015.12.06-15.03.58:354][  0]LogDerivedDataCache:Display: Pak cache opened for reading ../../../Engine/DerivedDataCache/Compressed.ddp.
+[2015.12.06-15.03.58:374][  0]LogDerivedDataCache: Using Local data cache path C:/Users/Quentin/AppData/Local/UnrealEngine/Common/DerivedDataCache: Writable
+[2015.12.06-15.04.06:128][  0]LogCollisionProfile:Warning: Profile (Trigger) - Custom Channel Name = 'Projectile' hasn't been found
+[2015.12.06-15.04.06:877][  0]LogInit: Selected Device Profile: [Windows]
+[2015.12.06-15.04.08:418][  0]ImportText (ComponentSweepMultiTests): Missing closing parenthesis: (RootShapeAsset="/Engine/BasicShapes/Cube.Cube",ShapeType="TriggerCapsule",HitResult=(Time=0.50,Location=(X=-100.000015,Y=0.0,Z=100.000015),ImpactPoint=(X=-50.0,Y=0.0,Z=50.0),Normal=(X=-1.0,Y=-0.0,Z=0.0),ImpactNormal=(X=0.0,Y=0.0,Z=1.0),TraceStart=(X=-200.0,Y=0.0,Z=200.0),TraceEnd=(X=0.0,Y=0.0,Z=0.0))
+[2015.12.06-15.04.08:420][  0]ImportText (LineTraceSingleByChannelTests): Missing closing parenthesis: (RootShapeAsset="/Engine/BasicShapes/Cube.Cube",HitResult=(Time=0.50,Location=(X=-100.000015,Y=0.0,Z=100.000015),ImpactPoint=(X=-50.0,Y=0.0,Z=50.0),Normal=(X=-1.0,Y=-0.0,Z=0.0),ImpactNormal=(X=0.0,Y=0.0,Z=1.0),TraceStart=(X=-200.0,Y=0.0,Z=200.0),TraceEnd=(X=0.0,Y=0.0,Z=0.0))
+[2015.12.06-15.04.08:794][  0]LogMeshUtilities: No automatic mesh reduction module available
+[2015.12.06-15.04.08:794][  0]LogMeshUtilities: No automatic mesh merging module available
+[2015.12.06-15.04.13:912][  0]LogInit: WinSock: version 1.1 (2.2), MaxSocks=32767, MaxUdp=65467
+[2015.12.06-15.04.44:025][  0]UdpMessaging: Initializing bridge on interface 0.0.0.0:0 to multicast group 230.0.0.1:6666.
+[2015.12.06-15.04.50:527][  0]SourceControl: Info Source control is disabled
+[2015.12.06-15.04.51:250][  0]SourceControl: Info Source control is disabled
+[2015.12.06-15.04.51:357][  0]SourceControl: Info Source control is disabled
+[2015.12.06-15.04.51:463][  0]SourceControl: Info Source control is disabled
+[2015.12.06-15.04.53:539][  0]LogObj: 31397 objects as part of root set at end of initial load.
+[2015.12.06-15.04.53:539][  0]LogUObjectAllocator: 7162512 out of 0 bytes used by permanent object pool.
+[2015.12.06-15.04.54:365][  0]LogEngine: Initializing Engine...
+[2015.12.06-15.04.54:394][  0]LogHMD: Can't find Oculus library dev build: is proper Runtime installed? Version: 0.6.0.0
+[2015.12.06-15.04.54:884][  0]LogHMD:Warning: SteamVR failed to initialize.  Error: 108
+[2015.12.06-15.04.56:504][  0]LogAIModule: Creating AISystem for world NewWorld
+[2015.12.06-15.04.56:738][  0]LogInit: XAudio2 using 'Haut-parleurs (Realtek High Definition Audio)' : 2 channels at 48 kHz using 32 bits per sample (channel mask 0x3)
+[2015.12.06-15.04.56:826][  0]LogInit: FAudioDevice initialized.
+[2015.12.06-15.04.56:870][  0]LogDerivedDataCache: Saved boot cache 0.04s 60MB C:/Users/Quentin/AppData/Local/UnrealEngine/4.8/DerivedDataCache/Boot.ddc.
+[2015.12.06-15.04.56:885][  0]LogInit: Texture streaming: Disabled
+[2015.12.06-15.04.56:956][  0]LogAnalytics: Creating configured Analytics provider AnalyticsET
+[2015.12.06-15.04.56:957][  0]LogAnalytics: [UEEditor.Rocket.Release] APIServer = http://et2.epicgames.com/ET2/. AppVersion = 4.8.3-2634408+++depot+UE4-Releases+4.8
+[2015.12.06-15.04.56:957][  0]LogAnalytics: [UEEditor.Rocket.Release] SetUserId 148c5c6642f68395c2a34183e8e7b9c3|0e9d1597697b4fcaaa11ed641c9e39a7|75275bf7-56c4-41b7-aeeb-75ea3d3b4f87
+[2015.12.06-15.04.56:971][  0]LogAnalytics: [UEEditor.Rocket.Release] AnalyticsET::StartSession
+[2015.12.06-15.04.57:826][  0]LogInit: Transaction tracking system initialized
+[2015.12.06-15.04.59:617][  0]BlueprintLog: New page: Editor Load
+[2015.12.06-15.05.00:185][  0]LogAssetRegistry: FAssetRegistry took 0.1079 seconds to start up
+[2015.12.06-15.05.00:207][  0]LogDirectoryWatcher:Warning: Failed to begin reading directory changes for ../../../Engine/Plugins/Experimental/CharacterAI/Content/. Error: 0
+[2015.12.06-15.05.24:759][  0]LogConsoleManager:Warning: Console variable 'r.VSync' wasn't set ('GameSetting' has a lower priority than 'SystemSettingsIni')
+[2015.12.06-15.05.24:760][  0]LogConsoleResponse:Display: 
+[2015.12.06-15.05.35:225][  0]LogCook:Display: Done creating registry. It took  0.00s.
+[2015.12.06-15.05.41:874][  0]SourceControl: Info Source control is disabled
+[2015.12.06-15.05.42:372][  0]Cmd: MAP LOAD FILE="D:/UQAC/Séminaire en Informatique IV/Brain/Content/FirstPerson/Maps/MainMenu.umap" TEMPLATE=0 SHOWPROGRESS=1 FEATURELEVEL=3
+[2015.12.06-15.05.42:651][  0]LightingResults: New page: Lighting Build
+[2015.12.06-15.05.43:809][  0]MapCheck: New page: Map Check
+[2015.12.06-15.05.43:809][  0]LightingResults: New page: Lighting Build
+[2015.12.06-15.05.45:786][  0]LogParticles: Destroying 0 GPU particle simulations for FXSystem 0x000000F82F8FA200
+[2015.12.06-15.05.48:668][  0]LogAIModule: Creating AISystem for world MainMenu
+[2015.12.06-15.05.49:056][  0]LogEditorServer: Finished looking for orphan Actors (0.000 secs)
+[2015.12.06-15.05.50:512][  0]Cmd: MAP CHECKDEP NOCLEARLOG
+[2015.12.06-15.05.50:951][  0]MapCheck: Info Map check complete: 0 Error(s), 0 Warning(s), took 414.14ms to complete.
+[2015.12.06-15.05.50:973][  0]LogFileHelpers: Loading map 'MainMenu' took 8.894
+[2015.12.06-15.06.00:794][  0]LogCollectionManager: Loaded 0 collections in 0.003998 seconds
+[2015.12.06-15.06.01:039][  0]LogContentBrowser: Native class hierarchy populated in 0.2207 seconds. Added 1819 classes and 311 folders.
+[2015.12.06-15.06.02:541][  0]LogContentBrowser: Native class hierarchy updated for 'WidgetCarousel' in 0.0065 seconds. Added 0 classes and 0 folders.
+[2015.12.06-15.06.03:859][  0]LogContentBrowser: Native class hierarchy updated for 'AddContentDialog' in 0.0137 seconds. Added 0 classes and 0 folders.
+[2015.12.06-15.06.04:242][  0]LogContentBrowser: Native class hierarchy updated for 'SceneOutliner' in 0.0124 seconds. Added 1 classes and 2 folders.
+[2015.12.06-15.06.07:817][  0]LogCrashTracker: Crashtracker disabled due to settings.
+[2015.12.06-15.06.07:999][  0]LogD3D11RHI: InitD3DDevice
+[2015.12.06-15.06.08:389][  0]LogUObjectGlobals:Warning: Failed to find object 'Class None.'
+[2015.12.06-15.06.08:475][  0]LogLoad: Full Startup: 160.31 seconds (BP compile: 1.58 seconds)
+[2015.12.06-15.06.08:548][  0]LogWindowsTextInputMethodSystem:Display: IME system now deactivated.
+[2015.12.06-15.06.10:779][  0]LogContentStreaming: Texture pool size is 0.000000MB
+[2015.12.06-15.06.10:995][  0]LogContentStreaming: Texture pool size now 1000 MB
+[2015.12.06-15.06.17:141][  0]LogRenderer: Reallocating scene render targets to support 1008x456 (Frame:2).
+[2015.12.06-15.06.26:537][ 11]LogAssetRegistry: Asset discovery search completed in 86.4121 seconds
+[2015.12.06-15.07.08:282][859]LogD3D11RHI: InitD3DDevice
+[2015.12.06-15.07.09:561][929]LogD3D11RHI: InitD3DDevice
+[2015.12.06-15.07.10:284][929]LogLinker:Warning: Can't find file '/Game/FirstPerson/Meshes/CubeMaterial'
+[2015.12.06-15.07.10:297][929]LogLinker:Warning: Can't find file for asset '/Game/FirstPerson/Meshes/CubeMaterial' while loading D:/UQAC/Séminaire en Informatique IV/Brain/Content/FirstPerson/Meshes/CubeMesh.uasset.
+[2015.12.06-15.07.10:297][929]LoadErrors:Error: Error /Game/FirstPerson/Meshes/CubeMesh : Can't find file for asset. /Game/FirstPerson/Meshes/CubeMaterial
+[2015.12.06-15.07.10:297][929]LogLinker:Warning: Can't find file '/Game/FirstPerson/Meshes/CubeMaterial'
+[2015.12.06-15.07.10:297][929]LogLinker:Warning: Can't find file for asset '/Game/FirstPerson/Meshes/CubeMaterial' while loading D:/UQAC/Séminaire en Informatique IV/Brain/Content/FirstPerson/Meshes/CubeMesh.uasset.
+[2015.12.06-15.07.10:331][929]LogLinker:Warning: Can't find file '/Game/FirstPerson/Meshes/Material'
+[2015.12.06-15.07.10:331][929]LogLinker:Warning: Can't find file for asset '/Game/FirstPerson/Meshes/Material' while loading D:/UQAC/Séminaire en Informatique IV/Brain/Content/FirstPerson/Meshes/plaque.uasset.
+[2015.12.06-15.07.10:332][929]LoadErrors:Error: Error /Game/FirstPerson/Meshes/plaque : Can't find file for asset. /Game/FirstPerson/Meshes/Material
+[2015.12.06-15.07.10:332][929]LogLinker:Warning: Can't find file '/Game/FirstPerson/Meshes/Material'
+[2015.12.06-15.07.10:333][929]LogLinker:Warning: Can't find file for asset '/Game/FirstPerson/Meshes/Material' while loading D:/UQAC/Séminaire en Informatique IV/Brain/Content/FirstPerson/Meshes/plaque.uasset.
+[2015.12.06-15.07.10:344][929]LogLinker:Warning: Can't find file '/Game/FirstPerson/Meshes/Material'
+[2015.12.06-15.07.10:345][929]LogLinker:Warning: Can't find file for asset '/Game/FirstPerson/Meshes/Material' while loading D:/UQAC/Séminaire en Informatique IV/Brain/Content/FirstPerson/Meshes/porte.uasset.
+[2015.12.06-15.07.10:345][929]LoadErrors:Error: Error /Game/FirstPerson/Meshes/porte : Can't find file for asset. /Game/FirstPerson/Meshes/Material
+[2015.12.06-15.07.10:346][929]LogLinker:Warning: Can't find file '/Game/FirstPerson/Meshes/Material'
+[2015.12.06-15.07.10:347][929]LogLinker:Warning: Can't find file for asset '/Game/FirstPerson/Meshes/Material' while loading D:/UQAC/Séminaire en Informatique IV/Brain/Content/FirstPerson/Meshes/porte.uasset.
+[2015.12.06-15.07.10:414][929]LogLinker:Warning: Can't find file '/Game/FirstPerson/Meshes/Material'
+[2015.12.06-15.07.10:424][929]LoadErrors: Info Failed to load /Game/FirstPerson/Meshes/Material.Material Referenced by plaque
+[2015.12.06-15.07.10:424][929]LogLinker:Warning: Can't find file for asset '/Game/FirstPerson/Meshes/Material' while loading NULL.
+[2015.12.06-15.07.10:438][929]LogLinker:Warning: Can't find file '/Game/FirstPerson/Meshes/Material'
+[2015.12.06-15.07.10:438][929]LoadErrors: Info Failed to load /Game/FirstPerson/Meshes/Material.Material Referenced by porte
+[2015.12.06-15.07.10:439][929]LogLinker:Warning: Can't find file for asset '/Game/FirstPerson/Meshes/Material' while loading NULL.
+[2015.12.06-15.07.10:439][929]LogLinker:Warning: Can't find file '/Game/FirstPerson/Meshes/CubeMaterial'
+[2015.12.06-15.07.10:439][929]LoadErrors: Info Failed to load /Game/FirstPerson/Meshes/CubeMaterial.CubeMaterial Referenced by CubeMesh
+[2015.12.06-15.07.10:439][929]LogLinker:Warning: Can't find file for asset '/Game/FirstPerson/Meshes/CubeMaterial' while loading NULL.
+[2015.12.06-15.07.12:693][929]LogAIModule: Creating AISystem for world Level1
+[2015.12.06-15.07.13:326][929]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2015.12.06-15.07.13:856][929]Cmd: MAP LOAD FILE="D:/UQAC/Séminaire en Informatique IV/Brain/Content/FirstPerson/Maps/Level1.umap" TEMPLATE=0 SHOWPROGRESS=1 FEATURELEVEL=3
+[2015.12.06-15.07.13:858][929]LightingResults: New page: Lighting Build
+[2015.12.06-15.07.13:940][929]LoadErrors: New page: Loading map: Level1.umap
+[2015.12.06-15.07.13:971][929]MapCheck: New page: Map Check
+[2015.12.06-15.07.13:972][929]LightingResults: New page: Lighting Build
+[2015.12.06-15.07.14:186][929]LogParticles: Destroying 0 GPU particle simulations for FXSystem 0x000000F820931620
+[2015.12.06-15.07.14:542][929]LogAIModule: Creating AISystem for world Level1
+[2015.12.06-15.07.15:295][929]LogEditorServer: Finished looking for orphan Actors (0.000 secs)
+[2015.12.06-15.07.15:613][929]Cmd: MAP CHECKDEP NOCLEARLOG
+[2015.12.06-15.07.15:773][929]MapCheck:Warning: Warning BrainNormalInteractiveObject_3 StaticMeshComponent /Game/FirstPerson/Maps/Level1.Level1:PersistentLevel.BrainNormalInteractiveObject_3.Mesh : Externally referenced 
+[2015.12.06-15.07.15:774][929]MapCheck:Warning: Warning BrainNormalInteractiveObject_2 StaticMeshComponent /Game/FirstPerson/Maps/Level1.Level1:PersistentLevel.BrainNormalInteractiveObject_2.Mesh : Externally referenced 
+[2015.12.06-15.07.15:774][929]MapCheck:Warning: Warning BrainNormalInteractiveObject_1 StaticMeshComponent /Game/FirstPerson/Maps/Level1.Level1:PersistentLevel.BrainNormalInteractiveObject_1.Mesh : Externally referenced 
+[2015.12.06-15.07.15:774][929]MapCheck:Warning: Warning BrainNormalInteractiveObject_0 StaticMeshComponent /Game/FirstPerson/Maps/Level1.Level1:PersistentLevel.BrainNormalInteractiveObject_0.Mesh : Externally referenced 
+[2015.12.06-15.07.15:775][929]MapCheck:Warning: Warning porte_46 StaticMeshComponent /Game/FirstPerson/Maps/Level1.Level1:PersistentLevel.porte_46.StaticMeshComponent0 : Externally referenced 
+[2015.12.06-15.07.15:775][929]MapCheck:Warning: Warning porte4 StaticMeshComponent /Game/FirstPerson/Maps/Level1.Level1:PersistentLevel.porte4.StaticMeshComponent0 : Externally referenced 
+[2015.12.06-15.07.15:775][929]MapCheck:Warning: Warning porte3 StaticMeshComponent /Game/FirstPerson/Maps/Level1.Level1:PersistentLevel.porte3.StaticMeshComponent0 : Externally referenced 
+[2015.12.06-15.07.15:775][929]MapCheck:Warning: Warning porte2_12 StaticMeshComponent /Game/FirstPerson/Maps/Level1.Level1:PersistentLevel.porte2_12.StaticMeshComponent0 : Externally referenced 
+[2015.12.06-15.07.15:776][929]MapCheck:Warning: Warning BrainNormalInteractiveObject_5 StaticMeshComponent /Game/FirstPerson/Maps/Level1.Level1:PersistentLevel.BrainNormalInteractiveObject_5.Mesh : Externally referenced 
+[2015.12.06-15.07.15:776][929]MapCheck:Warning: Warning BrainNormalInteractiveObject_4 StaticMeshComponent /Game/FirstPerson/Maps/Level1.Level1:PersistentLevel.BrainNormalInteractiveObject_4.Mesh : Externally referenced 
+[2015.12.06-15.07.15:776][929]MapCheck:Warning: Warning plaque_49 StaticMeshComponent /Game/FirstPerson/Maps/Level1.Level1:PersistentLevel.plaque_49.StaticMeshComponent0 : Externally referenced 
+[2015.12.06-15.07.15:776][929]MapCheck:Warning: Warning plaque4 StaticMeshComponent /Game/FirstPerson/Maps/Level1.Level1:PersistentLevel.plaque4.StaticMeshComponent0 : Externally referenced 
+[2015.12.06-15.07.15:777][929]MapCheck:Warning: Warning plaque3_14 StaticMeshComponent /Game/FirstPerson/Maps/Level1.Level1:PersistentLevel.plaque3_14.StaticMeshComponent0 : Externally referenced 
+[2015.12.06-15.07.15:777][929]MapCheck:Warning: Warning plaque2 StaticMeshComponent /Game/FirstPerson/Maps/Level1.Level1:PersistentLevel.plaque2.StaticMeshComponent0 : Externally referenced 
+[2015.12.06-15.07.15:777][929]MapCheck:Warning: Warning plaque1 StaticMeshComponent /Game/FirstPerson/Maps/Level1.Level1:PersistentLevel.plaque1.StaticMeshComponent0 : Externally referenced 
+[2015.12.06-15.07.15:777][929]MapCheck:Warning: Warning BrainNormalInteractiveObject_1 StaticMeshComponent /Game/FirstPerson/Maps/Level1.Level1:PersistentLevel.BrainNormalInteractiveObject_1.Mesh : Externally referenced 
+[2015.12.06-15.07.15:777][929]MapCheck:Warning: Warning plaque_49 StaticMeshComponent /Game/FirstPerson/Maps/Level1.Level1:PersistentLevel.plaque_49.StaticMeshComponent0 : Externally referenced 
+[2015.12.06-15.07.15:778][929]MapCheck:Warning: Warning plaque4 StaticMeshComponent /Game/FirstPerson/Maps/Level1.Level1:PersistentLevel.plaque4.StaticMeshComponent0 : Externally referenced 
+[2015.12.06-15.07.15:778][929]MapCheck:Warning: Warning plaque3_14 StaticMeshComponent /Game/FirstPerson/Maps/Level1.Level1:PersistentLevel.plaque3_14.StaticMeshComponent0 : Externally referenced 
+[2015.12.06-15.07.15:778][929]MapCheck:Warning: Warning plaque2 StaticMeshComponent /Game/FirstPerson/Maps/Level1.Level1:PersistentLevel.plaque2.StaticMeshComponent0 : Externally referenced 
+[2015.12.06-15.07.15:778][929]MapCheck:Warning: Warning plaque1 StaticMeshComponent /Game/FirstPerson/Maps/Level1.Level1:PersistentLevel.plaque1.StaticMeshComponent0 : Externally referenced 
+[2015.12.06-15.07.15:779][929]MapCheck:Warning: Warning porte_46 StaticMeshComponent /Game/FirstPerson/Maps/Level1.Level1:PersistentLevel.porte_46.StaticMeshComponent0 : Externally referenced 
+[2015.12.06-15.07.15:779][929]MapCheck:Warning: Warning porte4 StaticMeshComponent /Game/FirstPerson/Maps/Level1.Level1:PersistentLevel.porte4.StaticMeshComponent0 : Externally referenced 
+[2015.12.06-15.07.15:779][929]MapCheck:Warning: Warning porte3 StaticMeshComponent /Game/FirstPerson/Maps/Level1.Level1:PersistentLevel.porte3.StaticMeshComponent0 : Externally referenced 
+[2015.12.06-15.07.15:779][929]MapCheck:Warning: Warning porte2_12 StaticMeshComponent /Game/FirstPerson/Maps/Level1.Level1:PersistentLevel.porte2_12.StaticMeshComponent0 : Externally referenced 
+[2015.12.06-15.07.15:780][929]MapCheck: Info Map check complete: 0 Error(s), 25 Warning(s), took 166.378ms to complete.
+[2015.12.06-15.07.15:789][929]LogD3D11RHI: InitD3DDevice
+[2015.12.06-15.07.15:861][929]LogD3D11RHI: InitD3DDevice
+[2015.12.06-15.07.15:883][929]LogFileHelpers: Loading map 'Level1' took 2.079
+[2015.12.06-15.07.26:375][389]LogEditorViewport: Clicking on Actor (context menu): BrainNormalInteractiveObject (Cube)
+[2015.12.06-15.07.28:419][389]LogD3D11RHI: InitD3DDevice
+[2015.12.06-15.07.29:473][391]LogEditorViewport: Clicking on Actor (LMB): BrainNormalInteractiveObject (Cube)
+[2015.12.06-15.07.31:054][447]LogD3D11RHI: InitD3DDevice
+[2015.12.06-15.07.36:382][679]LogPlayLevel: PIE:  No blueprints needed recompiling
+[2015.12.06-15.07.36:666][679]PIE: New page: PIE session: Level1 (Dec 6, 2015, 5:07:36 AM)
+[2015.12.06-15.07.36:712][679]LogPlayLevel: Creating play world package: /Game/FirstPerson/Maps/UEDPIE_0_Level1
+[2015.12.06-15.07.36:906][679]LogPlayLevel: PIE: StaticDuplicateObject took: (0.193911s)
+[2015.12.06-15.07.36:907][679]LogAIModule: Creating AISystem for world Level1
+[2015.12.06-15.07.36:908][679]LogPlayLevel: PIE: World Init took: (0.002223s)
+[2015.12.06-15.07.36:927][679]LogPlayLevel: PIE: Created PIE world by copying editor world from /Game/FirstPerson/Maps/Level1.Level1 to /Game/FirstPerson/Maps/UEDPIE_0_Level1.Level1 (0.214087s)
+[2015.12.06-15.07.36:927][679]LogActorComponent: UnregisterComponent: (/Engine/Transient.CharMoveComp) Not registered. Aborting.
+[2015.12.06-15.07.37:078][679]LogInit: XAudio2 using 'Haut-parleurs (Realtek High Definition Audio)' : 2 channels at 48 kHz using 32 bits per sample (channel mask 0x3)
+[2015.12.06-15.07.37:120][679]LogInit: FAudioDevice initialized.
+[2015.12.06-15.07.37:445][679]LogWorld: Game class is 'BrainGameMode'
+[2015.12.06-15.07.37:864][679]LogWorld: Bringing World /Game/FirstPerson/Maps/UEDPIE_0_Level1.Level1 up for play (max tick rate 60) at 2015.12.06-10.07.37
+[2015.12.06-15.07.37:865][679]LogActor:Warning: GameSession /Game/FirstPerson/Maps/UEDPIE_0_Level1.Level1:PersistentLevel.GameSession_0 has natively added scene component(s), but none of them were set as the actor's RootComponent - picking one arbitrarily
+[2015.12.06-15.07.37:909][679]LogActor:Warning: GameNetworkManager /Game/FirstPerson/Maps/UEDPIE_0_Level1.Level1:PersistentLevel.GameNetworkManager_0 has natively added scene component(s), but none of them were set as the actor's RootComponent - picking one arbitrarily
+[2015.12.06-15.07.38:011][679]LogWorld: Bringing up level for play took: 0.179520
+[2015.12.06-15.07.39:634][679]LogAssetRegistry: ScanPathsSynchronous completed scanning '/Game/FirstPerson/Textures/Actions' to find 8 assets in 0.0897 seconds
+[2015.12.06-15.07.40:065][679]PIE: Info Play in editor start time for /Game/FirstPerson/Maps/UEDPIE_0_Level1 2.991
+[2015.12.06-15.07.46:567][769]LogParticles: Destroying 0 GPU particle simulations for FXSystem 0x000000F81E6A18A0
+[2015.12.06-15.07.57:034][241]LogPlayLevel: PIE:  No blueprints needed recompiling
+[2015.12.06-15.07.57:034][241]PIE: New page: PIE session: Level1 (Dec 6, 2015, 5:07:57 AM)
+[2015.12.06-15.07.57:035][241]LogPlayLevel: Creating play world package: /Game/FirstPerson/Maps/UEDPIE_0_Level1
+[2015.12.06-15.07.57:069][241]LogPlayLevel: PIE: StaticDuplicateObject took: (0.034537s)
+[2015.12.06-15.07.57:071][241]LogAIModule: Creating AISystem for world Level1
+[2015.12.06-15.07.57:072][241]LogPlayLevel: PIE: World Init took: (0.002697s)
+[2015.12.06-15.07.57:072][241]LogPlayLevel: PIE: Created PIE world by copying editor world from /Game/FirstPerson/Maps/Level1.Level1 to /Game/FirstPerson/Maps/UEDPIE_0_Level1.Level1 (0.037651s)
+[2015.12.06-15.07.57:233][241]LogInit: XAudio2 using 'Haut-parleurs (Realtek High Definition Audio)' : 2 channels at 48 kHz using 32 bits per sample (channel mask 0x3)
+[2015.12.06-15.07.57:256][241]LogInit: FAudioDevice initialized.
+[2015.12.06-15.07.57:292][241]LogWorld: Game class is 'BrainGameMode'
+[2015.12.06-15.07.57:303][241]LogWorld: Bringing World /Game/FirstPerson/Maps/UEDPIE_0_Level1.Level1 up for play (max tick rate 60) at 2015.12.06-10.07.57
+[2015.12.06-15.07.57:303][241]LogActor:Warning: GameSession /Game/FirstPerson/Maps/UEDPIE_0_Level1.Level1:PersistentLevel.GameSession_1 has natively added scene component(s), but none of them were set as the actor's RootComponent - picking one arbitrarily
+[2015.12.06-15.07.57:304][241]LogActor:Warning: GameNetworkManager /Game/FirstPerson/Maps/UEDPIE_0_Level1.Level1:PersistentLevel.GameNetworkManager_1 has natively added scene component(s), but none of them were set as the actor's RootComponent - picking one arbitrarily
+[2015.12.06-15.07.57:304][241]LogWorld: Bringing up level for play took: 0.010563
+[2015.12.06-15.07.57:311][241]PIE: Info Play in editor start time for /Game/FirstPerson/Maps/UEDPIE_0_Level1 0.237
+[2015.12.06-15.08.04:517][440]LogParticles: Destroying 0 GPU particle simulations for FXSystem 0x000000F82961A840
+[2015.12.06-15.08.17:140][187]LogPlayLevel: PIE:  No blueprints needed recompiling
+[2015.12.06-15.08.17:140][187]PIE: New page: PIE session: Level1 (Dec 6, 2015, 5:08:17 AM)
+[2015.12.06-15.08.17:140][187]LogPlayLevel: Creating play world package: /Game/FirstPerson/Maps/UEDPIE_0_Level1
+[2015.12.06-15.08.17:177][187]LogPlayLevel: PIE: StaticDuplicateObject took: (0.037113s)
+[2015.12.06-15.08.17:179][187]LogAIModule: Creating AISystem for world Level1
+[2015.12.06-15.08.17:180][187]LogPlayLevel: PIE: World Init took: (0.002628s)
+[2015.12.06-15.08.17:180][187]LogPlayLevel: PIE: Created PIE world by copying editor world from /Game/FirstPerson/Maps/Level1.Level1 to /Game/FirstPerson/Maps/UEDPIE_0_Level1.Level1 (0.040103s)
+[2015.12.06-15.08.17:233][187]LogInit: XAudio2 using 'Haut-parleurs (Realtek High Definition Audio)' : 2 channels at 48 kHz using 32 bits per sample (channel mask 0x3)
+[2015.12.06-15.08.17:256][187]LogInit: FAudioDevice initialized.
+[2015.12.06-15.08.17:291][187]LogWorld: Game class is 'BrainGameMode'
+[2015.12.06-15.08.17:303][187]LogWorld: Bringing World /Game/FirstPerson/Maps/UEDPIE_0_Level1.Level1 up for play (max tick rate 60) at 2015.12.06-10.08.17
+[2015.12.06-15.08.17:303][187]LogActor:Warning: GameSession /Game/FirstPerson/Maps/UEDPIE_0_Level1.Level1:PersistentLevel.GameSession_2 has natively added scene component(s), but none of them were set as the actor's RootComponent - picking one arbitrarily
+[2015.12.06-15.08.17:304][187]LogActor:Warning: GameNetworkManager /Game/FirstPerson/Maps/UEDPIE_0_Level1.Level1:PersistentLevel.GameNetworkManager_2 has natively added scene component(s), but none of them were set as the actor's RootComponent - picking one arbitrarily
+[2015.12.06-15.08.17:304][187]LogWorld: Bringing up level for play took: 0.010866
+[2015.12.06-15.08.17:311][187]PIE: Info Play in editor start time for /Game/FirstPerson/Maps/UEDPIE_0_Level1 0.236
+[2015.12.06-15.08.33:608][768]LogParticles: Destroying 0 GPU particle simulations for FXSystem 0x000000F82442E660
+[2015.12.06-15.08.39:477][107]LogD3D11RHI: InitD3DDevice
+[2015.12.06-15.08.43:652][347]LogPlayLevel: PIE:  No blueprints needed recompiling
+[2015.12.06-15.08.43:652][347]PIE: New page: PIE session: Level1 (D

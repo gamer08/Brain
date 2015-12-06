@@ -2,5 +2,4 @@
 #include "BrainInputInterface.h"
 
 UBrainInputInterface::UBrainInputInterface(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
-{
-}
+{}

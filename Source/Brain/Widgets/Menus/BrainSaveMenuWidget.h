@@ -5,16 +5,12 @@
 #include "Blueprint/UserWidget.h"
 #include "BrainSaveMenuWidget.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class BRAIN_API UBrainSaveMenuWidget : public UUserWidget
 {
 	GENERATED_BODY()
 	
 public:
-
 	UFUNCTION(BlueprintCallable, Category = "Save")
 	void FillSavesList(UScrollBox* container);	
 
@@ -24,7 +20,6 @@ public:
 	void CloseOnSaveSuccessfull();
 
 private:
-
 	UButton* CreateButton(const FButtonStyle* buttonStyle, FSlateColor textColor, FString text);
 
 	UPROPERTY()

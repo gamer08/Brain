@@ -5,9 +5,6 @@
 #include "Blueprint/UserWidget.h"
 #include "BrainMainMenuWidget.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class BRAIN_API UBrainMainMenuWidget : public UUserWidget
 {

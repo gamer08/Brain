@@ -5,18 +5,12 @@
 #include "Blueprint/UserWidget.h"
 #include "BrainPauseMenuWidget.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class BRAIN_API UBrainPauseMenuWidget : public UUserWidget
 {
 	GENERATED_BODY()
 	
 public:
-
 	UFUNCTION(BlueprintCallable, Category = "Brain")
 	void RestartLevel();	
-	
-	
 };

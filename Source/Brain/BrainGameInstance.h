@@ -27,5 +27,4 @@ public:
 	{
 		return _saveManager;
 	}
-	
 };

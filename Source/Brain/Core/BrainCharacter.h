@@ -21,19 +21,19 @@ public:
 	void Save(FBrainSaveData& saveData);
 
 	UFUNCTION(BlueprintCallable, Category = "Energy")
-		void AddEnergy(int32 energy);
+	void AddEnergy(int32 energy);
 
 	UFUNCTION(BlueprintCallable, Category = "Energy")
-		void SubEnergy(int32 energy);
+	void SubEnergy(int32 energy);
 
 	UFUNCTION(BlueprintCallable, Category = "Energy")
-		bool HasEnergy();
+	bool HasEnergy();
 
 	UFUNCTION(BlueprintCallable, Category = "Energy")
-		int32 GetEnergy();
+	int32 GetEnergy();
 
 	UFUNCTION(BlueprintCallable, Category = "Energy")
-		int32 GetMaxEnergy();
+	int32 GetMaxEnergy();
 
 protected:
 
@@ -63,6 +63,12 @@ private:
 	UPROPERTY()
 	ABrainInteractiveObject* _selectedObject;
 
+	UPROPERTY(EditAnywhere, Category = Energy, meta = (DisplayName = "Current Energy"))
+	int32 _energy;
+
+	UPROPERTY(EditAnywhere, Category = Energy, meta = (DisplayName = "Maximum Energy"))
+	int32 _maxEnergy;
+
 	void Tick(float deltaTime) override;
 
 	void BeginPlay() override;
@@ -74,11 +80,4 @@ private:
 	ABrainInteractiveObject* CheckForInteractiveObjects();
 
 	void Load();
-
-	UPROPERTY(EditAnywhere, Category = Energy, meta = (DisplayName = "Current Energy"))
-		int32 _energy;
-
-	UPROPERTY(EditAnywhere, Category = Energy, meta = (DisplayName = "Maximum Energy"))
-		int32 _maxEnergy;
-
 };

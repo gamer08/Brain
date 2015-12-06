@@ -13,7 +13,6 @@ class IBrainInputInterface
 	GENERATED_IINTERFACE_BODY()
 
 public:
-
 	virtual FName GetInputName() = 0;
 	virtual FText GetDisplayValue() = 0;
 };
