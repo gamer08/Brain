@@ -45,10 +45,11 @@ struct FObjectAction
 		int32 count = id;
 		for (int32 i = 0; i < 8; i++)
 		{
-			if (count <= 0)
-				return i;
 			if (((1 << i) & _flags) != 0)
 				count--;
+			if (count < 0)
+				return i;
+			
 		}
 		return -1;
 	}
