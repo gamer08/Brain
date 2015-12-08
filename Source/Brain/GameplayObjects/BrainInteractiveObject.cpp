@@ -63,11 +63,13 @@ void ABrainInteractiveObject::PerformAction8()
 
 void ABrainInteractiveObject::ApplySelectionColor()
 {
-	_materialInstance->SetVectorParameterValue(FName("color"), _selectionColor);
+	if (_allowChangeColorOnHover)
+		_materialInstance->SetVectorParameterValue(FName("color"), _selectionColor);
 }
 
 void ABrainInteractiveObject::ResetMaterialColor()
 {
-	_materialInstance->SetVectorParameterValue(FName("color"), _defaultColor);
+	if (_allowChangeColorOnHover)
+		_materialInstance->SetVectorParameterValue(FName("color"), _defaultColor);
 }
 

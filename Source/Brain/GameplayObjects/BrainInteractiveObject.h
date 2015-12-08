@@ -48,6 +48,9 @@ protected:
 	FLinearColor _defaultColor;
 
 	UPROPERTY(EditAnywhere, Category = Interactive, meta = (DisplayName = "Selection Color"))
+	bool _allowChangeColorOnHover;
+
+	UPROPERTY(EditAnywhere, Category = Interactive, meta = (DisplayName = "Selection Color"))
 	FLinearColor _selectionColor;
 
 	void BeginPlay() override;

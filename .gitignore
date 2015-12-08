@@ -45,6 +45,12 @@ Binaries/*
 # Builds
 Build/*
 
+# Temp Files
+Saved/Autosaves/*
+Saved/Backup/*
+Saved/Logs/*
+
+
 # Don't ignore icon files in Build
 !Build/**/*.ico
 

@@ -17,8 +17,15 @@ void ABrainEndLevelTrigger::NotifyActorBeginOverlap(AActor* other)
 		{
 			if (UBrainGameInstance* gameInstance = Cast<UBrainGameInstance>(GetGameInstance()))
 				gameInstance->GetSaveManager()->FlushCachedSaveData();
+
+			if (world->GetMapName().EndsWith("Level1")){
+				UGameplayStatics::OpenLevel(world, "Level2");
+			}
+
+			if (world->GetMapName().EndsWith("Level2")){
+				UGameplayStatics::OpenLevel(world, "TheEnd");
+			}
 			
-			UGameplayStatics::OpenLevel(world, "test");
 		}
 	}
 }
