@@ -14,11 +14,17 @@ class BRAIN_API UBrainObserver : public UActorComponent
 	GENERATED_BODY()
 
 private:
-	//void Load();
+	TMap<FString, bool> _subjects;
 
-	TMap<FString, bool> client;
+public:		
+	UPROPERTY(EditAnywhere, Category = "Transformation", meta = (DisplayName = "Is Observer"))
+	bool _isObserver;	
+	
+	bool _state;
 
-public:	
+	UPROPERTY(EditAnywhere, Category = "Transformation", meta = (DisplayName = "Transformation", EditCondition = "_isObserver"))
+	FTransformation _transformation;
+	
 	// Sets default values for this component's properties
 	UBrainObserver();
 
@@ -31,20 +37,7 @@ public:
 	// Write sthg in the console when notify is called by the observable
 	virtual void Notify(FString objectName, EObserverEvent::Type call);
 	
-	UPROPERTY(EditAnywhere, Category = "Transformation", meta = (DisplayName = "Is Observer"))
-	bool _isObserver;
+	void UpdateState(FString objectName, bool value);
 
-	UPROPERTY(EditAnywhere, Category = "Transformation", meta = (DisplayName = "Transformation", EditCondition = "_isObserver"))
-	FTransformation _transformation;
-
-	//void Save(FBrainSaveData& saveData);
-
-	void updateState(FString objectName, bool value);
-
-	bool checkAllSwitches();
-
-	bool state;
-
-
-
+	bool CheckAllSwitches();
 };

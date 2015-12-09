@@ -32,7 +32,7 @@ void UBrainObservable::BeginPlay()
 		if (ub != nullptr)
 			RegisterObserver(ub);
 	}
-	NotifyAll(GetName(), EObserverEvent::HELLO);
+	NotifyAll(GetOwner()->GetName(), EObserverEvent::HELLO);
 
 }
 
@@ -63,7 +63,7 @@ void UBrainObservable::OnActorCollisionBegin(class AActor* OtherActor)
 {
 	if (_list_actors_overlap.Num() == 0)
 	{
-		NotifyAll(GetName(), EObserverEvent::EVENTON);
+		NotifyAll(GetOwner()->GetName(), EObserverEvent::EVENTON);
 		UE_LOG(LogTemp, Warning, TEXT("Begin !"));
 	}
 
@@ -74,7 +74,7 @@ void UBrainObservable::OnActorCollisionEnd(class AActor* OtherActor)
 	_list_actors_overlap.Remove(OtherActor);
 	if (_list_actors_overlap.Num() == 0)
 	{
-		NotifyAll(GetName(), EObserverEvent::EVENTOFF);
+		NotifyAll(GetOwner()->GetName(), EObserverEvent::EVENTOFF);
 		UE_LOG(LogTemp, Warning, TEXT("End !"));
 	}
 }
