@@ -8,6 +8,7 @@
 ABrainTimeInteractiveObject::ABrainTimeInteractiveObject()
 {
 	PrimaryActorTick.bCanEverTick = true;
+	_selectionColor = FLinearColor(1.0, 1.0, 1.0, 1.0);
 }
 
 void ABrainTimeInteractiveObject::BeginPlay()
@@ -20,6 +21,7 @@ void ABrainTimeInteractiveObject::BeginPlay()
 		| (_canBeStop ? EAction::STOP : 0)
 		| (_canBeReversed ? EAction::REVERSE : 0);
 	_actions = FObjectAction(flags);
+
 
 	for (FTransformation& trans : _transformations)
 		PreComputeTransformationData(trans);
@@ -36,11 +38,8 @@ void ABrainTimeInteractiveObject::Tick(float deltaTime)
 
 void ABrainTimeInteractiveObject::ApplyTransformations(float deltaTime)
 {
-
 	for (FTransformation& trans : _transformations)
-	{
 		ApplyTransformation(deltaTime, trans);
-	}
 }
 
 void ABrainTimeInteractiveObject::ApplyTransformation(float deltaTime, FTransformation& transformation)
@@ -182,7 +181,6 @@ void ABrainTimeInteractiveObject::PreComputeTransformationData(FTransformation& 
 		transformation._baseSclaleOverTimeStepInRAD.Z = FMath::DegreesToRadians(transformation._scaleRange.Z / 360.0f);
 
 		break;
-
 	}
 }
 
@@ -209,19 +207,27 @@ void ABrainTimeInteractiveObject::Save(FBrainSaveData& saveData)
 
 void ABrainTimeInteractiveObject::Load()
 {
-	FString name = GetName();
-	FBrainTIOSaveData savedData = Cast<UBrainGameInstance>(GetGameInstance())->GetSaveManager()->GetDataFromSave<FBrainTIOSaveData>(name);
-	if (savedData._loadFromfile)
+	if (!GetName().IsEmpty())
 	{
-		_globalTransformationSpeed = savedData._globalTransformationSpeed;
-			
-		int32 nbTransformations = _transformations.Num();
+		if (UBrainGameInstance* gameInstance = Cast<UBrainGameInstance>(GetGameInstance()))
+		{
+			if (UBrainSaveManager* saveManager = gameInstance->GetSaveManager())
+			{
+				FBrainTIOSaveData savedData = saveManager->GetDataFromSave<FBrainTIOSaveData>(GetName());
+				if (savedData._loadFromfile)
+				{
+					_globalTransformationSpeed = savedData._globalTransformationSpeed;
 
-		SetActorLocation(savedData._location);
-		SetActorRotation(savedData._rotation);
-		SetActorScale3D(savedData._scale);
-			
-		for (int32 i = 0; i < nbTransformations; i++)
-			_transformations[i]._currentScaleInRAD = savedData._transformsData[i]._currentScaleInRAD;
+					int32 nbTransformations = _transformations.Num();
+
+					SetActorLocation(savedData._location);
+					SetActorRotation(savedData._rotation);
+					SetActorScale3D(savedData._scale);
+
+					for (int32 i = 0; i < nbTransformations; i++)
+						_transformations[i]._currentScaleInRAD = savedData._transformsData[i]._currentScaleInRAD;
+				}
+			}
+		}
 	}
 }

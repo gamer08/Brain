@@ -6,7 +6,6 @@
 #include "BrainEnums.h"
 #include "BrainInteractiveObject.generated.h"
 
-
 USTRUCT(BlueprintType)
 struct FObjectAction
 {
@@ -28,6 +27,31 @@ struct FObjectAction
 	{
 		return (_flags &  action) != 0;
 	}
+
+	int32 CountAvailableActions()
+	{
+		int32 count = 0;
+		for (int32 i = 0; i < 8; i++)
+		{
+			if (((1 << i) & _flags) != 0)
+				count++;
+		}
+		return count;
+	}
+
+	int32 GetActionNo(int32 id)
+	{
+		int32 count = id;
+		for (int32 i = 0; i < 8; i++)
+		{
+			if (((1 << i) & _flags) != 0)
+				count--;
+
+			if (count < 0)
+				return i;
+		}
+		return -1;
+	}
 };
 
 UCLASS(Abstract)
@@ -35,17 +59,26 @@ class BRAIN_API ABrainInteractiveObject : public AActor
 {
 	GENERATED_BODY()
 
-private:
-	UPROPERTY(EditAnywhere, Category=Interactive, meta = (DisplayName = "Name"))
-	FName _name;
-
 protected:
-	
 	UPROPERTY(Visibleanywhere, Category = Interactive, meta = (DisplayName = "Mesh"))
 	UStaticMeshComponent* _mesh;
 	
 	UPROPERTY()
 	FObjectAction _actions;
+
+	UPROPERTY()
+	UMaterialInstanceDynamic* _materialInstance;
+
+	UPROPERTY()
+	FLinearColor _defaultColor;
+
+	UPROPERTY(EditAnywhere, Category = Interactive, meta = (DisplayName = "Selection Color"))
+	FLinearColor _selectionColor;
+
+	UPROPERTY(EditAnywhere, Category = Interactive, meta = (DisplayName = "Allow change color"))
+	bool _allowChangeColorOnHover;
+
+	void BeginPlay() override;
 
 public:	
 	ABrainInteractiveObject();
@@ -55,11 +88,10 @@ public:
 		return _actions;
 	}
 
-	// declaration "virtuel pure" d'unreal
-
-//	UFUNCTION()
-//		virtual void PerformAction(int32 action) PURE_VIRTUAL(ABrainInteractiveObject::PerformAction, );
-	
+	int32 CountAvailableActions()
+	{
+		return _actions.CountAvailableActions();
+	}
 
 	// declaration "virtuel pure" d'unreal
 	UFUNCTION()
@@ -88,12 +120,15 @@ public:
 	UFUNCTION()
 	virtual void PerformAction8();
 
+	UFUNCTION()
+	bool CanUseEnergy(int32 quantity);
 	
 	UFUNCTION()
-		virtual void CancelActions() PURE_VIRTUAL(ABrainInteractiveObject::CancelActions, );
+	void UseEnergy(int32 quantity);
 
-	UFUNCTION()
-		bool CanUseEnergy(int32 quantity);
-	UFUNCTION()
-		void UseEnergy(int32 quantity);
+	void ApplySelectionColor();
+
+	void ResetMaterialColor();
+
+	void PerformActionNo(int id, bool reverseAction);
 };

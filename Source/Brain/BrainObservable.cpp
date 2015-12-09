@@ -3,7 +3,6 @@
 #include "Brain.h"
 #include "BrainObservable.h"
 
-
 // Sets default values for this component's properties
 UBrainObservable::UBrainObservable()
 {
@@ -11,10 +10,7 @@ UBrainObservable::UBrainObservable()
 	// off to improve performance if you don't need them.
 	bWantsBeginPlay = true;
 	PrimaryComponentTick.bCanEverTick = true;
-
-	// ...
 }
-
 
 // Called when the game starts
 void UBrainObservable::BeginPlay()
@@ -27,17 +23,15 @@ void UBrainObservable::BeginPlay()
 
 	GetOwner()->OnActorBeginOverlap.Add(Delegate);
 	GetOwner()->OnActorEndOverlap.Add(Delegate2);
-
-
 	
-	for (int32 i = 0; i < _list.Num(); i++){
+	for (int32 i = 0; i < _list.Num(); i++)
+	{
 		AActor* actor = _list[i];
 		UBrainObserver* ub = actor->FindComponentByClass<UBrainObserver>();
 
 		if (ub != nullptr)
 			RegisterObserver(ub);
 	}
-	
 }
 
 
@@ -45,15 +39,12 @@ void UBrainObservable::BeginPlay()
 void UBrainObservable::TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction )
 {
 	Super::TickComponent( DeltaTime, TickType, ThisTickFunction );
-
-	// ...
 }
 
 void UBrainObservable::NotifyAll(bool state)
 {
-	for (int32 i=0; i < _list_observers.Num(); i++){
+	for (int32 i=0; i < _list_observers.Num(); i++)
 		_list_observers[i]->Notify(state);
-	}
 }
 
 void UBrainObservable::RegisterObserver(UBrainObserver* o)
@@ -73,6 +64,7 @@ void UBrainObservable::OnActorCollisionBegin(class AActor* OtherActor)
 		NotifyAll(true);
 		UE_LOG(LogTemp, Warning, TEXT("Begin !"));
 	}
+
 	_list_actors_overlap.Add(OtherActor);
 }
 void UBrainObservable::OnActorCollisionEnd(class AActor* OtherActor)

@@ -39,7 +39,6 @@ public:
 		_tioSaveData.Reset();
 	}
 	
-
 	void AddDataToSave(FBrainCharacterSaveData data)
 	{
 		_characterData = data;

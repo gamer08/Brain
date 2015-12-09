@@ -5,7 +5,6 @@
 #include "ScaleBox.h"
 #include "TextBlock.h"
 
-
 UBrainKeyComboBoxWidget::UBrainKeyComboBoxWidget()
 :Super()
 {
@@ -28,7 +27,3 @@ UWidget* UBrainKeyComboBoxWidget::CreateComboBoxItem(FString itemText)
 
 	return scaleBox;
 }
-
-
-
-

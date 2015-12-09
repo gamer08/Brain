@@ -6,7 +6,6 @@
 #include "GameplayObjects/FTransformation.h"
 #include "BrainObserver.generated.h"
 
-
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BRAIN_API UBrainObserver : public UActorComponent
 {
@@ -26,12 +25,8 @@ public:
 	virtual void Notify(bool state);
 	
 	UPROPERTY(EditAnywhere, Category = "Transformation", meta = (DisplayName = "Is Observer"))
-		bool _isObserver;
+	bool _isObserver;
 
 	UPROPERTY(EditAnywhere, Category = "Transformation", meta = (DisplayName = "Transformation", EditCondition = "_isObserver"))
-		FTransformation _transformation;
-
-
-	
-
+	FTransformation _transformation;
 };

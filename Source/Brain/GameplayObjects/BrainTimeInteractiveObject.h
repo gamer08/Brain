@@ -7,8 +7,6 @@
 #include "FTransformation.h"
 #include "BrainTimeInteractiveObject.generated.h"
 
-
-
 UCLASS()
 class BRAIN_API ABrainTimeInteractiveObject : public ABrainInteractiveObject, public IBrainSaveInterface
 {
@@ -69,7 +67,6 @@ private:
 	void Load();
 
 public:
-
 	ABrainTimeInteractiveObject();
 
 	void Tick(float deltaTime) override;
@@ -89,5 +86,3 @@ public:
 
 	void Save(FBrainSaveData& saveData);
 };
-
-

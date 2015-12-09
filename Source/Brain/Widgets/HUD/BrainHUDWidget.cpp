@@ -13,8 +13,6 @@
 #define STOPING "stop"
 #define REVERSING "reverse"
 
-
-
 void UBrainHUDWidget::SetAvailableAction(FObjectAction objectAction)
 {
 	if (objectAction._flags == -1)
@@ -80,7 +78,3 @@ void UBrainHUDWidget::LoadActionBarTextures()
 	actionTexturesLibrary->ClearLoaded();
 	actionTexturesLibrary->ConditionalBeginDestroy();
 }
-
-
-
-

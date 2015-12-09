@@ -47,6 +47,11 @@ void ABrainPlayerController::SetupInputComponent()
 	InputComponent->BindAction("PerformActionOnObject8", IE_Pressed, this, &ABrainPlayerController::PerformActionOnObject<7>);
 	InputComponent->BindAction("Pause", IE_Pressed, this, &ABrainPlayerController::ShowPauseMenu);
 
+	InputComponent->BindAction("SelectNextAction", IE_Pressed, this, &ABrainPlayerController::SelectNextAction);
+	InputComponent->BindAction("SelectLastAction", IE_Pressed, this, &ABrainPlayerController::SelectLastAction);
+	InputComponent->BindAction("ApplySelectedAction", IE_Pressed, this, &ABrainPlayerController::PerformSelectedAction);
+	InputComponent->BindAction("UnapplySelectedAction", IE_Pressed, this, &ABrainPlayerController::PerformSelectedActionReversed);
+
 	InputComponent->BindAxis("MoveForward", this, &ABrainPlayerController::MoveForward);
 	InputComponent->BindAxis("MoveBackward", this, &ABrainPlayerController::MoveForward);
 
@@ -98,6 +103,11 @@ void ABrainPlayerController::SendSelectedObjectActionsToHUD(FObjectAction action
 	Cast<ABrainHUD>(MyHUD)->OnReceiveSelectedObjectActions(actions);
 }
 
+void ABrainPlayerController::UpdateActionBar()
+{
+	Cast<ABrainHUD>(MyHUD)->UpdateActionBar();
+}
+
 void ABrainPlayerController::GiveControlsToUI(bool value)
 {
 	this->bShowMouseCursor = value;
@@ -139,4 +149,26 @@ int32 ABrainPlayerController::GetEnergy()
 void ABrainPlayerController::SubEnergy(int32 quantity)
 {
 	_pawn->SubEnergy(quantity);
+}
+
+void ABrainPlayerController::SelectNextAction()
+{
+	_pawn->SelectNextAction();
+	UpdateActionBar();
+}
+
+void ABrainPlayerController::SelectLastAction()
+{
+	_pawn->SelectLastAction();
+	UpdateActionBar();
+}
+
+void ABrainPlayerController::PerformSelectedAction()
+{
+	_pawn->PerformSelectedAction(false);
+}
+
+void ABrainPlayerController::PerformSelectedActionReversed()
+{
+	_pawn->PerformSelectedAction(true);
 }

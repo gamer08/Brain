@@ -5,9 +5,9 @@
 #include "Core/BrainCharacter.h"
 #include "BrainGameInstance.h"
 
-
 ABrainEndLevelTrigger::ABrainEndLevelTrigger()
 {
+	_levelToLoad = FName();
 }
 
 void ABrainEndLevelTrigger::NotifyActorBeginOverlap(AActor* other)
@@ -19,7 +19,7 @@ void ABrainEndLevelTrigger::NotifyActorBeginOverlap(AActor* other)
 			if (UBrainGameInstance* gameInstance = Cast<UBrainGameInstance>(GetGameInstance()))
 				gameInstance->GetSaveManager()->FlushCachedSaveData();
 			
-			UGameplayStatics::OpenLevel(world, "test");
+				UGameplayStatics::OpenLevel(world, _levelToLoad);
 		}
 	}
 }

@@ -2,12 +2,9 @@
 
 #pragma once
 
-#include <set>
 #include "Components/ActorComponent.h"
 #include "BrainObserver.h"
 #include "BrainObservable.generated.h"
-
-using std::set;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BRAIN_API UBrainObservable : public UActorComponent
@@ -33,15 +30,14 @@ public:
 	void UnregisterObserver(UBrainObserver* o);
 
 	UPROPERTY(EditAnywhere, Category = "Observer", meta = (DisplayName = "Can be Observed"))
-		bool _bool;
+	bool _bool;
 
 	UPROPERTY(EditAnywhere, Category = "Observer", meta = (DisplayName = "My Observer", EditCondition = "_bool"))
-		//UBrainObserver* _myObservateur;
-		TArray<AActor*> _list;
+	TArray<AActor*> _list;
 	
 	UFUNCTION()
-		void OnActorCollisionBegin(class AActor* OtherActor);
+	void OnActorCollisionBegin(class AActor* OtherActor);
 
 	UFUNCTION()
-		void OnActorCollisionEnd(class AActor* OtherActor);
+	void OnActorCollisionEnd(class AActor* OtherActor);
 };

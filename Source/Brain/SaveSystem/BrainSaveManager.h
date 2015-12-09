@@ -6,9 +6,6 @@
 #include "BrainSaveData.h"
 #include "BrainSaveManager.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class BRAIN_API UBrainSaveManager : public UObject
 {
@@ -63,5 +60,4 @@ private:
 	FString GenerateSaveFileName();
 
 	bool LoadInternal(FString SaveToLoad);
-
 };

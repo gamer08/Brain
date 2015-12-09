@@ -53,10 +53,18 @@ public:
 	}
 
 	void SendSelectedObjectActionsToHUD(FObjectAction actions);
+	void UpdateActionBar();
 
 	UFUNCTION(BlueprintCallable, Category = "Brain player controller")
 	void GiveControlsToUI(bool value);
 
 	int32 GetEnergy();
 	void SubEnergy(int32 quantity);
+
+	void SelectNextAction();
+
+	void SelectLastAction();
+
+	void PerformSelectedAction();
+	void PerformSelectedActionReversed();
 };

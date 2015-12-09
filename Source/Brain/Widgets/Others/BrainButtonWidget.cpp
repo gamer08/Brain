@@ -8,5 +8,3 @@ UBrainButtonWidget::UBrainButtonWidget()
 {
 	OnClicked.AddDynamic(this, &UBrainButtonWidget::OnClick);
 }
-
-
