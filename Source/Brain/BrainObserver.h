@@ -4,12 +4,19 @@
 
 #include "Components/ActorComponent.h"
 #include "GameplayObjects/FTransformation.h"
+#include "SaveSystem/BrainSaveInterface.h"
+#include "BrainEnums.h"
 #include "BrainObserver.generated.h"
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BRAIN_API UBrainObserver : public UActorComponent
 {
 	GENERATED_BODY()
+
+private:
+	//void Load();
+
+	TMap<FString, bool> client;
 
 public:	
 	// Sets default values for this component's properties
@@ -22,11 +29,22 @@ public:
 	virtual void TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction ) override;
 
 	// Write sthg in the console when notify is called by the observable
-	virtual void Notify(bool state);
+	virtual void Notify(FString objectName, EObserverEvent::Type call);
 	
 	UPROPERTY(EditAnywhere, Category = "Transformation", meta = (DisplayName = "Is Observer"))
 	bool _isObserver;
 
 	UPROPERTY(EditAnywhere, Category = "Transformation", meta = (DisplayName = "Transformation", EditCondition = "_isObserver"))
 	FTransformation _transformation;
+
+	//void Save(FBrainSaveData& saveData);
+
+	void updateState(FString objectName, bool value);
+
+	bool checkAllSwitches();
+
+	bool state;
+
+
+
 };

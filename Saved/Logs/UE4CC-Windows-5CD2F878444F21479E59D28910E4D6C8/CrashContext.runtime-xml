@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FGenericCrashContext>
+<RuntimeProperties>
+<Version>1</Version>
+<ProcessId>6324</ProcessId>
+<IsInternalBuild>0</IsInternalBuild>
+<IsPerforceBuild>0</IsPerforceBuild>
+<IsSourceDistribution>0</IsSourceDistribution>
+<GameName>Brain</GameName>
+<ExecutableName>UE4Editor</ExecutableName>
+<BuildConfiguration>Development</BuildConfiguration>
+<PlatformName>Windows</PlatformName>
+<PlatformNameIni>Windows</PlatformNameIni>
+<EngineMode>Editor</EngineMode>
+<EngineVersion>4.8.3-2634408+++depot+UE4-Releases+4.8</EngineVersion>
+<CommandLine> </CommandLine>
+<LanguageLCID>9</LanguageLCID>
+<DefaultLocale>fr_FR</DefaultLocale>
+<IsUE4Release>1</IsUE4Release>
+<UserName></UserName>
+<BaseDir>C:/Program Files/Epic Games/4.8/Engine/Binaries/Win64/</BaseDir>
+<RootDir>C:/Program Files/Epic Games/4.8/</RootDir>
+<MachineId>AD541DF74DB84AF293F9B0A60160A0CF</MachineId>
+<EpicAccountId>46a40cfda58c4237b68f593a66e52ede</EpicAccountId>
+<CallStack></CallStack>
+<SourceContext></SourceContext>
+<UserDescription></UserDescription>
+<ErrorMessage></ErrorMessage>
+<MiscNumberOfCores>4</MiscNumberOfCores>
+<MiscNumberOfCoresIncludingHyperthreads>8</MiscNumberOfCoresIncludingHyperthreads>
+<MiscIs64bitOperatingSystem>1</MiscIs64bitOperatingSystem>
+<MiscCPUVendor>GenuineIntel</MiscCPUVendor>
+<MiscCPUBrand>      Intel(R) Core(TM) i7-3610QM CPU @ 2.30GHz</MiscCPUBrand>
+<MiscPrimaryGPUBrand>NVIDIA GeForce GTX 670M</MiscPrimaryGPUBrand>
+<MiscOSVersionMajor>Windows 8</MiscOSVersionMajor>
+<MiscOSVersionMinor></MiscOSVersionMinor>
+<MemoryStatsTotalPhysical>8547889152</MemoryStatsTotalPhysical>
+<MemoryStatsTotalVirtual>140737488224256</MemoryStatsTotalVirtual>
+<MemoryStatsPageSize>4096</MemoryStatsPageSize>
+<MemoryStatsTotalPhysicalGB>8</MemoryStatsTotalPhysicalGB>
+</RuntimeProperties>
+<PlatformProperties>
+<Platform.IsRunningWindows>1</Platform.IsRunningWindows>
+</PlatformProperties>
+</FGenericCrashContext>

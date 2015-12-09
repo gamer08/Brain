@@ -17,3 +17,14 @@ namespace EAction
 		REVERSE = 128
 	};
 }
+
+UENUM(BlueprintType)
+namespace EObserverEvent
+{
+	enum Type
+	{
+		HELLO,
+		EVENTON,
+		EVENTOFF
+	};
+}

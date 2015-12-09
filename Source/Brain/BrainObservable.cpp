@@ -32,6 +32,8 @@ void UBrainObservable::BeginPlay()
 		if (ub != nullptr)
 			RegisterObserver(ub);
 	}
+	NotifyAll(GetName(), EObserverEvent::HELLO);
+
 }
 
 
@@ -41,10 +43,10 @@ void UBrainObservable::TickComponent( float DeltaTime, ELevelTick TickType, FAct
 	Super::TickComponent( DeltaTime, TickType, ThisTickFunction );
 }
 
-void UBrainObservable::NotifyAll(bool state)
+void UBrainObservable::NotifyAll(FString name, EObserverEvent::Type call)
 {
 	for (int32 i=0; i < _list_observers.Num(); i++)
-		_list_observers[i]->Notify(state);
+		_list_observers[i]->Notify(name, call);
 }
 
 void UBrainObservable::RegisterObserver(UBrainObserver* o)
@@ -61,7 +63,7 @@ void UBrainObservable::OnActorCollisionBegin(class AActor* OtherActor)
 {
 	if (_list_actors_overlap.Num() == 0)
 	{
-		NotifyAll(true);
+		NotifyAll(GetName(), EObserverEvent::EVENTON);
 		UE_LOG(LogTemp, Warning, TEXT("Begin !"));
 	}
 
@@ -72,7 +74,7 @@ void UBrainObservable::OnActorCollisionEnd(class AActor* OtherActor)
 	_list_actors_overlap.Remove(OtherActor);
 	if (_list_actors_overlap.Num() == 0)
 	{
-		NotifyAll(false);
+		NotifyAll(GetName(), EObserverEvent::EVENTOFF);
 		UE_LOG(LogTemp, Warning, TEXT("End !"));
 	}
 }

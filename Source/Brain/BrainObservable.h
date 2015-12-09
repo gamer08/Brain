@@ -4,6 +4,7 @@
 
 #include "Components/ActorComponent.h"
 #include "BrainObserver.h"
+#include "BrainEnums.h"
 #include "BrainObservable.generated.h"
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -25,9 +26,10 @@ public:
 	// Called every frame
 	virtual void TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction ) override;
 
-	void NotifyAll(bool state);
+	void NotifyAll(FString name, EObserverEvent::Type call);
 	void RegisterObserver(UBrainObserver* o);
 	void UnregisterObserver(UBrainObserver* o);
+
 
 	UPROPERTY(EditAnywhere, Category = "Observer", meta = (DisplayName = "Can be Observed"))
 	bool _bool;
