@@ -13,18 +13,22 @@ DEFINE_LOG_CATEGORY_STATIC(LogFPChar, Warning, All);
 
 ABrainCharacter::ABrainCharacter()
 {
-	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
+	//Empecher qu'Unreal cree des objets templates doublons pour les backup
+	if (!HasAnyFlags(RF_ClassDefaultObject | RF_ArchetypeObject))
+	{
+		GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
 
-	_minPitch = -89.0f;
-	_maxPitch = 89.0f;
-	_maxDistanceInteraction = 600.0f;
+		_minPitch = -89.0f;
+		_maxPitch = 89.0f;
+		_maxDistanceInteraction = 600.0f;
 
-	PrimaryActorTick.bCanEverTick = true;
+		PrimaryActorTick.bCanEverTick = true;
 
-	USkeletalMeshComponent* mesh = GetMesh();
-	mesh->bCastDynamicShadow = mesh->CastShadow = false;
+		USkeletalMeshComponent* mesh = GetMesh();
+		mesh->bCastDynamicShadow = mesh->CastShadow = false;
 
-	_selectedObject = nullptr;
+		_selectedObject = nullptr;
+	}
 }
 
 void ABrainCharacter::BeginPlay()

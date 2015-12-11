@@ -12,11 +12,15 @@ class BRAIN_API UBrainSaveManager : public UObject
 	GENERATED_BODY()
 	
 public:
-	
 	UBrainSaveManager();
 	
 	bool Save(FString saveName);
 	bool Load(FString SaveToLoad);
+	
+	inline bool IsASaveLoaded()
+	{
+		return _isASaveLoaded;
+	}
 
 	TArray<FString> GetSaveFilesName();
 
@@ -46,6 +50,11 @@ public:
 		return _currentCachedData.GetDataFromSave<FBrainTIOSaveData>(name);
 	}
 
+	template <> inline FBrainObserverSaveData GetDataFromSave<FBrainObserverSaveData>(FString name)
+	{
+		return _currentCachedData.GetDataFromSave<FBrainObserverSaveData>(name);
+	}
+
 	void FlushCachedSaveData();
 
 private:
@@ -55,6 +64,8 @@ private:
 
 	UPROPERTY()
 	FString _saveDirectory;
+
+	bool _isASaveLoaded;
 
 	void SaveNLoadData(FArchive& archive, FBrainSaveData& data);
 	FString GenerateSaveFileName();

@@ -5,7 +5,6 @@
 #include "SaveSystem/BrainSaveInterface.h"
 #include "BrainCharacter.generated.h"
 
-
 UCLASS(config=Game)
 class ABrainCharacter : public ACharacter, public IBrainSaveInterface
 {
@@ -40,7 +39,7 @@ public:
 	void SelectLastAction();
 
 	UFUNCTION(BlueprintCallable, Category = "Energy")
-		int32 GetSelectedAction();
+	int32 GetSelectedAction();
 
 	int32 CountAvailableActions();
 

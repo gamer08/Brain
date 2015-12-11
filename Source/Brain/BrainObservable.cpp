@@ -2,6 +2,7 @@
 
 #include "Brain.h"
 #include "BrainObservable.h"
+#include "BrainGameInstance.h"
 
 // Sets default values for this component's properties
 UBrainObservable::UBrainObservable()
@@ -32,8 +33,19 @@ void UBrainObservable::BeginPlay()
 		if (ub != nullptr)
 			RegisterObserver(ub);
 	}
-	NotifyAll(GetOwner()->GetName(), EObserverEvent::HELLO);
 
+	if (UWorld* world = GetWorld())
+	{
+		if (UBrainGameInstance* gameInstance = Cast<UBrainGameInstance>(world->GetGameInstance()))
+		{
+			if (UBrainSaveManager* saveManager = gameInstance->GetSaveManager())
+			{
+				//si on ne charge pas une sauvegarde le sujet s'identifie à ces observeurs.
+				if (!saveManager->IsASaveLoaded())
+					NotifyAll(GetOwner()->GetName(), EObserverEvent::HELLO);
+			}
+		}
+	}
 }
 
 

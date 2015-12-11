@@ -6,10 +6,14 @@
 
 ABrainCameraManager::ABrainCameraManager()
 {
-	_minPitch = -89.0f;
-	_maxPitch = 89.0f;
-	_relativePosition = FVector(0.0f, 0.0f, 64.0f);
-	_rotation = FRotator(0.0f);
+	//Empecher qu'Unreal cree des objets templates doublons pour les backup
+	if (!HasAnyFlags(RF_ClassDefaultObject | RF_ArchetypeObject))
+	{
+		_minPitch = -89.0f;
+		_maxPitch = 89.0f;
+		_relativePosition = FVector(0.0f, 0.0f, 64.0f);
+		_rotation = FRotator(0.0f);
+	}
 }
 
 void ABrainCameraManager::BeginPlay()

@@ -5,6 +5,7 @@
 #include "BrainCameraSaveData.h"
 #include "BrainNIOSaveData.h"
 #include "BrainTIOSaveData.h"
+#include "BrainObserverSaveData.h"
 
 #include "BrainSaveData.generated.h"
 
@@ -30,6 +31,9 @@ public:
 	UPROPERTY()
 	TMap<FString,FBrainTIOSaveData> _tioSaveData;
 
+	UPROPERTY()
+	TMap<FString, FBrainObserverSaveData> _observerSaveData;
+
 	FBrainSaveData()
 	{
 		_levelName = FString();
@@ -37,6 +41,7 @@ public:
 		_cameraData = FBrainCameraSaveData();
 		_nioSaveData.Reset();
 		_tioSaveData.Reset();
+		_observerSaveData.Reset();
 	}
 	
 	void AddDataToSave(FBrainCharacterSaveData data)
@@ -57,6 +62,11 @@ public:
 	void AddDataToSave(FString name, FBrainTIOSaveData data)
 	{
 		_tioSaveData.Emplace(name, data);
+	}
+
+	void AddDataToSave(FString name, FBrainObserverSaveData data)
+	{
+		_observerSaveData.Emplace(name, data);
 	}
 
 	template <typename T>
@@ -94,6 +104,17 @@ public:
 		
 		return data;
 	}
+
+	template <> inline FBrainObserverSaveData GetDataFromSave<FBrainObserverSaveData>(FString name)
+	{
+		FBrainObserverSaveData data = FBrainObserverSaveData();
+		FBrainObserverSaveData* lData = _observerSaveData.Find(name);
+		
+		if (lData)
+			data = *lData;
+		
+		return data;
+	}
 };
 
 FORCEINLINE FArchive &operator << (FArchive &archive, FBrainSaveData& data)
@@ -103,6 +124,7 @@ FORCEINLINE FArchive &operator << (FArchive &archive, FBrainSaveData& data)
 	archive << data._cameraData;
 	archive << data._nioSaveData;
 	archive << data._tioSaveData;
+	archive << data._observerSaveData;
 
 	return archive;
 }

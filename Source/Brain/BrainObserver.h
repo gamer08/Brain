@@ -9,12 +9,15 @@
 #include "BrainObserver.generated.h"
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class BRAIN_API UBrainObserver : public UActorComponent
+class BRAIN_API UBrainObserver : public UActorComponent, public IBrainSaveInterface
 {
 	GENERATED_BODY()
 
 private:
-	TMap<FString, bool> _subjects;
+	UPROPERTY()
+	TMap<FString, int8> _subjects;
+
+	void Load();
 
 public:		
 	UPROPERTY(EditAnywhere, Category = "Transformation", meta = (DisplayName = "Is Observer"))
@@ -37,7 +40,9 @@ public:
 	// Write sthg in the console when notify is called by the observable
 	virtual void Notify(FString objectName, EObserverEvent::Type call);
 	
-	void UpdateState(FString objectName, bool value);
+	void UpdateState(FString objectName, int8 value);
 
-	bool CheckAllSwitches();
+	int8 CheckAllSwitches();
+
+	void Save(FBrainSaveData& saveData);
 };

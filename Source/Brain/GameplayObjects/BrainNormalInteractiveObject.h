@@ -89,6 +89,8 @@ private:
 	FVector _deltaScale; // For animation.
 	
 	float _durationScale;
+
+	bool CanScale();
 	
 
 	/*Shear Data*/

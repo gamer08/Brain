@@ -8,8 +8,12 @@
 
 ABrainNormalInteractiveObject::ABrainNormalInteractiveObject()
 {
-	PrimaryActorTick.bCanEverTick = true;
-	_selectionColor = FLinearColor(1.0, 0.0, 0.0, 1.0);
+	//Empecher qu'Unreal cree des objets templates doublons pour les backup
+	if (!HasAnyFlags(RF_ClassDefaultObject | RF_ArchetypeObject))
+	{
+		PrimaryActorTick.bCanEverTick = true;
+		_selectionColor = FLinearColor(1.0, 0.0, 0.0, 1.0);
+	}
 }
 
 void ABrainNormalInteractiveObject::BeginPlay()
@@ -153,14 +157,27 @@ void ABrainNormalInteractiveObject::ChangeScale(int32 orientation)
 		_durationScale = 0;
 		_countScale += orientation;
 
-		if (_targetScale.Size() < _minScale.Size())
-			_targetScale = _minScale;
-		else if (_targetScale.Size() > _maxScale.Size())
-			_targetScale = _maxScale;
-		else UseEnergy(energy);
+		if (CanScale())
+			UseEnergy(energy);
 
 		_deltaScale = _targetScale - _currentScale;
 	}
+}
+
+bool ABrainNormalInteractiveObject::CanScale()
+{
+	if (_targetScale.X < _minScale.X
+		|| _targetScale.Y < _minScale.Y
+		|| _targetScale.Z < _minScale.Z
+		|| _targetScale.X > _maxScale.X
+		|| _targetScale.Y > _maxScale.Y
+		|| _targetScale.Z > _maxScale.Z)
+	{
+		_targetScale = _currentScale;
+		return false;
+	}
+	else
+		return true;
 }
 
 void ABrainNormalInteractiveObject::ChangeShear(int32 orientation){
@@ -272,10 +289,7 @@ void ABrainNormalInteractiveObject::Load()
 					_targetScale = savedData._scale;
 
 					_cachedTransform = GetTransform();
-					SetActorTransform(FTransform(Shear(savedData._shearFirstAxis, savedData._shearSecondAxis))*_cachedTransform);
-
-					int32 energyUsed = abs(_countRotation) + abs(_countTranslation) + abs(_countScale) + abs(_countShear);
-					UseEnergy(energyUsed);
+					SetActorTransform(FTransform(Shear(savedData._shearFirstAxis, savedData._shearSecondAxis)) * _cachedTransform);
 				}
 			}
 		}

@@ -12,6 +12,8 @@ UBrainSaveManager::UBrainSaveManager()
 {
 	if (!HasAnyFlags(RF_ClassDefaultObject | RF_ArchetypeObject))
 	{
+		_isASaveLoaded = false;
+
 		std::string userProfile, saveDirectory;
 		userProfile.clear();
 		saveDirectory.clear();
@@ -50,6 +52,8 @@ bool UBrainSaveManager::Save(FString saveName)
 
 	if (saveName.IsEmpty())
 		saveFileName = GenerateSaveFileName();
+	else
+		saveFileName = saveName;
 
 	FString saveFilePath = _saveDirectory + "\\" + saveFileName;
 	
@@ -93,7 +97,9 @@ bool UBrainSaveManager::Load(FString SaveToLoad)
 {
 	bool loadSuccessfull = false;
 
-	if (LoadInternal(SaveToLoad))
+	_isASaveLoaded = LoadInternal(SaveToLoad);
+
+	if (_isASaveLoaded)
 	{
 		UWorld* world = GetOuter()->GetWorld();
 		if (world)
@@ -144,5 +150,6 @@ FString UBrainSaveManager::GenerateSaveFileName()
 
 void UBrainSaveManager::FlushCachedSaveData()
 {
+	_isASaveLoaded = false;
 	_currentCachedData = FBrainSaveData();
 }

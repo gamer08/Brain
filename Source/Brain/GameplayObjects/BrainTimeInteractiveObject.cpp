@@ -7,8 +7,12 @@
 
 ABrainTimeInteractiveObject::ABrainTimeInteractiveObject()
 {
-	PrimaryActorTick.bCanEverTick = true;
-	_selectionColor = FLinearColor(1.0, 1.0, 1.0, 1.0);
+	//Empecher qu'Unreal cree des objets templates doublons pour les backup
+	if (!HasAnyFlags(RF_ClassDefaultObject | RF_ArchetypeObject))
+	{
+		PrimaryActorTick.bCanEverTick = true;
+		_selectionColor = FLinearColor(1.0, 1.0, 1.0, 1.0);
+	}
 }
 
 void ABrainTimeInteractiveObject::BeginPlay()
